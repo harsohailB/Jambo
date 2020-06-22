@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 import styled from "styled-components";
 import logo from "./assets/logo.png";
@@ -16,7 +17,7 @@ const PagesWrapper = styled.nav`
     list-style: none;
 `;
 
-const PageReference = styled.li`
+const PageReference = styled(Link)`
     display: flex;
     padding: 14px 16px;
     font-size: 16px;
@@ -26,6 +27,7 @@ const PageReference = styled.li`
     color: #3d4246;
     line-height: 1.5;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover{
         color: black;
@@ -90,10 +92,10 @@ const Navbar = () => {
             </LogoWrapper>
 
             <PagesWrapper>
-                <PageReference>Home</PageReference>
-                <PageReference>Catalog</PageReference>
-                <PageReference>Story</PageReference>
-                <PageReference>Contact</PageReference>
+                <PageReference to="/">Home</PageReference>
+                <PageReference to="/catalog">Catalog</PageReference>
+                <PageReference to="/story">Story</PageReference>
+                <PageReference to="/contact">Contact</PageReference>
             </PagesWrapper>
 
             <IconsWrapper>
