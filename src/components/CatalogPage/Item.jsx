@@ -1,9 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom"
 
-const Wrapper = styled.a`
+const Wrapper = styled(Link)`
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    text-decoration: none;
+
+    & :hover {
+        opacity: 80%;
+    }
 `;
 
 const Image = styled.img`

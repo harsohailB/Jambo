@@ -48,19 +48,37 @@ const InventoryCount = styled.p`
 `;
 
 const FilterBar = () => {
+    const sortingOptions = ["Alphabetically, A-Z", "Alphabetically, Z-A", "Featured",
+                            "Best-Selling", "Price, low to high", "Price, high to low",
+                            "Date, new to old", "Date, old to new"]
+    const filteringOptions = ["All Products", "Accesories", "Case", "Cotton", "Crew Neck",
+                            "DTG", "Embroidery", "Glossy", "Hats", "Hoodies", "Long Sleeves"]
+
+    const renderSortingOptions = () => {
+        return sortingOptions.map(option => (
+            <option>{option}</option>
+        ));
+    }
+
+    const renderFilteringOptions = () => {
+        return filteringOptions.map(option => (
+            <option>{option}</option>
+        ));
+    }
+
     return(
        <Wrapper>
            <FilterWrapper>
                 <Filter>
                     <FilterText>FILTER BY</FilterText>
                     <FilterDropdown>
-                        <option>All Products</option>
+                        {renderFilteringOptions()}
                     </FilterDropdown>
                 </Filter>
                 <Filter>
                     <FilterText>SORT BY</FilterText>
                     <FilterDropdown>
-                        <option>Alphabetically, A-Z</option>
+                        {renderSortingOptions()}
                     </FilterDropdown>
                 </Filter>
            </FilterWrapper>

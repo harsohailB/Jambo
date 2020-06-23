@@ -51,7 +51,7 @@ const IconsWrapper = styled.div`
     width: fit-content;
 `;
 
-const Icon = styled.div`
+const Icon = styled(Link)`
     margin: 10px;
     color: #3d4246;
     cursor: pointer;
@@ -103,7 +103,7 @@ const Navbar = () => {
                 <Icon onClick={handleSearchClick}>
                     <FaSearch size={24}/>
                 </Icon>    
-                <Icon>
+                <Icon to="/cart">
                     <FaShoppingCart size={24}/>
                 </Icon>
             </IconsWrapper>
