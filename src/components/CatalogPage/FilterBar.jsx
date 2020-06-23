@@ -47,7 +47,7 @@ const InventoryCount = styled.p`
     white-space: nowrap;
 `;
 
-const FilterBar = () => {
+const FilterBar = (props) => {
     const sortingOptions = ["Alphabetically, A-Z", "Alphabetically, Z-A", "Featured",
                             "Best-Selling", "Price, low to high", "Price, high to low",
                             "Date, new to old", "Date, old to new"]
@@ -82,7 +82,7 @@ const FilterBar = () => {
                     </FilterDropdown>
                 </Filter>
            </FilterWrapper>
-           <InventoryCount>15 products</InventoryCount>
+           <InventoryCount>{props.productCount} products</InventoryCount>
        </Wrapper>
     );
 }

@@ -37,8 +37,8 @@ const Featured = () => {
         <Wrapper>
             <Message>CHECK CATALOG FOR NEW PRODUCTS</Message>
             <ItemWrapper>
-                <Item path={featuredOnePic} name="TenaciTee:)" price="$27.99"></Item>
-                <Item path={featuredTwoPic} name="LEGACY Long Sleeve :)" price="$35.99"></Item>
+                <Item path={featuredOnePic} name="TenaciTee:)" price="27.99"></Item>
+                <Item path={featuredTwoPic} name="LEGACY Long Sleeve :)" price="35.99"></Item>
             </ItemWrapper>
             <Button>View All</Button>
         </Wrapper>

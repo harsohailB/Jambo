@@ -43,7 +43,7 @@ const Item = (props) => {
         <Wrapper>
             <Image src={props.path}></Image>
             <Name>{props.name}</Name>
-            <Price>{props.price}</Price>
+            <Price>${props.price}</Price>
         </Wrapper>
     );
 }
