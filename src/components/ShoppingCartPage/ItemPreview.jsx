@@ -106,17 +106,15 @@ const ItemPreview = (props) => {
     }
 
     const handleQuantityChange = evt => {
-        let tempShoppingCartItems = shoppingCartItems;
-        tempShoppingCartItems.forEach(existingItem => {
+        shoppingCartItems.forEach(existingItem => {
             if(existingItem.id === item.id){
                 setItem({...item, quantity: evt.target.value});
                 existingItem.quantity = evt.target.value;
             }
         });
-        setShoppingCartItems(tempShoppingCartItems);
     }
 
-    const calculateItemTotal = () => {
+    const calculateTotal = () => {
         return parseFloat(item.price * item.quantity).toFixed(2);
     }
 
@@ -133,7 +131,7 @@ const ItemPreview = (props) => {
             </ProductWrapper>
             <Price>${item.price}</Price>
             <QuantityInput value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
-            <Price>${calculateItemTotal()}</Price>
+            <Price>${calculateTotal()}</Price>
         </Wrapper>
     );
 }
