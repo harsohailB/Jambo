@@ -21,10 +21,10 @@ const Title = styled.h1`
 const ItemsWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    margin-left: 50px;
-    margin-right: 50px;
-    align-items: center;
+    justify-content: space-between;
+    margin-left: 150px;
+    margin-right: 150px;
+    flex-grow: 5;
 `;
 
 const CatalogPage = () => {
@@ -36,9 +36,15 @@ const CatalogPage = () => {
         });
     }, []);
 
-    const renderItems= () => {
+    const renderItems = () => {
         return items.map(item => (
-            <Item key={item.id} path={"../../assets/catalog/inventory/".concat(item.imageName)} name={item.name} price={item.price}></Item>
+            <Item 
+                key={item.id} 
+                id={item.id}
+                path={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")} 
+                name={item.name} 
+                price={item.price}>                   
+            </Item>
         ));
     }
 

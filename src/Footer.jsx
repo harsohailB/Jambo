@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom"
 
 import paymentMethods from "./assets/payment-methods.PNG"
 
@@ -10,13 +11,14 @@ const Wrapper = styled.div`
     margin-top: 50px;
 `;
 
-const Link = styled.a`
+const PageReference = styled(Link)`
     font-size: 16px;
     font-family: Oswald,sans-serif;
     font-style: normal;
     font-weight: 400;
     color: #3d4246;
     line-height: 1.5;
+    text-decoration: none;
     margin: 20px;
 `;
 
@@ -36,7 +38,7 @@ const Credits = styled.p`
 const Footer = () => {
     return(
         <Wrapper>
-            <Link>Search</Link>
+            <PageReference to="/search">Search</PageReference>
             <Image src={paymentMethods}></Image>
             <Credits>© 2020, JAMBO Website by Harsohail Brar & Ryan Holt</Credits>
         </Wrapper>

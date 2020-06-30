@@ -11,10 +11,12 @@ const Wrapper = styled(Link)`
     & :hover {
         opacity: 80%;
     }
+
+    margin-bottom: 50px;
 `;
 
 const Image = styled.img`
-    width: 316px;
+    width: 250px;
     height: auto;
 `;
 
@@ -40,7 +42,7 @@ const Price = styled.h3`
 
 const Item = (props) => {
     return(
-        <Wrapper>
+        <Wrapper to={"/catalog/" + props.id}>
             <Image src={props.path}></Image>
             <Name>{props.name}</Name>
             <Price>${props.price}</Price>

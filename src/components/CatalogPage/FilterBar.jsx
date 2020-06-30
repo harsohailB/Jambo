@@ -1,4 +1,5 @@
 import React from "react";
+import Dropdown from "../styled/Dropdown"
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -23,18 +24,9 @@ const FilterText = styled.label`
     font-style: normal;
     font-weight: 400;
     color: #3d4246;
-    margin: 12px;
-`;
-
-const FilterDropdown = styled.select`
-    padding: 10px 28px 10px 18px;
-    font-size: 16px;
-    font-family: Oswald,sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    color: #3d4246;
-    line-height: 1.5;
-    border: 0 solid transparent;
+    margin-top: 12px;
+    margin-left: 12px;
+    width: 100px;
 `;
 
 const InventoryCount = styled.p`
@@ -71,15 +63,15 @@ const FilterBar = (props) => {
            <FilterWrapper>
                 <Filter>
                     <FilterText>FILTER BY</FilterText>
-                    <FilterDropdown>
+                    <Dropdown>
                         {renderFilteringOptions()}
-                    </FilterDropdown>
+                    </Dropdown>
                 </Filter>
                 <Filter>
                     <FilterText>SORT BY</FilterText>
-                    <FilterDropdown>
+                    <Dropdown>
                         {renderSortingOptions()}
-                    </FilterDropdown>
+                    </Dropdown>
                 </Filter>
            </FilterWrapper>
            <InventoryCount>{props.productCount} products</InventoryCount>

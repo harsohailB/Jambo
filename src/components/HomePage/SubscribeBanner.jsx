@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../styled/Button"
+import Form from "../styled/Form"
+import Input from "../styled/Input"
 
 const Wrapper = styled.div`
     margin-top: 55px;
@@ -30,27 +32,6 @@ const Subtitle = styled.p`
     font-weight: 400;
     color: #69727B;
     line-height: 1.5;
-`;
-
-const Form = styled.form`
-    display: flex;   
-    justify-content: center;
-    text-align: center;
-    max-height: 46px;
-`;
-
-const Input = styled.input`
-    border: 1px solid rgba(61,66,70,0.85);
-    background-color: #fff;
-    width: 437px;
-    border-radius: 2px;
-    font-size: 16px;
-    font-family: Oswald,sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    color: #3d4246;
-    line-height: 1.5;
-    padding: 10px 18px;
 `;
 
 const SubscribeBanner = () => {
