@@ -9,27 +9,28 @@ import itemImagesCSV from "../../assets/catalog/itemImages.csv"
 
 const Wrapper = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    margin-top: 50px;
 `;
 
 const PreviewWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     max-width: 50%;
     margin-right: 50px;
 `;
 
 const MainImageWrapper = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     overflow: hidden;
     margin-bottom: 25px;
 `;
 
 const MainImage = styled.img`
-    width: 40%;
+    width: 50%;
     height: auto;
     transition: all 0.3s ease;
 
@@ -40,7 +41,10 @@ const MainImage = styled.img`
 
 const SmallImageWrapper = styled.div`
     display: flex;
-    width: 40%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    flex-grow: 4;
+    width: 600px;
 `;
 
 const SmallImage = styled.img`
@@ -60,6 +64,7 @@ const InfoWrapper = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     width: 20%;
+    margin-top: 50px;
 `;
 
 const Name = styled.h3`
@@ -102,6 +107,7 @@ const ItemPage = () => {
     const location = useLocation();
     const [item, setItem] = useState(null);
     const [images, setImages] = useState([]);
+    const [mainImage, setMainImage] = useState(null);
 
     useEffect(() => {
         importItem();
@@ -155,9 +161,11 @@ const ItemPage = () => {
     };
 
     const renderSmallImages = () => {
-        console.log(images.length)
         return images.map(image => (
-            <SmallImage src={require("../../assets/catalog/inventory/" + item.imageName + "/" + image.imageName)}></SmallImage>
+            <SmallImage 
+                src={require("../../assets/catalog/inventory/" + item.imageName + "/" + image.imageName)}
+                onClick={() => setMainImage(image)}
+            ></SmallImage>
         ));
     }
 
@@ -167,7 +175,9 @@ const ItemPage = () => {
                 <Wrapper>
                     <PreviewWrapper>
                         <MainImageWrapper>
-                            <MainImage src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")}></MainImage>
+                            {mainImage ? 
+                                <MainImage src={require("../../assets/catalog/inventory/" + item.imageName + "/" + mainImage.imageName)}></MainImage>
+                            :   <MainImage src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")}></MainImage>}
                         </MainImageWrapper>
 
                         <SmallImageWrapper>
