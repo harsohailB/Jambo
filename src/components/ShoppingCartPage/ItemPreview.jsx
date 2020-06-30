@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { ShoppingCartContext } from "../../ShoppingCartContext";
 
@@ -103,6 +103,7 @@ const ItemPreview = (props) => {
                 shoppingCartItems.splice(shoppingCartItems.indexOf(item), 1);
             }
         });
+        props.calculateSubtotal();
     }
 
     const handleQuantityChange = evt => {
@@ -112,6 +113,7 @@ const ItemPreview = (props) => {
                 existingItem.quantity = evt.target.value;
             }
         });
+        props.calculateSubtotal();
     }
 
     const calculateTotal = () => {

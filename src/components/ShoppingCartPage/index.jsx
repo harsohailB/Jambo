@@ -67,22 +67,22 @@ const ShoppingCartPage = () => {
     const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
     const [subTotal, setSubTotal] = useState(0);
 
-    // useEffect(() => {
-    //     updateSubtotal();
-    // }, [shoppingCartItems]);
+    useEffect(() => {
+        calculateSubtotal();
+    }, [subTotal, shoppingCartItems]);
 
     const renderItems = () => {
         return shoppingCartItems.map(item => (
-            <ItemPreview item={item}></ItemPreview>
+            <ItemPreview item={item} calculateSubtotal={calculateSubtotal}></ItemPreview>
         ));
     }
 
     const calculateSubtotal = () => {
-        let tempSubtotal = 0;
+        let sum = 0; 
         shoppingCartItems.forEach(item => {
-            tempSubtotal += parseFloat(item.price * item.quantity).toFixed(2);
+            sum += parseFloat(item.price * item.quantity).toFixed(2);
         });
-        return tempSubtotal;
+        setSubTotal(sum);
     }
 
     const renderCart = () => {
@@ -95,7 +95,7 @@ const ShoppingCartPage = () => {
                     <ColumnHeading>Total</ColumnHeading>
                 </Header>
                 {renderItems()}
-                <Price>Subtotal ${calculateSubtotal()}</Price>
+                <Price>Subtotal ${subTotal}</Price>
                 <Subtitle>Taxes and shipping calculated at checkout</Subtitle>
                 <CheckoutButtonsWrapper>
                     <Button to="/catalog">CONTINUE SHOPPING</Button>
