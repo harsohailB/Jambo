@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const Button = styled.button`
+const Button = styled(Link)`
     font-family: Righteous,sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -20,6 +21,7 @@ const Button = styled.button`
     letter-spacing: 0.08em;
     white-space: normal;
     font-size: 14px;
+    margin: 5px;
 `;
 
 export default Button

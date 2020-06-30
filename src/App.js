@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css"
+import { ShoppingCartProvider } from "./ShoppingCartContext"
 import Navbar from "./Navbar"
 import AnnouncementHeader from "./AnnouncementHeader";
 import Footer from "./Footer"
@@ -15,22 +16,24 @@ import ItemPage from "./components/ItemPage";
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <div className="app-container">
-          <AnnouncementHeader/>
-          <Navbar/>
-          <Switch>
-            <Route exact path="/" component={HomePage}></Route>
-            <Route path="/catalog/:id" component={ItemPage}></Route>
-            <Route path="/catalog" component={CatalogPage}></Route>
-            <Route path="/story" component={StoryPage}></Route>
-            <Route path="/contact" component={ContactPage}></Route>
-            <Route path="/cart" component={ShoppingCartPage}></Route>
-            <Route path="/search" component={SearchPage}></Route>
-          </Switch>
-          <Footer/>
-        </div>
-      </BrowserRouter>
+        <BrowserRouter>
+          <ShoppingCartProvider>
+            <div className="app-container">
+              <AnnouncementHeader/>
+              <Navbar/>
+              <Switch>
+                <Route exact path="/" component={HomePage}></Route>
+                <Route path="/catalog/:id" component={ItemPage}></Route>
+                <Route path="/catalog" component={CatalogPage}></Route>
+                <Route path="/story" component={StoryPage}></Route>
+                <Route path="/contact" component={ContactPage}></Route>
+                <Route path="/cart" component={ShoppingCartPage}></Route>
+                <Route path="/search" component={SearchPage}></Route>
+              </Switch>
+              <Footer/>
+            </div>
+          </ShoppingCartProvider>
+        </BrowserRouter>
     );
   }
 }

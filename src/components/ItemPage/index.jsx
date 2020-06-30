@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown"
 import Button from "../styled/Button"
@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { csv } from "d3";
 import inventoryDataCSV from "../../assets/catalog/inventoryData.csv"
 import itemImagesCSV from "../../assets/catalog/itemImages.csv"
+import { ShoppingCartContext } from "../../ShoppingCartContext"
 
 const Wrapper = styled.div`
     display: flex;
@@ -106,8 +107,13 @@ const DropdownWrapper = styled.div`
 const ItemPage = () => {
     const location = useLocation();
     const [item, setItem] = useState(null);
+    const [itemColors, setItemColors] = useState(null);
+    const [itemSizes, setItemSizes] = useState(null);
     const [images, setImages] = useState([]);
     const [mainImage, setMainImage] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(null);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
 
     useEffect(() => {
         importItem();
@@ -121,6 +127,12 @@ const ItemPage = () => {
                 items.forEach(item => {
                     if(item.id === itemId){
                         setItem(item);
+                        const itemColorsArray = item.colors.split('/');
+                        const itemSizesArray = item.sizes.split('/');
+                        setItemColors(itemColorsArray);
+                        setItemSizes(itemSizesArray);
+                        setSelectedColor(itemColorsArray[0]);
+                        setSelectedSize(itemSizesArray[0]);
                     }
                 })
             });
@@ -169,6 +181,35 @@ const ItemPage = () => {
         ));
     }
 
+    const updateSelectedColor = evt => {
+        setSelectedColor(evt.target.value);
+    }
+    
+    const updateSelectedSize = evt => {
+        setSelectedSize(evt.target.value);
+    }
+    
+
+    const handleAddToCartClick = () => {
+        let itemExists = false;
+        // if shopping cart has item then increment quantity
+        shoppingCartItems.forEach(existingItem => {
+            if(item.id === existingItem.id && selectedColor === existingItem.color && selectedSize === existingItem.size){
+                existingItem.quantity++;
+                itemExists = true;
+            }
+        });
+        // if not, add new one
+        if(!itemExists){
+            shoppingCartItems.push({
+                ...item,
+                color: selectedColor,
+                quantity: "1",
+                size: selectedSize
+            });
+        }
+    }
+
     return(
         <div>
             {item ? 
@@ -189,10 +230,10 @@ const ItemPage = () => {
                         <Name>{item.name}</Name>
                         <Price>${item.price}</Price>
                         <DropdownWrapper>
-                            <Dropdown>{renderItemColors()}</Dropdown>
-                            <Dropdown>{renderItemSizes()}</Dropdown>
+                            <Dropdown value={selectedColor} onChange={updateSelectedColor}>{renderItemColors()}</Dropdown>
+                            <Dropdown value={selectedSize} onChange={updateSelectedSize}>{renderItemSizes()}</Dropdown>
                         </DropdownWrapper>
-                        <Button>ADD TO CART</Button>
+                        <Button onClick={handleAddToCartClick} to="/cart">ADD TO CART</Button>
                         <Description>{item.description}</Description>
                     </InfoWrapper>
                 </Wrapper> : 

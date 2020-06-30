@@ -13,7 +13,7 @@ const NavbarWrapper = styled.div`
 `;
 
 const PagesWrapper = styled.nav`
-    display: flex:
+    display: flex;
     list-style: none;
 `;
 
@@ -34,7 +34,7 @@ const PageReference = styled(Link)`
     }
 `; 
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled(Link)`
     display: flex;
     justify-content: flex-start;
 `;
@@ -67,7 +67,6 @@ const Icon = styled(Link)`
 const SearchBar = styled.input`
     border: 1px solid rgba(61,66,70,0.85);
     background-color: #fff;
-    width: 200px;
     border-radius: 2px;
     font-size: 16px;
     font-family: Oswald,sans-serif;
@@ -76,6 +75,7 @@ const SearchBar = styled.input`
     color: #3d4246;
     line-height: 1.5;
     padding: 10px 18px;
+    transition: all .5s;
 `;
 
 const Navbar = () => {
@@ -87,7 +87,7 @@ const Navbar = () => {
 
     return(
         <NavbarWrapper>
-            <LogoWrapper>
+            <LogoWrapper to="/">
                 <Logo src={logo}></Logo>
             </LogoWrapper>
 
