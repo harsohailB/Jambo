@@ -108,7 +108,7 @@ const ItemPreview = (props) => {
 
     const handleQuantityChange = evt => {
         shoppingCartItems.forEach(existingItem => {
-            if(existingItem.id === item.id){
+            if(existingItem.id === item.id && existingItem.color === item.color && existingItem.size === item.size){
                 setItem({...item, quantity: evt.target.value});
                 existingItem.quantity = evt.target.value;
             }
