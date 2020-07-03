@@ -7,6 +7,7 @@ import { csv } from "d3";
 import inventoryDataCSV from "../../assets/catalog/inventoryData.csv"
 import itemImagesCSV from "../../assets/catalog/itemImages.csv"
 import { ShoppingCartContext } from "../../ShoppingCartContext"
+import { UserContext } from "../../UserContext";
 
 const Wrapper = styled.div`
     display: flex;
@@ -107,6 +108,7 @@ const DropdownWrapper = styled.div`
 const ItemPage = () => {
     const location = useLocation();
     const [item, setItem] = useState(null);
+    const [user, setUser] = useContext(UserContext);
     const [itemColors, setItemColors] = useState(null);
     const [itemSizes, setItemSizes] = useState(null);
     const [images, setImages] = useState([]);
@@ -189,6 +191,13 @@ const ItemPage = () => {
         setSelectedSize(evt.target.value);
     }
     
+    const handleRemoveItem = () => {
+        // TODO remove item
+    }
+    
+    const handleEditItem = () => {
+        // TODO edit item
+    }
 
     const handleAddToCartClick = () => {
         let itemExists = false;
@@ -235,6 +244,8 @@ const ItemPage = () => {
                         </DropdownWrapper>
                         <Button onClick={handleAddToCartClick} to="/cart">ADD TO CART</Button>
                         <Description>{item.description}</Description>
+                        {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
+                        {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
                     </InfoWrapper>
                 </Wrapper> : 
                 <h3>Loading</h3>}

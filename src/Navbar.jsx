@@ -116,7 +116,6 @@ const Navbar = () => {
                 {user && <Icon onClick={handleLogout}>
                     <FaDoorOpen size={24}/>
                 </Icon>}
-                {user && <PageReference to="/catalog">Manage Items</PageReference>}
             </IconsWrapper>
 
             
