@@ -3,11 +3,9 @@ import styled from "styled-components";
 import Dropdown from "../styled/Dropdown"
 import Button from "../styled/Button"
 import { useLocation } from "react-router-dom";
-import { csv } from "d3";
-import inventoryDataCSV from "../../assets/catalog/inventoryData.csv"
-import itemImagesCSV from "../../assets/catalog/itemImages.csv"
 import { ShoppingCartContext } from "../../ShoppingCartContext"
 import { UserContext } from "../../UserContext";
+import { getItemById, getItems } from "../../actions/items";
 
 const Wrapper = styled.div`
     display: flex;
@@ -118,47 +116,21 @@ const ItemPage = () => {
     const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
 
     useEffect(() => {
-        importItem();
-        importAllItemImages();
+        try {
+            const itemId = location.pathname.split("/").reverse()[0];
+            getItemById(itemId).then(fetchedItem => {
+                setItem(fetchedItem);
+                setImages(fetchedItem.images);
+            })
+            setItemColors(item.colors.split('/'));
+            setItemSizes(item.sizes.split('/'));
+            setSelectedColor(item.colors.split('/')[0]);
+            setSelectedSize(item.sizes.split('/')[0]);
+        } catch (e) {
+            console.log("ItemPage UseEffect ERROR")
+            console.log(e);
+        }
     }, [location]);
-
-    const importItem = () => {
-        try {
-            const itemId = location.pathname.split("/").reverse()[0];
-            csv(inventoryDataCSV).then(items => {
-                items.forEach(item => {
-                    if(item.id === itemId){
-                        setItem(item);
-                        const itemColorsArray = item.colors.split('/');
-                        const itemSizesArray = item.sizes.split('/');
-                        setItemColors(itemColorsArray);
-                        setItemSizes(itemSizesArray);
-                        setSelectedColor(itemColorsArray[0]);
-                        setSelectedSize(itemSizesArray[0]);
-                    }
-                })
-            });
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    const importAllItemImages = () => {
-        try {
-            var tempImagesArray = []
-            const itemId = location.pathname.split("/").reverse()[0];
-            csv(itemImagesCSV).then(itemImages => {
-                itemImages.forEach(itemImage => {
-                    if(itemImage.id === itemId){
-                        tempImagesArray.push(itemImage);
-                    }
-                })
-                setImages(tempImagesArray);
-            });
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     const renderItemColors = () => {
         const itemColors = item.colors.split('/')

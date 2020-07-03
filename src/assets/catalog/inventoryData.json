@@ -1,0 +1,219 @@
+{  
+  "items":[
+    {
+      "id": 1,
+      "name": "Bean",
+      "price": 22.99,
+      "imageName": "bean",
+      "colors": "Forest Green/Graphite Heather/Maroon/Deep Orange",
+      "sizes": "One size",
+      "description": "Don't brave the elements without the proper headwear. Good for winter spring or fall, customize this knit beanie for your chilly weather go-to cap! For every task that takes you outdoors stay comfortable, stylish, and warm!",
+      "images": [
+        {
+          "imageName": "bean.jpg",
+          "color": "Forest Green"
+        },
+        {
+          "imageName": "bean-top.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-fg-model.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-fg-model2.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-gh.jpg",
+          "color": "Graphite Heather"
+        },
+        {
+          "imageName": "bean-gh2.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-gh-model.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-gh-model2.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-do.jpg",
+          "color": "Deep Orange"
+        },
+        {
+          "imageName": "bean-do-top.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-do-model.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-do-model2.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-m.jpg",
+          "color": "Maroon"
+        },
+        {
+          "imageName": "bean-m-top.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-m-model.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "bean-m-model2.jpg",
+          "color": "None"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big Logo Tee",
+      "price": 29.99,
+      "imageName": "big-logo-tee",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images":[]
+    },
+    {
+      "id": 3,
+      "name": "Big Logo Tee",
+      "price": 29.99,
+      "imageName": "big-logo-tee2",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 4,
+      "name": "Classic Crew",
+      "price": 35.99,
+      "imageName": "classic-crew",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 5,
+      "name": "Classic Hoodie",
+      "price": 39.99,
+      "imageName": "classic-hoodie",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 6,
+      "name": "Classic Tee",
+      "price": 27.99,
+      "imageName": "classic-tee",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 7,
+      "name": "HumaniTee",
+      "price": 27.99,
+      "imageName": "humani-tee",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 8,
+      "name": "i protec: Loyalty",
+      "price": 19.99,
+      "imageName": "loyalty-case",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 9,
+      "name": "i protec: Tenacity",
+      "price": 19.99,
+      "imageName": "tenacity-case",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 10,
+      "name": "LEGACY Long Sleeve",
+      "price": 35.99,
+      "imageName": "legacy-sleeve",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 11,
+      "name": "LoyalTee",
+      "price": 29.99,
+      "imageName": "loyal-tee",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 12,
+      "name": "LoyalTee",
+      "price": 27.99,
+      "imageName": "loyal-tee2",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 13,
+      "name": "TenaciTee",
+      "price": 27.99,
+      "imageName": "tenaci-tee",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 14,
+      "name": "TenaciTee Hoodie",
+      "price": 39.99,
+      "imageName": "tenaci-hoodie",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    },
+    {
+      "id": 15,
+      "name": "UniTee",
+      "price": 27.99,
+      "imageName": "uni-tee",
+      "colors": "",
+      "sizes": "",
+      "description": "",
+      "images": []
+    }
+  ]
+}
