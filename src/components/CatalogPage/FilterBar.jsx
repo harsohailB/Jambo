@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Dropdown from "../styled/Dropdown"
+import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
 import Button from "../styled/Button";
 import { UserContext } from "../../UserContext";
@@ -76,7 +76,7 @@ const FilterBar = (props) => {
                         {renderSortingOptions()}
                     </Dropdown>
                 </Filter>
-                {user && <Button>ADD ITEM</Button>}
+                {user && <Button to="/add-item">ADD ITEM</Button>}
            </FilterWrapper>
            <InventoryCount>{props.productCount} products</InventoryCount>
        </Wrapper>

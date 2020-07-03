@@ -14,8 +14,6 @@ const Form = styled.form`
     flex-direction: column; 
     justify-content: center;
     text-align: center;
-    max-height: 46px;
-    margin-top: 100px;
 `;
 
 const Input = styled.input`

@@ -14,6 +14,7 @@ import ShoppingCartPage from "./components/ShoppingCartPage";
 import SearchPage from "./components/SearchPage";
 import ItemPage from "./components/ItemPage";
 import LoginPage from "./components/LoginPage";
+import AddItemPage from "./components/AddItemPage";
 
 class App extends Component {
   render() {
@@ -33,6 +34,7 @@ class App extends Component {
                   <Route path="/cart" component={ShoppingCartPage}></Route>
                   <Route path="/search" component={SearchPage}></Route>
                   <Route path="/login" component={LoginPage}></Route>
+                  <Route path="/add-item" component={AddItemPage}></Route>
                 </Switch>
                 <Footer/>
               </div>

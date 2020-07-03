@@ -1,17 +1,17 @@
-id,imageName
-1,bean.jpg
+id,imageName,color
+1,bean.jpg,Forest Green
 1,bean-top.jpg
 1,bean-fg-model.jpg
 1,bean-fg-model2.jpg
-1,bean-gh.jpg
+1,bean-gh.jpg,Graphite Heather
 1,bean-gh2.jpg
 1,bean-gh-model.jpg
 1,bean-gh-model2.jpg
-1,bean-do.jpg
-1,bean-do.jpg
+1,bean-do.jpg,Deep Orange
+1,bean-do-top.jpg
 1,bean-do-model.jpg
 1,bean-do-model2.jpg
-1,bean-m.jpg
-1,bean-m.jpg
+1,bean-m.jpg,Maroon
+1,bean-m-top.jpg
 1,bean-m-model.jpg
 1,bean-m-model2.jpg

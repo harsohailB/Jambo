@@ -185,6 +185,11 @@ const ItemPage = () => {
 
     const updateSelectedColor = evt => {
         setSelectedColor(evt.target.value);
+        images.forEach(image => {
+            if(image.color === evt.target.value){
+                setMainImage(image);
+            }
+        });
     }
     
     const updateSelectedSize = evt => {
