@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaSearch, FaShoppingCart } from 'react-icons/fa';
+import { FaSearch, FaShoppingCart, FaDoorOpen } from 'react-icons/fa';
 import styled from "styled-components";
 import logo from "./assets/logo.png";
+import { UserContext } from "./UserContext";
 
 const NavbarWrapper = styled.div`
     background-color: white;
@@ -79,10 +80,16 @@ const SearchBar = styled.input`
 `;
 
 const Navbar = () => {
+    const [user, setUser] = useContext(UserContext);
     const [searchClicked, setSearchClicked] = useState(false);
 
     const handleSearchClick = () => {
         setSearchClicked(!searchClicked);
+    }
+
+    const handleLogout = e => {
+        e.preventDefault();
+        setUser(false);
     }
 
     return(
@@ -106,7 +113,12 @@ const Navbar = () => {
                 <Icon to="/cart">
                     <FaShoppingCart size={24}/>
                 </Icon>
+                {user && <Icon onClick={handleLogout}>
+                    <FaDoorOpen size={24}/>
+                </Icon>}
             </IconsWrapper>
+
+            
         </NavbarWrapper>
     );
 }

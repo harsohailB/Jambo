@@ -1,6 +1,8 @@
-import React from "react";
-import Dropdown from "../styled/Dropdown"
+import React, { useContext } from "react";
+import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
+import Button from "../styled/Button";
+import { UserContext } from "../../UserContext";
 
 const Wrapper = styled.div`
     display: flex;
@@ -40,6 +42,7 @@ const InventoryCount = styled.p`
 `;
 
 const FilterBar = (props) => {
+    const [user, setUser] = useContext(UserContext);
     const sortingOptions = ["Alphabetically, A-Z", "Alphabetically, Z-A", "Featured",
                             "Best-Selling", "Price, low to high", "Price, high to low",
                             "Date, new to old", "Date, old to new"]
@@ -73,6 +76,7 @@ const FilterBar = (props) => {
                         {renderSortingOptions()}
                     </Dropdown>
                 </Filter>
+                {user && <Button to="/add-item">ADD ITEM</Button>}
            </FilterWrapper>
            <InventoryCount>{props.productCount} products</InventoryCount>
        </Wrapper>
