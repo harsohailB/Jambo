@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown"
 import Button from "../styled/Button"
@@ -104,9 +105,10 @@ const DropdownWrapper = styled.div`
 `;
 
 const ItemPage = () => {
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const location = useLocation();
     const [item, setItem] = useState(null);
-    const [user, setUser] = useContext(UserContext);
     const [itemColors, setItemColors] = useState(null);
     const [itemSizes, setItemSizes] = useState(null);
     const [images, setImages] = useState([]);

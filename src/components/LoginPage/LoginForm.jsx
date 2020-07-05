@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../UserContext";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../actions/users";
 
 const Wrapper = styled.div`
     display: flex;
@@ -64,6 +66,7 @@ const Error = styled.label`
 
 const LoginForm = () => {
     const history = useHistory();
+    const dispath = useDispatch();
     const [user, setUser] = useContext(UserContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -71,11 +74,12 @@ const LoginForm = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        if(username === "admin" && password === "password"){
-            setUser(true);
+        try{
+            dispath(loginUser(username, password));
             history.push("/");
-        }else{
+        }catch(error){
             setHasErrors(true);
+            console.log(error)
         }
     };
 

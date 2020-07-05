@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
 import Button from "../styled/Button";
-import { UserContext } from "../../UserContext";
 
 const Wrapper = styled.div`
     display: flex;
@@ -42,7 +42,8 @@ const InventoryCount = styled.p`
 `;
 
 const FilterBar = (props) => {
-    const [user, setUser] = useContext(UserContext);
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const sortingOptions = ["Alphabetically, A-Z", "Alphabetically, Z-A", "Featured",
                             "Best-Selling", "Price, low to high", "Price, high to low",
                             "Date, new to old", "Date, old to new"]

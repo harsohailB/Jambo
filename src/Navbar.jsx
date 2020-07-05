@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FaSearch, FaShoppingCart, FaDoorOpen } from 'react-icons/fa';
 import styled from "styled-components";
 import logo from "./assets/logo.png";
-import { UserContext } from "./UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { LOGOUT_USER } from "./actions/types";
 
 const NavbarWrapper = styled.div`
     background-color: white;
@@ -80,7 +81,9 @@ const SearchBar = styled.input`
 `;
 
 const Navbar = () => {
-    const [user, setUser] = useContext(UserContext);
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [searchClicked, setSearchClicked] = useState(false);
 
     const handleSearchClick = () => {
@@ -89,7 +92,8 @@ const Navbar = () => {
 
     const handleLogout = e => {
         e.preventDefault();
-        setUser(false);
+        dispatch({ type: LOGOUT_USER });
+        history.push("/");
     }
 
     return(

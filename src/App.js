@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect }from "react";
 import "./App.css"
 import { ShoppingCartProvider } from "./ShoppingCartContext"
 import { UserProvider } from "./UserContext"
@@ -15,9 +15,22 @@ import SearchPage from "./components/SearchPage";
 import ItemPage from "./components/ItemPage";
 import LoginPage from "./components/LoginPage";
 import AddItemPage from "./components/AddItemPage";
+import ls from "local-storage";
+import { useDispatch } from "react-redux";
+import { LOGIN_USER, LOGOUT_USER } from "./actions/types";
 
-class App extends Component {
-  render() {
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userFromLocalStorage = ls.get("user");
+    if (userFromLocalStorage) {
+      dispatch({ type: LOGIN_USER, user: userFromLocalStorage });
+    } else {
+      dispatch({ type: LOGOUT_USER });
+    }
+  }, [dispatch]);
+
     return (
         <BrowserRouter>
           <UserProvider>
@@ -42,7 +55,6 @@ class App extends Component {
           </UserProvider>
         </BrowserRouter>
     );
-  }
 }
 
 export default App;
