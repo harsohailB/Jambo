@@ -1,8 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../../UserContext";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../actions/users";
 
 const Wrapper = styled.div`
@@ -67,7 +66,7 @@ const Error = styled.label`
 const LoginForm = () => {
     const history = useHistory();
     const dispath = useDispatch();
-    const [user, setUser] = useContext(UserContext);
+    const user = useSelector((state) => state.user);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [hasErrors, setHasErrors] = useState(false);

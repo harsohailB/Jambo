@@ -3,10 +3,8 @@ import styled from "styled-components";
 import Title from "../styled/Title"
 import Button from "../styled/Button"
 import ItemPreview from "./ItemPreview"
-import { useContext } from "react";
-import { ShoppingCartContext } from "../../ShoppingCartContext";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
     display: flex;
@@ -64,7 +62,7 @@ const CheckoutButtonsWrapper = styled.div`
 `;
 
 const ShoppingCartPage = () => {
-    const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
+    const shoppingCartItems = useSelector((state) => state.shoppingCart);
     const [subTotal, setSubTotal] = useState(0);
 
     useEffect(() => {

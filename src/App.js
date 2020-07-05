@@ -1,7 +1,5 @@
 import React, { useEffect }from "react";
 import "./App.css"
-import { ShoppingCartProvider } from "./ShoppingCartContext"
-import { UserProvider } from "./UserContext"
 import Navbar from "./Navbar"
 import AnnouncementHeader from "./AnnouncementHeader";
 import Footer from "./Footer"
@@ -17,24 +15,28 @@ import LoginPage from "./components/LoginPage";
 import AddItemPage from "./components/AddItemPage";
 import ls from "local-storage";
 import { useDispatch } from "react-redux";
-import { LOGIN_USER, LOGOUT_USER } from "./actions/types";
+import { LOGIN_USER, LOGOUT_USER, FETCH_SC_ITEMS } from "./actions/types";
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const userFromLocalStorage = ls.get("user");
+    const shoppingCartItemsFromLocalStorage = ls.get("shoppingCart");
+
     if (userFromLocalStorage) {
       dispatch({ type: LOGIN_USER, user: userFromLocalStorage });
     } else {
       dispatch({ type: LOGOUT_USER });
     }
+
+    if (shoppingCartItemsFromLocalStorage) {
+      dispatch({ type: FETCH_SC_ITEMS, items: shoppingCartItemsFromLocalStorage });
+    }
   }, [dispatch]);
 
     return (
         <BrowserRouter>
-          <UserProvider>
-            <ShoppingCartProvider>
               <div className="app-container">
                 <AnnouncementHeader/>
                 <Navbar/>
@@ -51,8 +53,6 @@ const App = () => {
                 </Switch>
                 <Footer/>
               </div>
-            </ShoppingCartProvider>
-          </UserProvider>
         </BrowserRouter>
     );
 }

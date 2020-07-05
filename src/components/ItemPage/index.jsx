@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown"
 import Button from "../styled/Button"
 import { useLocation } from "react-router-dom";
-import { ShoppingCartContext } from "../../ShoppingCartContext"
-import { UserContext } from "../../UserContext";
 import { getItemById, getItems } from "../../actions/items";
+import { ADD_ITEM_TO_SC } from "../../actions/types";
 
 const Wrapper = styled.div`
     display: flex;
@@ -106,8 +106,10 @@ const DropdownWrapper = styled.div`
 
 const ItemPage = () => {
     const user = useSelector((state) => state.user);
+    const shoppingCartItems = useSelector((state) => state.shoppingCart);
     const dispatch = useDispatch();
     const location = useLocation();
+    const history = useHistory();
     const [item, setItem] = useState(null);
     const [itemColors, setItemColors] = useState(null);
     const [itemSizes, setItemSizes] = useState(null);
@@ -115,7 +117,6 @@ const ItemPage = () => {
     const [mainImage, setMainImage] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
-    const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
 
     useEffect(() => {
         try {
@@ -123,11 +124,11 @@ const ItemPage = () => {
             getItemById(itemId).then(fetchedItem => {
                 setItem(fetchedItem);
                 setImages(fetchedItem.images);
+                setItemColors(fetchedItem.colors.split('/'));
+                setSelectedColor(fetchedItem.colors.split('/')[0]);
+                setItemSizes(fetchedItem.sizes.split('/'));
+                setSelectedSize(fetchedItem.sizes.split('/')[0]);
             })
-            setItemColors(item.colors.split('/'));
-            setItemSizes(item.sizes.split('/'));
-            setSelectedColor(item.colors.split('/')[0]);
-            setSelectedSize(item.sizes.split('/')[0]);
         } catch (e) {
             console.log("ItemPage UseEffect ERROR")
             console.log(e);
@@ -179,23 +180,17 @@ const ItemPage = () => {
     }
 
     const handleAddToCartClick = () => {
-        let itemExists = false;
-        // if shopping cart has item then increment quantity
-        shoppingCartItems.forEach(existingItem => {
-            if(item.id === existingItem.id && selectedColor === existingItem.color && selectedSize === existingItem.size){
-                existingItem.quantity++;
-                itemExists = true;
-            }
-        });
-        // if not, add new one
-        if(!itemExists){
-            shoppingCartItems.push({
-                ...item,
-                color: selectedColor,
-                quantity: "1",
-                size: selectedSize
-            });
-        }
+        console.log("Selected COLOR: " + selectedColor);
+        console.log("Selected size: " + selectedSize);
+        dispatch({ type: ADD_ITEM_TO_SC, 
+                   item: {
+                    ...item,
+                    color: selectedColor,
+                    quantity: "1",
+                    size: selectedSize
+                   }
+                });
+        history.push("/cart");
     }
 
     return(

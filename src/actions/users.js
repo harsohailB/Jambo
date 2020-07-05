@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from "./types";
+import { LOGIN_USER } from "./types";
 
 export const loginUser = (username, password) => {
     if(username === "admin" && password === "password"){

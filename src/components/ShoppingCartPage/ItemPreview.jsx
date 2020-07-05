@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ShoppingCartContext } from "../../ShoppingCartContext";
+import { useSelector, useDispatch } from "react-redux";
+import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
 
 const Wrapper = styled.div`
     display: flex;
@@ -94,25 +95,19 @@ const Button = styled.button`
 `;
 
 const ItemPreview = (props) => {
-    const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
+    const shoppingCartItems = useSelector((state) => state.shoppingCart);
+    const dispatch = useDispatch();
     const [item, setItem] = useState(props.item);
 
     const handleRemoveClick = () => {
-        shoppingCartItems.forEach(item => {
-            if(item.id === props.item.id){
-                shoppingCartItems.splice(shoppingCartItems.indexOf(item), 1);
-            }
-        });
+        dispatch({ type: REMOVE_ITEM_FROM_SC, item: item });
         props.calculateSubtotal();
+        window.location.reload(false); // TODO state is updated correctly, but wrong item component until refreshed, hence the reload
     }
 
     const handleQuantityChange = evt => {
-        shoppingCartItems.forEach(existingItem => {
-            if(existingItem.id === item.id && existingItem.color === item.color && existingItem.size === item.size){
-                setItem({...item, quantity: evt.target.value});
-                existingItem.quantity = evt.target.value;
-            }
-        });
+        setItem({...item, quantity: evt.target.value});
+        dispatch({ type: QUANTITY_CHANGE, item: item, newQuantity: evt.target.value });
         props.calculateSubtotal();
     }
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FaSearch, FaShoppingCart, FaDoorOpen } from 'react-icons/fa';
 import styled from "styled-components";
