@@ -10,7 +10,10 @@ const Wrapper = styled.div`
     justify-content: space-between;
     margin-left: 150px;
     margin-right: 150px;
+    max-width: 1500px;
+    width: 75%;
 `;
+
 
 const FilterWrapper = styled.div`
     display: flex;

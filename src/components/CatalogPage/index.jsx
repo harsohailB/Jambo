@@ -4,6 +4,13 @@ import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
 const Title = styled.h1`
     margin-top: 50px;
     font-family: Righteous,sans-serif;
@@ -24,6 +31,7 @@ const ItemsWrapper = styled.div`
     margin-left: 150px;
     margin-right: 150px;
     flex-grow: 5;
+    max-width: 1400px;
 `;
 
 const CatalogPage = () => {
@@ -47,13 +55,13 @@ const CatalogPage = () => {
         ));
     }
     return(
-        <div>
+        <Wrapper>
             <Title>Products</Title>
             <FilterBar productCount={items.length}/>
             <ItemsWrapper>
                 {renderItems()}
             </ItemsWrapper>
-        </div>
+        </Wrapper>
     );
 }
 
