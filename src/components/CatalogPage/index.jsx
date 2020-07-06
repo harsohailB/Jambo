@@ -39,7 +39,11 @@ const CatalogPage = () => {
 
     useEffect(() => {
         getItems().then(fetchedItems => {
-            setItems(fetchedItems);
+            if(fetchedItems.length > 1000000){
+                throw "Error loading page, items overflow";
+            }else{
+                setItems(fetchedItems);
+            }
         });
     }, []);
 
