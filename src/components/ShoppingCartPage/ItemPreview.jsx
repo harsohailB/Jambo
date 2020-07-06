@@ -2,14 +2,23 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
+import { Link } from "react-router-dom";
 
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     margin-top: 20px;
     marign-bottom: 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all .5s ease-in;
+    padding: 20px;
+
+    &: hover{
+        background-color: #D66E40;
+    }
 `;
 
 const ProductWrapper = styled.div`
@@ -21,6 +30,7 @@ const Image = styled.img`
     width: 95px;
     height: auto;
     margin-right: 20px;
+    border-radius: 5px;
 `;
 
 const ItemInfoWrapper = styled.div`
@@ -116,7 +126,7 @@ const ItemPreview = (props) => {
     }
 
     return(
-        <Wrapper>
+        <Wrapper to={"/catalog/" + item.id}>
             <ProductWrapper>
                 <Image src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.selectedImageName)}></Image>
                 <ItemInfoWrapper>
