@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import FilterBar from "./FilterBar";
 import Item from "./Item";
-import { csv } from "d3";
-import inventoryDataCSV from "../../assets/catalog/inventoryData.csv";
+import { getItems } from "../../actions/items";
 
 const Title = styled.h1`
     margin-top: 50px;
@@ -31,8 +30,8 @@ const CatalogPage = () => {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        csv(inventoryDataCSV).then(items => {
-            setItems(items);
+        getItems().then(fetchedItems => {
+            setItems(fetchedItems);
         });
     }, []);
 
@@ -47,7 +46,6 @@ const CatalogPage = () => {
             </Item>
         ));
     }
-
     return(
         <div>
             <Title>Products</Title>

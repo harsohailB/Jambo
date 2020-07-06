@@ -1,6 +1,20 @@
 ## React Overhaul for Jambo Apparel
 
-In the project directory, you can run:
+In the project directory, do the following to run the project:
+
+1. Start the back-end json server:
+
+```
+npx json-server --watch src/assets/catalog/inventoryData.json --port 3001
+```
+
+2. Start the front-end react website
+
+```
+npm start
+```
+
+## npm scripts:
 
 ### `npm start`
 
