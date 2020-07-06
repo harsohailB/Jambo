@@ -118,7 +118,7 @@ const ItemPreview = (props) => {
     return(
         <Wrapper>
             <ProductWrapper>
-                <Image src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")}></Image>
+                <Image src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.selectedImageName)}></Image>
                 <ItemInfoWrapper>
                     <ItemName>{item.name}</ItemName>
                     <ItemDetail>Color: {item.color}</ItemDetail>

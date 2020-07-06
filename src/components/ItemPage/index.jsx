@@ -128,6 +128,7 @@ const ItemPage = () => {
                 setSelectedColor(fetchedItem.colors.split('/')[0]);
                 setItemSizes(fetchedItem.sizes.split('/'));
                 setSelectedSize(fetchedItem.sizes.split('/')[0]);
+                setMainImage(fetchedItem.images[0]);
             })
         } catch (e) {
             console.log("ItemPage UseEffect ERROR")
@@ -185,6 +186,7 @@ const ItemPage = () => {
         dispatch({ type: ADD_ITEM_TO_SC, 
                    item: {
                     ...item,
+                    selectedImageName: mainImage.imageName,
                     color: selectedColor,
                     quantity: "1",
                     size: selectedSize
