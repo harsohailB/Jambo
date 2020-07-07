@@ -39,6 +39,7 @@ const CatalogPage = () => {
 
     useEffect(() => {
         getItems().then(fetchedItems => {
+            console.log(fetchedItems);
             if(fetchedItems.length > 1000000){
                 throw "Error loading page, items overflow";
             }else{
@@ -52,7 +53,7 @@ const CatalogPage = () => {
             <Item 
                 key={item.id} 
                 id={item.id}
-                path={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")} 
+                path={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.thumbnailImage.imageName)} 
                 name={item.name} 
                 price={item.price}>                   
             </Item>

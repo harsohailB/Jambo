@@ -128,7 +128,7 @@ const ItemPage = () => {
                 setSelectedColor(fetchedItem.colors.split('/')[0]);
                 setItemSizes(fetchedItem.sizes.split('/'));
                 setSelectedSize(fetchedItem.sizes.split('/')[0]);
-                setMainImage(fetchedItem.images[0]);
+                setMainImage(fetchedItem.thumbnailImage);
             })
         } catch (e) {
             console.log("ItemPage UseEffect ERROR")
@@ -153,7 +153,7 @@ const ItemPage = () => {
     const renderSmallImages = () => {
         return images.map(image => (
             <SmallImage 
-                src={require("../../assets/catalog/inventory/" + item.imageName + "/" + image.imageName)}
+                src={require("../../assets/catalog/inventory/" + item.folderName + "/" + image.imageName)}
                 onClick={() => setMainImage(image)}
             ></SmallImage>
         ));
@@ -181,8 +181,7 @@ const ItemPage = () => {
     }
 
     const handleAddToCartClick = () => {
-        console.log("Selected COLOR: " + selectedColor);
-        console.log("Selected size: " + selectedSize);
+        console.log(item);
         dispatch({ type: ADD_ITEM_TO_SC, 
                    item: {
                     ...item,
@@ -202,8 +201,8 @@ const ItemPage = () => {
                     <PreviewWrapper>
                         <MainImageWrapper>
                             {mainImage ? 
-                                <MainImage src={require("../../assets/catalog/inventory/" + item.imageName + "/" + mainImage.imageName)}></MainImage>
-                            :   <MainImage src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")}></MainImage>}
+                                <MainImage src={require("../../assets/catalog/inventory/" + item.folderName + "/" + mainImage.imageName)}></MainImage>
+                            :   <MainImage src={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.thumbnailImage.imageName)}></MainImage>}
                         </MainImageWrapper>
 
                         <SmallImageWrapper>
