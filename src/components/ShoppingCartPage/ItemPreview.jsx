@@ -132,6 +132,11 @@ const ItemPreview = (props) => {
     }
 
     const handleQuantityChange = evt => {
+        if(evt.target.value < 0){
+            evt.target.value = 0;
+        }else if(evt.target.value > 100){
+            evt.target.value = 100;
+        }
         setItem({...item, quantity: evt.target.value});
         dispatch({ type: QUANTITY_CHANGE, item: item, newQuantity: evt.target.value });
         props.calculateSubtotal();
