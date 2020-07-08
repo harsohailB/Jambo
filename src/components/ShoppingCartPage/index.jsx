@@ -5,6 +5,7 @@ import Button from "../styled/Button"
 import ItemPreview from "./ItemPreview"
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import currency from "currency.js";
 
 const Wrapper = styled.div`
     display: flex;
@@ -76,11 +77,11 @@ const ShoppingCartPage = () => {
     }
 
     const calculateSubtotal = () => {
-        let sum = 0; 
+        let sum = 0;
         shoppingCartItems.forEach(item => {
-            sum += parseFloat(item.price * item.quantity).toFixed(2);
+            sum += currency(item.price * item.quantity).value;
         });
-        setSubTotal(sum);
+        setSubTotal(sum.toFixed(2));
     }
 
     const renderCart = () => {
