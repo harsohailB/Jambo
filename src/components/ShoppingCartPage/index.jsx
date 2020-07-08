@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 `;
 
 const ItemsWrapper = styled.div`
@@ -21,19 +22,22 @@ const ItemsWrapper = styled.div`
     width: 70%;
 `;
 
-const Header = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+const TableWrapper = styled.table`
     width: 100%;
 `;
 
-const ColumnHeading = styled.h3`
+const TableHeading = styled.th`
     font-weight: 400;
     font-family: Righteous,sans-serif;
     font-style: normal;
+    font-size: 20px;
     color: #3d4246;
     line-height: 1.5;
+    text-align: left;
+`;
+
+const TableRow = styled.tr`
+    width: 100%;
 `;
 
 const Subtitle = styled.h1`
@@ -85,14 +89,17 @@ const ShoppingCartPage = () => {
 
     const renderCart = () => {
         return (
+            
             <ItemsWrapper>
-                <Header>
-                    <ColumnHeading>Product</ColumnHeading>
-                    <ColumnHeading>Price</ColumnHeading>
-                    <ColumnHeading>Quantity</ColumnHeading>
-                    <ColumnHeading>Total</ColumnHeading>
-                </Header>
-                {renderItems()}
+                <TableWrapper>
+                    <TableRow>
+                        <TableHeading>Product</TableHeading>
+                        <TableHeading>Price</TableHeading>
+                        <TableHeading>Quantity</TableHeading>
+                        <TableHeading>Total</TableHeading>
+                    </TableRow>
+                    {renderItems()}
+                </TableWrapper>
                 <Price>Subtotal ${subTotal}</Price>
                 <Subtitle>Taxes and shipping calculated at checkout</Subtitle>
                 <CheckoutButtonsWrapper>
