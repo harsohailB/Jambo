@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
 import { Link } from "react-router-dom";
+import { FaTrash } from 'react-icons/fa';
 
 const Wrapper = styled.div`
     display: flex;
@@ -62,6 +63,11 @@ const Price = styled.h3`
     margin: 0px;
 `;
 
+const QuantityWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
 const QuantityInput = styled.input`
     text-align: center;
     width: 60px;
@@ -101,6 +107,19 @@ const Button = styled.button`
     }
 `;
 
+const Icon = styled(Link)`
+    margin: 10px;
+    color: #3d4246;
+    cursor: pointer;
+    
+    & :hover {
+        color: red;
+    }
+    & > svg {
+        transition: color 0.1s linear;
+    }
+`;
+
 const ItemPreview = (props) => {
     const shoppingCartItems = useSelector((state) => state.shoppingCart);
     const dispatch = useDispatch();
@@ -130,11 +149,15 @@ const ItemPreview = (props) => {
                     <ItemName>{item.name}</ItemName>
                     <ItemDetail>Color: {item.color}</ItemDetail>
                     <ItemDetail>Size: {item.size}</ItemDetail>
-                    <Button onClick={handleRemoveClick}>REMOVE</Button>
                 </ItemInfoWrapper>
             </ProductWrapper>
             <Price>${item.price}</Price>
-            <QuantityInput class="quantityInput" value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
+            <QuantityWrapper>
+                <QuantityInput class="quantityInput" value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
+                <Icon onClick={handleRemoveClick}>
+                    <FaTrash size={18}/>
+                </Icon>
+            </QuantityWrapper>
             <Price>${calculateTotal()}</Price>
         </Wrapper>
     );

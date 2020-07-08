@@ -224,7 +224,7 @@ const ItemPage = () => {
                         {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
                     </InfoWrapper>
                 </Wrapper> : 
-                <Title>Loading</Title>}
+                <Title>Loading...</Title>}
         </div>
     );
 }
