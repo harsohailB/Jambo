@@ -4,7 +4,11 @@
       "id": 1,
       "name": "Bean",
       "price": 22.99,
-      "imageName": "bean",
+      "folderName": "bean",
+      "thumbnailImage": {
+          "imageName": "bean.jpg",
+          "color": "Forest Green"
+      },
       "colors": "Forest Green/Graphite Heather/Maroon/Deep Orange",
       "sizes": "One size",
       "description": "Don't brave the elements without the proper headwear. Good for winter spring or fall, customize this knit beanie for your chilly weather go-to cap! For every task that takes you outdoors stay comfortable, stylish, and warm!",
@@ -79,7 +83,11 @@
       "id": 2,
       "name": "Big Logo Tee",
       "price": 29.99,
-      "imageName": "big-logo-tee",
+      "folderName": "big-logo-tee",
+      "thumbnailImage": {
+        "imageName": "big-logo-tee.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -89,7 +97,11 @@
       "id": 3,
       "name": "Big Logo Tee",
       "price": 29.99,
-      "imageName": "big-logo-tee2",
+      "folderName": "big-logo-tee2",
+      "thumbnailImage": {
+        "imageName": "big-logo-tee2.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -99,7 +111,11 @@
       "id": 4,
       "name": "Classic Crew",
       "price": 35.99,
-      "imageName": "classic-crew",
+      "folderName": "classic-crew",
+      "thumbnailImage": {
+        "imageName": "classic-crew.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -109,7 +125,11 @@
       "id": 5,
       "name": "Classic Hoodie",
       "price": 39.99,
-      "imageName": "classic-hoodie",
+      "folderName": "classic-hoodie",
+      "thumbnailImage": {
+        "imageName": "classic-hoodie.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -119,7 +139,11 @@
       "id": 6,
       "name": "Classic Tee",
       "price": 27.99,
-      "imageName": "classic-tee",
+      "folderName": "classic-tee",
+      "thumbnailImage": {
+        "imageName": "classic-tee.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -129,7 +153,11 @@
       "id": 7,
       "name": "HumaniTee",
       "price": 27.99,
-      "imageName": "humani-tee",
+      "folderName": "humani-tee",
+      "thumbnailImage": {
+        "imageName": "humani-tee.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -139,7 +167,11 @@
       "id": 8,
       "name": "i protec: Loyalty",
       "price": 19.99,
-      "imageName": "loyalty-case",
+      "folderName": "loyalty-case",
+      "thumbnailImage": {
+        "imageName": "loyalty-case.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -149,7 +181,11 @@
       "id": 9,
       "name": "i protec: Tenacity",
       "price": 19.99,
-      "imageName": "tenacity-case",
+      "folderName": "tenacity-case",
+      "thumbnailImage": {
+        "imageName": "tenacity-case.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -159,7 +195,11 @@
       "id": 10,
       "name": "LEGACY Long Sleeve",
       "price": 35.99,
-      "imageName": "legacy-sleeve",
+      "folderName": "legacy-sleeve",
+      "thumbnailImage": {
+        "imageName": "legacy-sleeve.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -169,7 +209,11 @@
       "id": 11,
       "name": "LoyalTee",
       "price": 29.99,
-      "imageName": "loyal-tee",
+      "folderName": "loyal-tee",
+      "thumbnailImage": {
+        "imageName": "loyal-tee.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -179,7 +223,11 @@
       "id": 12,
       "name": "LoyalTee",
       "price": 27.99,
-      "imageName": "loyal-tee2",
+      "folderName": "loyal-tee2",
+      "thumbnailImage": {
+        "imageName": "loyal-tee2.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -189,7 +237,11 @@
       "id": 13,
       "name": "TenaciTee",
       "price": 27.99,
-      "imageName": "tenaci-tee",
+      "folderName": "tenaci-tee",
+      "thumbnailImage": {
+        "imageName": "tenaci-tee.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -199,7 +251,11 @@
       "id": 14,
       "name": "TenaciTee Hoodie",
       "price": 39.99,
-      "imageName": "tenaci-hoodie",
+      "folderName": "tenaci-hoodie",
+      "thumbnailImage": {
+        "imageName": "tenaci-hoodie.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",
@@ -209,7 +265,11 @@
       "id": 15,
       "name": "UniTee",
       "price": 27.99,
-      "imageName": "uni-tee",
+      "folderName": "uni-tee",
+      "thumbnailImage": {
+        "imageName": "uni-tee.jpg",
+        "color": "None"
+      },
       "colors": "",
       "sizes": "",
       "description": "",

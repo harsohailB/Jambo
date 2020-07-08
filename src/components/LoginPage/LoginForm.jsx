@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../../UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../../actions/users";
+import Title from "../styled/Title";
 
 const Wrapper = styled.div`
     display: flex;
@@ -64,18 +66,20 @@ const Error = styled.label`
 
 const LoginForm = () => {
     const history = useHistory();
-    const [user, setUser] = useContext(UserContext);
+    const dispath = useDispatch();
+    const user = useSelector((state) => state.user);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [hasErrors, setHasErrors] = useState(false);
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        if(username === "admin" && password === "password"){
-            setUser(true);
+        try{
+            dispath(loginUser(username, password));
             history.push("/");
-        }else{
+        }catch(error){
             setHasErrors(true);
+            console.log(error)
         }
     };
 
@@ -89,29 +93,31 @@ const LoginForm = () => {
 
     return(
         <Wrapper>
-            <Form onSubmit={handleFormSubmit}>
-                <Input
-                    hasError={false}
-                    label="Username"
-                    handleInputChange={setUsername}
-                    onChange={handleUsernameChange}
-                    value={username}
-                    placeholder="Username"
-                    autocomplete="username"
-                />
-                <Input
-                    hasError={false}
-                    label="Password"
-                    handleInputChange={setPassword}
-                    onChange={handlePasswordChange}
-                    value={password}
-                    placeholder="Password"
-                    type="password"
-                    autocomplete="new-password"
-                />
-                {hasErrors && <Error>Please enter valid credentials!</Error>}
-                <Button>LOGIN</Button>
-            </Form>
+            {!user ?
+                <Form onSubmit={handleFormSubmit}>
+                    <Input
+                        hasError={false}
+                        label="Username"
+                        handleInputChange={setUsername}
+                        onChange={handleUsernameChange}
+                        value={username}
+                        placeholder="Username"
+                        autocomplete="username"
+                    />
+                    <Input
+                        hasError={false}
+                        label="Password"
+                        handleInputChange={setPassword}
+                        onChange={handlePasswordChange}
+                        value={password}
+                        placeholder="Password"
+                        type="password"
+                        autocomplete="new-password"
+                    />
+                    {hasErrors && <Error>Please enter valid credentials!</Error>}
+                    <Button>LOGIN</Button>
+                </Form>
+            : <Title>You are already logged in!</Title>}
         </Wrapper>
     );
 }
