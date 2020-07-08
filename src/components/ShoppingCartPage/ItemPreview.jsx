@@ -4,26 +4,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
 import { Link } from "react-router-dom";
 
-const Wrapper = styled(Link)`
+const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     margin-top: 20px;
     marign-bottom: 20px;
-    text-decoration: none;
-    border-radius: 10px;
-    transition: all .5s ease-in;
-    padding: 20px;
-
-    &: hover{
-        background-color: #D66E40;
-    }
 `;
 
-const ProductWrapper = styled.div`
+const ProductWrapper = styled(Link)`
     display: flex;
     flex-direction: row;
+    text-decoration: none;
+    transition: all .3s ease-in;
+    &: hover{
+        opacity: 80%;
+    }
 `;
 
 const Image = styled.img`
@@ -126,8 +123,8 @@ const ItemPreview = (props) => {
     }
 
     return(
-        <Wrapper to={"/catalog/" + item.id}>
-            <ProductWrapper>
+        <Wrapper>
+            <ProductWrapper to={"/catalog/" + item.id}>
                 <Image src={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.selectedImageName)}></Image>
                 <ItemInfoWrapper>
                     <ItemName>{item.name}</ItemName>
@@ -137,7 +134,7 @@ const ItemPreview = (props) => {
                 </ItemInfoWrapper>
             </ProductWrapper>
             <Price>${item.price}</Price>
-            <QuantityInput value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
+            <QuantityInput class="quantityInput" value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
             <Price>${calculateTotal()}</Price>
         </Wrapper>
     );

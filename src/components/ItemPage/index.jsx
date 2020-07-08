@@ -7,6 +7,7 @@ import Button from "../styled/Button"
 import { useLocation } from "react-router-dom";
 import { getItemById, getItems } from "../../actions/items";
 import { ADD_ITEM_TO_SC } from "../../actions/types";
+import Title from "../styled/Title";
 
 const Wrapper = styled.div`
     display: flex;
@@ -223,7 +224,7 @@ const ItemPage = () => {
                         {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
                     </InfoWrapper>
                 </Wrapper> : 
-                <h3>Loading</h3>}
+                <Title>Loading</Title>}
         </div>
     );
 }
