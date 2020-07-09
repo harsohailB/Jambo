@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { FaDotCircle } from 'react-icons/fa';
+import { FaCircle } from 'react-icons/fa';
+import { AnimateOnChange, animations } from 'react-animation';
 
-import elephant from "../../assets/african-elephants.jpg"
-import deer from "../../assets/deer-wildlife.jpg"
-import cheetah from "../../assets/cheetah.jpg"
+import fox from "../../assets/fox.jpg"
+import bison from "../../assets/bison.jpg"
+import dogCat from "../../assets/dogcat.jpg"
 
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
+    width: 100%;
 `;
 
 const ContentWrapper = styled.div`
@@ -28,20 +29,15 @@ const ContentWrapper = styled.div`
 const Image = styled.img`
     margin-top: 100px;
     width: 100%;
-    max-height: 500px;
-    -webkit-animation: fadein 2s; 
-
-    @-webkit-keyframes fadein {
-        from { opacity: 0; }
-        to   { opacity: 1; }
-    }
+    height: 475px;
+    object-fit: cover;
 `;
 
 const Title = styled.h1`
     font-style: normal;
     font-weight: 400;
     line-height: 1.2;
-    color: black;
+    color: white;
     font-family: Righteous,sans-serif;
     margin-top: 300px;
     margin-bottom: 200px;
@@ -66,33 +62,38 @@ const Dot = styled.div`
 `;
 
 const Slideshow = () => {
-    const slideshowImages = [elephant, cheetah, deer];
+    const slideshowImages = [fox, bison, dogCat];
     const slideshowTitles = ["ASANTE SANA", "THANK YOU", "ILI KUENDELEA"]
+    const [index, setIndex] = useState(0);
     const [slideshowImage, setSlideshowImage] = useState(slideshowImages[0]);
     const [slideshowTitle, setSlideshowTitle] = useState(slideshowTitles[0]);
 
-    const handleSlideshowChange = page => {
-        setSlideshowImage(slideshowImages[page]);
-        setSlideshowTitle(slideshowTitles[page]);
+    const handleSlideshowChange = index => {
+        setSlideshowImage(slideshowImages[index]);
+        setSlideshowTitle(slideshowTitles[index]);
     }
 
     return(
         <Wrapper>
             <ContentWrapper>
-                <Title>{slideshowTitle}</Title>
+                <AnimateOnChange durationOut = "400">
+                    <Title>{slideshowTitle}</Title>
+                </AnimateOnChange>
                 <DotsWrapper>
                     <Dot onClick={() => handleSlideshowChange(0)}>
-                        <FaDotCircle/>
+                        <FaCircle/>
                     </Dot>
                     <Dot onClick={() => handleSlideshowChange(1)}>
-                        <FaDotCircle/>
+                        <FaCircle/>
                     </Dot>
                     <Dot onClick={() => handleSlideshowChange(2)}>
-                        <FaDotCircle/>
+                        <FaCircle/>
                     </Dot>
                 </DotsWrapper>
             </ContentWrapper>
-            <Image src={slideshowImage}></Image>
+            <AnimateOnChange durationOut = "400">
+                <Image src={slideshowImage}></Image>
+            </AnimateOnChange>
         </Wrapper>
     );
 }
