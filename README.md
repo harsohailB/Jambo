@@ -11,7 +11,7 @@ npm i
 1. Start the back-end json server:
 
 ```
-npx json-server --watch src/assets/catalog/inventoryData.json --port 3001
+node server.js
 ```
 
 2. Start the front-end react website
