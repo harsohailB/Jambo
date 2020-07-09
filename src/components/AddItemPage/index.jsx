@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { UserContext } from "../../UserContext";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import NewItemForm from "./NewItemForm";
 import Title from "../styled/Title";
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `;
 
 const AddItemPage = () => {
-    const [user, setUser] = useContext(UserContext);
+    const user = useSelector((state) => state.user);
 
     return(
         <Wrapper>

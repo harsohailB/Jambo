@@ -1,6 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ShoppingCartContext } from "../../ShoppingCartContext";
+import { useSelector, useDispatch } from "react-redux";
+import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
+import { Link } from "react-router-dom";
+import { FaTrash } from 'react-icons/fa';
 
 const Wrapper = styled.div`
     display: flex;
@@ -11,15 +14,21 @@ const Wrapper = styled.div`
     marign-bottom: 20px;
 `;
 
-const ProductWrapper = styled.div`
+const ProductWrapper = styled(Link)`
     display: flex;
     flex-direction: row;
+    text-decoration: none;
+    transition: all .3s ease-in;
+    &: hover{
+        opacity: 80%;
+    }
 `;
 
 const Image = styled.img`
     width: 95px;
     height: auto;
     margin-right: 20px;
+    border-radius: 5px;
 `;
 
 const ItemInfoWrapper = styled.div`
@@ -52,6 +61,11 @@ const Price = styled.h3`
     font-weight: 400;
     color: #3d4246;
     margin: 0px;
+`;
+
+const QuantityWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 
 const QuantityInput = styled.input`
@@ -93,26 +107,38 @@ const Button = styled.button`
     }
 `;
 
+const Icon = styled(Link)`
+    margin: 10px;
+    color: #3d4246;
+    cursor: pointer;
+    
+    & :hover {
+        color: red;
+    }
+    & > svg {
+        transition: color 0.1s linear;
+    }
+`;
+
 const ItemPreview = (props) => {
-    const [shoppingCartItems, setShoppingCartItems] = useContext(ShoppingCartContext);
+    const shoppingCartItems = useSelector((state) => state.shoppingCart);
+    const dispatch = useDispatch();
     const [item, setItem] = useState(props.item);
 
     const handleRemoveClick = () => {
-        shoppingCartItems.forEach(item => {
-            if(item.id === props.item.id){
-                shoppingCartItems.splice(shoppingCartItems.indexOf(item), 1);
-            }
-        });
+        dispatch({ type: REMOVE_ITEM_FROM_SC, item: item });
         props.calculateSubtotal();
+        window.location.reload(false); // TODO state is updated correctly, but wrong item component until refreshed, hence the reload
     }
 
     const handleQuantityChange = evt => {
-        shoppingCartItems.forEach(existingItem => {
-            if(existingItem.id === item.id && existingItem.color === item.color && existingItem.size === item.size){
-                setItem({...item, quantity: evt.target.value});
-                existingItem.quantity = evt.target.value;
-            }
-        });
+        if(evt.target.value < 0){
+            evt.target.value = 0;
+        }else if(evt.target.value > 100){
+            evt.target.value = 100;
+        }
+        setItem({...item, quantity: evt.target.value});
+        dispatch({ type: QUANTITY_CHANGE, item: item, newQuantity: evt.target.value });
         props.calculateSubtotal();
     }
 
@@ -122,17 +148,21 @@ const ItemPreview = (props) => {
 
     return(
         <Wrapper>
-            <ProductWrapper>
-                <Image src={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")}></Image>
+            <ProductWrapper to={"/catalog/" + item.id}>
+                <Image src={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.selectedImageName)}></Image>
                 <ItemInfoWrapper>
                     <ItemName>{item.name}</ItemName>
                     <ItemDetail>Color: {item.color}</ItemDetail>
                     <ItemDetail>Size: {item.size}</ItemDetail>
-                    <Button onClick={handleRemoveClick}>REMOVE</Button>
                 </ItemInfoWrapper>
             </ProductWrapper>
             <Price>${item.price}</Price>
-            <QuantityInput value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
+            <QuantityWrapper>
+                <QuantityInput class="quantityInput" value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
+                <Icon onClick={handleRemoveClick}>
+                    <FaTrash size={18}/>
+                </Icon>
+            </QuantityWrapper>
             <Price>${calculateTotal()}</Price>
         </Wrapper>
     );

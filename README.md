@@ -2,6 +2,12 @@
 
 In the project directory, do the following to run the project:
 
+1. Install npm packages:
+
+```
+npm i
+```
+
 1. Start the back-end json server:
 
 ```

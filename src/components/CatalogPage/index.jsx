@@ -4,6 +4,13 @@ import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
 const Title = styled.h1`
     margin-top: 50px;
     font-family: Righteous,sans-serif;
@@ -24,6 +31,7 @@ const ItemsWrapper = styled.div`
     margin-left: 150px;
     margin-right: 150px;
     flex-grow: 5;
+    max-width: 1400px;
 `;
 
 const CatalogPage = () => {
@@ -31,7 +39,12 @@ const CatalogPage = () => {
 
     useEffect(() => {
         getItems().then(fetchedItems => {
-            setItems(fetchedItems);
+            console.log(fetchedItems);
+            if(fetchedItems.length > 1000000){
+                throw "Error loading page, items overflow";
+            }else{
+                setItems(fetchedItems);
+            }
         });
     }, []);
 
@@ -40,20 +53,20 @@ const CatalogPage = () => {
             <Item 
                 key={item.id} 
                 id={item.id}
-                path={require("../../assets/catalog/inventory/" + item.imageName + "/" + item.imageName + ".jpg")} 
+                path={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.thumbnailImage.imageName)} 
                 name={item.name} 
                 price={item.price}>                   
             </Item>
         ));
     }
     return(
-        <div>
+        <Wrapper>
             <Title>Products</Title>
             <FilterBar productCount={items.length}/>
             <ItemsWrapper>
                 {renderItems()}
             </ItemsWrapper>
-        </div>
+        </Wrapper>
     );
 }
 
