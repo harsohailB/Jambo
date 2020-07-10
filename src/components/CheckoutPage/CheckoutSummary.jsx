@@ -5,7 +5,7 @@ import CheckoutItemPreview from "./CheckoutItemPreview";
 import currency from "currency.js";
 import { useEffect } from "react";
 import InputBox from "./InputBox";
-import Button from "../styled/Button";
+import Button from "./Button";
 
 const Wrapper = styled.div`
   background-color: #fafafa;

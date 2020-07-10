@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import InputBox from "./InputBox";
 import { useState } from "react";
 import { FaSquare, FaCheckSquare } from "react-icons/fa";
-import Button from "../styled/Button";
+import Button from "./Button";
 
 const Wrapper = styled.div`
   display: flex;
@@ -97,6 +97,7 @@ const ConfirmationWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  height: 50px;
 `;
 
 const CheckoutForm = () => {
