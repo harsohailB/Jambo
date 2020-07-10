@@ -77,7 +77,7 @@ const Title = styled.h2`
   margin-top: 10px;
 `;
 
-const AutoSummarizeMessage = styled.span`
+const OffersMessage = styled.span`
   cursor: pointer;
   font-family: "Raleway", sans-serif;
   font-size: 14px;
@@ -86,7 +86,7 @@ const AutoSummarizeMessage = styled.span`
 
 const Icon = styled.span`
   margin-right: 10px;
-  color: grey;
+  color: orange;
 `;
 
 const InputWrapper = styled.div`
@@ -125,12 +125,12 @@ const CheckoutForm = () => {
           <Title>Contact Information</Title>
           <InputBox placeholder="Email or mobile phone number"></InputBox>
           <div>
-            <AutoSummarizeMessage>
+            <OffersMessage>
               <Icon onClick={handleCheckClick}>
                 {check ? <FaCheckSquare size={18} /> : <FaSquare size={18} />}
               </Icon>
               Keep me up to date on news and exclusive offers
-            </AutoSummarizeMessage>
+            </OffersMessage>
           </div>
 
           <Title>Shipping Address</Title>

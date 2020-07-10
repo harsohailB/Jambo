@@ -33,6 +33,7 @@ const Title = styled.th`
   white-space: normal;
   font-size: 16px;
   text-align: left;
+  margin-left: 10px;
 `;
 
 const Value = styled.tr`
@@ -55,6 +56,13 @@ const TotalPrice = styled.h3`
   white-space: normal;
   font-size: 20px;
   margin-top: 0;
+`;
+
+const PageLabel = styled.p`
+  font-family: "Raleway", sans-serif;
+  font-size: 12px;
+  color: black;
+  margin-top: 2px;
 `;
 
 const RowWrapper = styled.div`
@@ -103,7 +111,7 @@ const CheckoutSummary = () => {
         </RowWrapper>
         <RowWrapper>
           <Title>Shipping</Title>
-          <Value>Calculated at next step</Value>
+          <PageLabel>Calculated at next step</PageLabel>
         </RowWrapper>
         <BreakLine />
         <RowWrapper>
