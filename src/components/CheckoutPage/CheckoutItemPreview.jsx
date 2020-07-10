@@ -2,18 +2,13 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import currency from "currency.js";
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 const ProductWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-grow: 2;
+  justify-content: space-between;
   margin: 5px;
   width: 100%;
-  flex-grow: 3;
-  justify-content: space-between;
 `;
 
 const ProductInfoWrapper = styled.div`
@@ -21,22 +16,7 @@ const ProductInfoWrapper = styled.div`
   flex-direction: column;
   margin-left: 10px;
   margin-top: 10px;
-  width: 50%;
-`;
-
-const Quantity = styled.div`
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: orange;
-  float: left;
-  z-index: 1000;
-  font-size: 12px;
-  font-family: "Raleway", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  text-align: center;
-  margin-top: 10px;
+  width: 75%;
 `;
 
 const Image = styled.img`
@@ -56,7 +36,21 @@ const Name = styled.span`
   font-size: 14px;
 `;
 
-const Price = styled.span`
+const Quantity = styled.div`
+  width: 15px;
+  height: 15px;
+  background-color: orange;
+  border-radius: 50%;
+  margin: 0;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+`;
+
+const Price = styled.div`
+  width: 50%;
+  text-align: right;
   color: #323232;
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -74,30 +68,27 @@ const Description = styled.span`
   font-weight: 400;
   color: #838b92;
   line-height: 1.5;
-  text-align: center;
-  margin-bottom: 25px;
+  text-align: left;
 `;
 
 const CheckoutItemPreview = (props) => {
   return (
-    <Wrapper>
-      <ProductWrapper>
-        <Image
-          src={require("../../assets/catalog/inventory/" +
-            props.item.folderName +
-            "/" +
-            props.item.selectedImageName)}
-        />
-        <ProductInfoWrapper>
-          <Name>{props.item.name}</Name>
-          <Description>
-            {props.item.color}/{props.item.size}
-          </Description>
-        </ProductInfoWrapper>
+    <ProductWrapper>
+      <Image
+        src={require("../../assets/catalog/inventory/" +
+          props.item.folderName +
+          "/" +
+          props.item.selectedImageName)}
+      />
+      <ProductInfoWrapper>
+        <Name>{props.item.name}</Name>
+        <Description>
+          {props.item.color}/{props.item.size}
+        </Description>
         <Quantity>{props.item.quantity}</Quantity>
-        <Price>${currency(props.item.price * props.item.quantity).value}</Price>
-      </ProductWrapper>
-    </Wrapper>
+      </ProductInfoWrapper>
+      <Price>${currency(props.item.price * props.item.quantity).value}</Price>
+    </ProductWrapper>
   );
 };
 
