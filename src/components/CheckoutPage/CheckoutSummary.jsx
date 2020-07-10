@@ -4,22 +4,24 @@ import { useSelector } from "react-redux";
 import CheckoutItemPreview from "./CheckoutItemPreview";
 import currency from "currency.js";
 import { useEffect } from "react";
+import InputBox from "./InputBox";
+import Button from "../styled/Button";
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   background-color: #fafafa;
   width: 40%;
 `;
 
-const BreakLine = styled.br``;
-
-const TableWrapper = styled.table`
-  margin-left: 10px;
+const NestedWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 `;
 
-const TableRow = styled.tr`
-  text-align: right;
+const BreakLine = styled.hr`
+  border: 1px solid black;
+  width: 100%;
+  margin-left: 10px;
 `;
 
 const Title = styled.th`
@@ -35,13 +37,30 @@ const Title = styled.th`
 
 const Value = styled.tr`
   color: #323232;
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.08em;
   white-space: normal;
   font-size: 16px;
   text-align: right;
+`;
+
+const TotalPrice = styled.h3`
+  color: #323232;
+  font-family: "Roboto", sans-serif;
+  font-style: bold;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: normal;
+  font-size: 20px;
+  margin-top: 0;
+`;
+
+const RowWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 const CheckoutSummary = () => {
@@ -53,36 +72,45 @@ const CheckoutSummary = () => {
     shoppingCartItems.forEach((item) => {
       sum += currency(item.price * item.quantity).value;
     });
-    setSubtotal(sum);
+    setSubtotal(sum.toFixed(2));
   }, [shoppingCartItems]);
 
   const renderItems = () => {
-    return shoppingCartItems.map((item) => <CheckoutItemPreview item={item} />);
+    return shoppingCartItems.map((item) => (
+      <RowWrapper>
+        <CheckoutItemPreview item={item} />
+      </RowWrapper>
+    ));
   };
 
   return (
     <Wrapper>
-      <TableWrapper>{renderItems()}</TableWrapper>
-      <BreakLine />
-      <h3>Discount Code Section</h3>
-      <BreakLine />
-      <TableWrapper>
-        <TableRow>
+      <NestedWrapper>
+        {renderItems()}
+
+        <BreakLine />
+
+        <RowWrapper>
+          <InputBox placeholder="Discount Code" />
+          <Button>Apply</Button>
+        </RowWrapper>
+
+        <BreakLine />
+
+        <RowWrapper>
           <Title>Subtotal</Title>
           <Value>${subTotal}</Value>
-        </TableRow>
-        <TableRow>
+        </RowWrapper>
+        <RowWrapper>
           <Title>Shipping</Title>
           <Value>Calculated at next step</Value>
-        </TableRow>
-      </TableWrapper>
-      <BreakLine />
-      <TableWrapper>
-        <TableRow>
+        </RowWrapper>
+        <BreakLine />
+        <RowWrapper>
           <Title>Total</Title>
-          <Value>CAD ${subTotal}</Value>
-        </TableRow>
-      </TableWrapper>
+          <TotalPrice>CAD ${subTotal}</TotalPrice>
+        </RowWrapper>
+      </NestedWrapper>
     </Wrapper>
   );
 };

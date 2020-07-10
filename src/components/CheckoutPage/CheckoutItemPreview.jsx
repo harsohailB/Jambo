@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import CheckoutSummary from "./CheckoutSummary";
-import CheckoutForm from "./CheckoutForm";
+import currency from "currency.js";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,6 +11,9 @@ const ProductWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin: 5px;
+  width: 100%;
+  flex-grow: 3;
+  justify-content: space-between;
 `;
 
 const ProductInfoWrapper = styled.div`
@@ -19,6 +21,7 @@ const ProductInfoWrapper = styled.div`
   flex-direction: column;
   margin-left: 10px;
   margin-top: 10px;
+  width: 50%;
 `;
 
 const Quantity = styled.div`
@@ -33,7 +36,6 @@ const Quantity = styled.div`
   font-style: normal;
   font-weight: 600;
   text-align: center;
-  margin-left: 100px;
   margin-top: 10px;
 `;
 
@@ -56,13 +58,12 @@ const Name = styled.span`
 
 const Price = styled.span`
   color: #323232;
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.08em;
   white-space: normal;
   font-size: 14px;
-  margin-left: 100px;
   margin-top: 10px;
 `;
 
@@ -94,7 +95,7 @@ const CheckoutItemPreview = (props) => {
           </Description>
         </ProductInfoWrapper>
         <Quantity>{props.item.quantity}</Quantity>
-        <Price>${props.item.price}</Price>
+        <Price>${currency(props.item.price * props.item.quantity).value}</Price>
       </ProductWrapper>
     </Wrapper>
   );

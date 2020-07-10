@@ -6,6 +6,14 @@ import CheckoutForm from "./CheckoutForm";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NestedWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  max-width: 90%;
 `;
 
 const CheckoutPage = () => {

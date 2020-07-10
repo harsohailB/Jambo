@@ -4,16 +4,19 @@ import { Link } from "react-router-dom";
 import InputBox from "./InputBox";
 import { useState } from "react";
 import { FaSquare, FaCheckSquare } from "react-icons/fa";
+import Button from "../styled/Button";
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   width: 60%;
 `;
 
 const NestedWrapper = styled.div`
-  width: 80%;
-  margin-left: 10%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5%;
 `;
 
 const SiteTitle = styled(Link)`
@@ -86,8 +89,14 @@ const Icon = styled.span`
   color: grey;
 `;
 
-const InputNameWrapper = styled.div`
+const InputWrapper = styled.div`
   display: flex;
+`;
+
+const ConfirmationWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 const CheckoutForm = () => {
@@ -124,13 +133,26 @@ const CheckoutForm = () => {
           </div>
 
           <Title>Shipping Address</Title>
-          <InputNameWrapper>
+          <InputWrapper>
             <InputBox placeholder="First Name (optional)" />
             <InputBox placeholder="Last name" />
-          </InputNameWrapper>
+          </InputWrapper>
           <InputBox placeholder="Address" />
           <InputBox placeholder="Apartment, suite, etc. (optional)" />
           <InputBox placeholder="City" />
+          <InputWrapper>
+            <InputBox placeholder="Country/Region" />
+            <InputBox placeholder="Province" />
+            <InputBox placeholder="Postal Code" />
+          </InputWrapper>
+
+          <ConfirmationWrapper>
+            <PagePipeline>
+              <Arrow>{"<"}</Arrow>
+              <PageReference to="/cart">{"Return to cart"}</PageReference>
+            </PagePipeline>
+            <Button>Continue to Shipping</Button>
+          </ConfirmationWrapper>
         </FormWrapper>
       </NestedWrapper>
     </Wrapper>
