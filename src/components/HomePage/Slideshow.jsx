@@ -80,6 +80,7 @@ const Slideshow = () => {
         <Wrapper>
             <ContentWrapper>
                 <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "600">
+                <AnimateOnChange durationOut = "400">
                     <Title>{slideshowTitle}</Title>
                 </AnimateOnChange>
                 <DotsWrapper>

@@ -1,3 +1,5 @@
+![](src/assets/logo.png)
+
 ## React Overhaul for Jambo Apparel
 
 In the project directory, do the following to run the project:
