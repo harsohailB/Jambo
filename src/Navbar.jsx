@@ -111,6 +111,14 @@ const Navbar = () => {
     history.push("/");
   };
 
+  const getCartItemCount = () => {
+    let count = 0;
+    shoppingCartItems.forEach((item) => {
+      count += +item.quantity;
+    });
+    return count;
+  };
+
   return (
     <NavbarWrapper>
       <LogoWrapper to="/">
@@ -134,7 +142,7 @@ const Navbar = () => {
         <Icon to="/cart">
           <FaShoppingCart size={24} />
           {shoppingCartItems.length !== 0 && (
-            <CartCounter>{shoppingCartItems.length}</CartCounter>
+            <CartCounter>{getCartItemCount()}</CartCounter>
           )}
         </Icon>
         {user && (
