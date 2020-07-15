@@ -5,13 +5,8 @@ import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
 import { Link } from "react-router-dom";
 import { FaTrash } from 'react-icons/fa';
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+const TableRow = styled.tr`
     width: 100%;
-    margin-top: 20px;
-    marign-bottom: 20px;
 `;
 
 const ProductWrapper = styled(Link)`
@@ -147,24 +142,32 @@ const ItemPreview = (props) => {
     }
 
     return(
-        <Wrapper>
-            <ProductWrapper to={"/catalog/" + item.id}>
-                <Image src={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.selectedImageName)}></Image>
-                <ItemInfoWrapper>
-                    <ItemName>{item.name}</ItemName>
-                    <ItemDetail>Color: {item.color}</ItemDetail>
-                    <ItemDetail>Size: {item.size}</ItemDetail>
-                </ItemInfoWrapper>
-            </ProductWrapper>
-            <Price>${item.price}</Price>
-            <QuantityWrapper>
-                <QuantityInput class="quantityInput" value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
-                <Icon onClick={handleRemoveClick}>
-                    <FaTrash size={18}/>
-                </Icon>
-            </QuantityWrapper>
-            <Price>${calculateTotal()}</Price>
-        </Wrapper>
+        <TableRow>
+            <td>
+                <ProductWrapper to={"/catalog/" + item.id}>
+                    <Image src={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.selectedImageName)}></Image>
+                    <ItemInfoWrapper>
+                        <ItemName>{item.name}</ItemName>
+                        <ItemDetail>Color: {item.color}</ItemDetail>
+                        <ItemDetail>Size: {item.size}</ItemDetail>
+                    </ItemInfoWrapper>
+                </ProductWrapper>
+            </td>
+            <td>
+                <Price>${item.price}</Price>
+            </td>
+            <td>
+                <QuantityWrapper>
+                    <QuantityInput class="quantityInput" value={item.quantity} type="number" pattern="[0-9]" min="1" onChange={handleQuantityChange}></QuantityInput>
+                    <Icon onClick={handleRemoveClick}>
+                        <FaTrash size={18}/>
+                    </Icon>
+                </QuantityWrapper>
+            </td>
+            <td>
+                <Price>${calculateTotal()}</Price>
+            </td>
+        </TableRow>
     );
 }
 
