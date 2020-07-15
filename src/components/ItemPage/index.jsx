@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { getItemById, getItems } from "../../actions/items";
 import { ADD_ITEM_TO_SC } from "../../actions/types";
 import Title from "../styled/Title";
+import { Facebook, Twitter } from 'react-sharingbuttons'
 
 const Wrapper = styled.div`
     display: flex;
@@ -98,6 +99,7 @@ const Description = styled.h3`
     margin-top: 25px;
 `;
 
+
 const DropdownWrapper = styled.div`
     display: flex;
     flex-grow: 2;
@@ -118,6 +120,9 @@ const ItemPage = () => {
     const [mainImage, setMainImage] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
+    const shareText = 'Check this site!'
+    //const url = window.location.href
+    const url = 'www.jamboapparel.com'
 
     useEffect(() => {
         try {
@@ -150,6 +155,13 @@ const ItemPage = () => {
             <option>{size}</option>
         ));
     };
+
+    const mystyle = {
+        color: "white",
+        backgroundColor: "DodgerBlue",
+        padding: "10px",
+        fontFamily: "Arial"
+      };
 
     const renderSmallImages = () => {
         return images.map(image => (
@@ -222,6 +234,9 @@ const ItemPage = () => {
                         <Description>{item.description}</Description>
                         {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
                         {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
+                        <Facebook url={url} style={mystyle}></Facebook>
+                        <h1></h1>
+                        <Twitter url={url} shareText={shareText}/>
                     </InfoWrapper>
                 </Wrapper> : 
                 <Title>Loading...</Title>}
