@@ -66,6 +66,20 @@ const Icon = styled(Link)`
   }
 `;
 
+const CartCounter = styled.div`
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: orange;
+  float: left;
+  z-index: 1000;
+  font-size: 12px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  text-align: center;
+`;
+
 const SearchBar = styled.input`
   border: 1px solid rgba(61, 66, 70, 0.85);
   background-color: #fff;
@@ -82,6 +96,7 @@ const SearchBar = styled.input`
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
+  const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const dispatch = useDispatch();
   const history = useHistory();
   const [searchClicked, setSearchClicked] = useState(false);
@@ -94,6 +109,14 @@ const Navbar = () => {
     e.preventDefault();
     dispatch({ type: LOGOUT_USER });
     history.push("/");
+  };
+
+  const getCartItemCount = () => {
+    let count = 0;
+    shoppingCartItems.forEach((item) => {
+      count += +item.quantity;
+    });
+    return count;
   };
 
   return (
@@ -118,6 +141,9 @@ const Navbar = () => {
         </Icon>
         <Icon to="/cart">
           <FaShoppingCart size={24} />
+          {shoppingCartItems.length !== 0 && (
+            <CartCounter>{getCartItemCount()}</CartCounter>
+          )}
         </Icon>
         {user && (
           <Icon onClick={handleLogout}>
