@@ -1,13 +1,13 @@
-{  
-  "items":[
+{
+  "items": [
     {
       "id": 1,
       "name": "Bean",
       "price": 22.99,
       "folderName": "bean",
       "thumbnailImage": {
-          "imageName": "bean.jpg",
-          "color": "Forest Green"
+        "imageName": "bean.jpg",
+        "color": "Forest Green"
       },
       "colors": "Forest Green/Graphite Heather/Maroon/Deep Orange",
       "sizes": "One size",
@@ -91,7 +91,7 @@
       "colors": "",
       "sizes": "",
       "description": "",
-      "images":[]
+      "images": []
     },
     {
       "id": 3,
