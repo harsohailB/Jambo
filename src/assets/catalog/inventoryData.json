@@ -274,20 +274,6 @@
       "sizes": "",
       "description": "",
       "images": []
-    },
-    {
-      "id": 16,
-      "name": "Test Item",
-      "price": 27.99,
-      "folderName": "test",
-      "thumbnailImage": {
-        "imageName": "adult-fox-on-grass-2786709.jpg",
-        "color": "None"
-      },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "images": []
     }
   ]
 }
