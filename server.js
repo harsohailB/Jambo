@@ -48,6 +48,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 server.post("/session_id", async (req, res) => {
   let session = await stripe.checkout.sessions
     .create({
+      shipping_address_collection: {
+        allowed_countries: ["CA"],
+      },
       payment_method_types: ["card"],
       line_items: req.body.line_items,
       success_url: "http://localhost:3000/",
