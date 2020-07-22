@@ -74,8 +74,8 @@ const NewItemForm = () => {
     name: "",
     folderName: "",
     price: "",
-    listOfColours: "",
-    listOfSizes: "",
+    colors: "",
+    sizes: "",
     description: "",
     thumbnailImage: null,
     images: [
@@ -90,7 +90,7 @@ const NewItemForm = () => {
   const [hasErrors, setHasErrors] = useState(false);
 
   const getArrayOfColours = () => {
-    const arrOfColours = newItem.listOfColours.split(",");
+    const arrOfColours = newItem.colors.split("/");
     var resultArr = ["None"];
     arrOfColours.forEach((color) => {
       resultArr.push(color);
@@ -99,7 +99,7 @@ const NewItemForm = () => {
   };
 
   const getArrayOfSizes = () => {
-    return newItem.listOfSizes.split(",");
+    return newItem.sizes.split("/");
   };
 
   const handleFormSubmit = (e) => {
@@ -131,14 +131,14 @@ const NewItemForm = () => {
   const handleListofColoursChange = (evt) => {
     setNewItem({
       ...newItem,
-      listOfColours: evt.target.value,
+      colors: evt.target.value,
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setNewItem({
       ...newItem,
-      listOfSizes: evt.target.value,
+      sizes: evt.target.value,
     });
   };
 
@@ -169,22 +169,22 @@ const NewItemForm = () => {
         placeholder="xx.xx"
         autocomplete="item-price"
       />
-      <Label>List of Colours (seperated by commas)</Label>
+      <Label>List of Colours (seperated by /)</Label>
       <Input
         hasError={false}
         label="List of colours"
         onChange={handleListofColoursChange}
-        value={newItem.listOfColours}
-        placeholder="Red,Green,Blue"
+        value={newItem.colors}
+        placeholder="Red/Green/Blue"
         autocomplete="list-of-colours"
       />
-      <Label>List of Sizes (seperated by commas)</Label>
+      <Label>List of Sizes (seperated by /)</Label>
       <Input
         hasError={false}
         label="List of sizes"
         onChange={handleListofSizesChange}
-        value={newItem.listOfSizes}
-        placeholder="S,M,L"
+        value={newItem.sizes}
+        placeholder="S/M/L"
         autocomplete="list-of-sizes"
       />
       <Label>Description</Label>

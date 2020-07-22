@@ -41,10 +41,25 @@ server.use((req, res, next) => {
 /************IMAGE UPLOAD ROUTE**********/
 
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+const inventoryPath = "src/assets/catalog/inventory";
+
+server.post("/create-folder", (req, res) => {
+  fs.mkdir(
+    path.join(__dirname, inventoryPath + "/" + req.body.folderName),
+    (err) => {
+      if (err) {
+        return console.error(err);
+      }
+      console.log("Directory created successfully!");
+    }
+  );
+});
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/assets/catalog/inventory");
+    cb(null, inventoryPath + "/" + req.query.folderName);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -54,6 +69,7 @@ var storage = multer.diskStorage({
 const upload = multer({ storage }).single("file");
 
 server.post("/upload", (req, res) => {
+  console.log(req.query);
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);

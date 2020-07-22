@@ -22,8 +22,10 @@ export const getItemById = async (id) => {
 };
 
 export const uploadItem = async (user, newItem) => {
+  createFolderForNewItem(user, newItem.folderName);
+
   newItem.images.forEach((image) => {
-    uploadImage(user, image);
+    uploadImage(user, image, newItem.folderName);
   });
 
   const response = await axios.post(
@@ -46,7 +48,7 @@ export const uploadItem = async (user, newItem) => {
   return response.data;
 };
 
-export const uploadImage = async (user, image) => {
+const uploadImage = async (user, image, folderName) => {
   const data = new FormData();
   data.append("file", image.file);
 
@@ -54,13 +56,36 @@ export const uploadImage = async (user, image) => {
     `${config.endpoint}/upload?username=` +
       user.username +
       "&password=" +
-      user.password,
+      user.password +
+      "&folderName=" +
+      folderName,
     data
   );
 
   if (response.status !== 200) {
     throw (
       "uploadImage failed with error code " +
+      response.status +
+      ": " +
+      response.data.message
+    );
+  }
+
+  return response.data;
+};
+
+const createFolderForNewItem = async (user, folderName) => {
+  const response = await axios.post(
+    `${config.endpoint}/create-folder?username=` +
+      user.username +
+      "&password=" +
+      user.password,
+    { folderName }
+  );
+
+  if (response.status !== 200) {
+    throw (
+      "createFolderForNewItem failed with error code " +
       response.status +
       ": " +
       response.data.message
