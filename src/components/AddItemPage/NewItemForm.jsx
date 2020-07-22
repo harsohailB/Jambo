@@ -197,7 +197,10 @@ const NewItemForm = () => {
         autocomplete="description"
       />
       <Label>Add images here:</Label>
-      <Label>(Note: First Picture will be thumbnail)</Label>
+      <Label>
+        (Note: First Picture will be thumbnail and DON'T put spaces in
+        filenames)
+      </Label>
       <ImageForm
         getArrayOfColours={getArrayOfColours}
         newItem={newItem}
