@@ -175,7 +175,9 @@ const ItemPage = () => {
 
   const handleRemoveItem = () => {
     deleteItemById(user, item.id);
-    history.push("/catalog");
+    setTimeout(() => {
+      history.push("/catalog");
+    }, 500);
   };
 
   const handleEditItem = () => {
