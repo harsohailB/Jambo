@@ -110,14 +110,14 @@ const EditItemForm = () => {
   const handleListofColoursChange = (evt) => {
     setItem({
       ...item,
-      listOfColours: evt.target.value,
+      colors: evt.target.value,
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setItem({
       ...item,
-      listOfSizes: evt.target.value,
+      sizes: evt.target.value,
     });
   };
 
@@ -162,7 +162,7 @@ const EditItemForm = () => {
         hasError={false}
         label="List of sizes"
         onChange={handleListofSizesChange}
-        value={item.sizes !== "One size" ? item.sizes : ""}
+        value={item.sizes}
         placeholder="S,M,L"
         autocomplete="list-of-sizes"
       />
@@ -176,7 +176,7 @@ const EditItemForm = () => {
         autocomplete="description"
       />
       {hasErrors && <Error>Please enter valid details!</Error>}
-      <Button>SAVE CHANGES</Button>
+      <Button to="/catalog">SAVE CHANGES</Button>
     </Form>
   );
 };
