@@ -5,10 +5,11 @@ import styled from "styled-components";
 import Dropdown from "../styled/Dropdown";
 import Button from "../styled/Button";
 import { useLocation } from "react-router-dom";
-import { getItemById, getItems } from "../../actions/items";
+import { getItemById, updateItemById } from "../../actions/items";
 import { deleteItemById } from "../../actions/items";
 import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
+import { FaCheckSquare, FaSquare } from "react-icons/fa";
 
 const Wrapper = styled.div`
   display: flex;
@@ -106,6 +107,31 @@ const DropdownWrapper = styled.div`
   margin-bottom: 5px;
 `;
 
+const Icon = styled.div`
+  margin: 5px;
+  color: #557b97;
+  cursor: pointer;
+  width: 21px;
+
+  & :hover {
+    color: #131516;
+  }
+  & > svg {
+    transition: color 0.1s linear;
+  }
+`;
+
+const FeatureItemOption = styled.span`
+  display: flex;
+  jsutify-content: center;
+  align-items: center;
+  font-family: Righteous, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  cursor: pointer;
+  color: #3d4246;
+`;
+
 const ItemPage = () => {
   const user = useSelector((state) => state.user);
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
@@ -199,6 +225,19 @@ const ItemPage = () => {
     history.push("/cart");
   };
 
+  const handleFeatureClick = (e) => {
+    e.preventDefault();
+    let currentItemFeatured = item.featured;
+    setItem({
+      ...item,
+      featured: !currentItemFeatured,
+    });
+    updateItemById(user, {
+      ...item,
+      featured: !currentItemFeatured,
+    });
+  };
+
   return (
     <div>
       {item ? (
@@ -242,6 +281,18 @@ const ItemPage = () => {
             <Description>{item.description}</Description>
             {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
             {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
+            {user && (
+              <FeatureItemOption onClick={handleFeatureClick}>
+                <Icon>
+                  {item.featured ? (
+                    <FaCheckSquare size={24} />
+                  ) : (
+                    <FaSquare size={24} />
+                  )}
+                </Icon>
+                Featured Item
+              </FeatureItemOption>
+            )}
           </InfoWrapper>
         </Wrapper>
       ) : (
