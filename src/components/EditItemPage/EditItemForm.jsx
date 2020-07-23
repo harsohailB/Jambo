@@ -91,7 +91,9 @@ const EditItemForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     updateItemById(user, item);
-    history.push("/catalog/" + item.id);
+    setTimeout(() => {
+      history.push("/catalog/" + item.id);
+    }, 500);
   };
 
   const handleNameChange = (evt) => {
