@@ -34,7 +34,7 @@ const Error = styled.label`
   color: red;
 `;
 
-const Button = styled.button`
+const Button = styled.Link`
   font-family: Righteous, sans-serif;
   font-style: normal;
   font-weight: 400;
