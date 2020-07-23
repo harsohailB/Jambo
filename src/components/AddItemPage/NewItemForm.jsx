@@ -98,17 +98,43 @@ const NewItemForm = () => {
     return resultArr;
   };
 
-  const getArrayOfSizes = () => {
-    return newItem.sizes.split("/");
+  const checkForErrors = () => {
+    // Check for text input fields
+    if (
+      newItem.name === "" ||
+      newItem.price === "" ||
+      newItem.colors === "" ||
+      newItem.sizes === "" ||
+      newItem.description === ""
+    ) {
+      setHasErrors(true);
+      return true;
+    }
+
+    // Check image inputs
+    let result = false;
+    newItem.images.forEach((image) => {
+      if (image.file === null || image.imageName === "") {
+        setHasErrors(true);
+        result = true;
+      }
+    });
+    return result;
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    try {
-      uploadItem(user, newItem);
-    } catch (error) {
-      setHasErrors(true);
-      console.log(error);
+    setNewItem({
+      ...newItem,
+      thumbnailImage: newItem.images[0],
+    });
+    if (!checkForErrors()) {
+      try {
+        uploadItem(user, newItem);
+      } catch (error) {
+        setHasErrors(true);
+        console.log(error);
+      }
     }
   };
 
