@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { getItemById, updateItemById } from "../../actions/items";
 import { useEffect } from "react";
@@ -34,7 +34,7 @@ const Error = styled.label`
   color: red;
 `;
 
-const Button = styled.Link`
+const Button = styled(Link)`
   font-family: Righteous, sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -176,7 +176,7 @@ const EditItemForm = () => {
         autocomplete="description"
       />
       {hasErrors && <Error>Please enter valid details!</Error>}
-      <Button to="/catalog">SAVE CHANGES</Button>
+      <Button to={"/catalog/" + item.id}>SAVE CHANGES</Button>
     </Form>
   );
 };
