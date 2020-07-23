@@ -179,7 +179,7 @@ const ItemPage = () => {
   };
 
   const handleEditItem = () => {
-    // TODO edit item
+    history.push("/edit-item/" + item.id);
   };
 
   const handleAddToCartClick = () => {
