@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getItemById, updateItemById } from "../../actions/items";
 import { useEffect } from "react";
@@ -34,7 +34,7 @@ const Error = styled.label`
   color: red;
 `;
 
-const Button = styled(Link)`
+const Button = styled.button`
   font-family: Righteous, sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -72,6 +72,7 @@ const Label = styled.label`
 const EditItemForm = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
+  const history = useHistory();
   const [item, setItem] = useState({});
   const [hasErrors, setHasErrors] = useState(false);
 
@@ -90,6 +91,7 @@ const EditItemForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     updateItemById(user, item);
+    history.push("/catalog/" + item.id);
   };
 
   const handleNameChange = (evt) => {
@@ -176,7 +178,7 @@ const EditItemForm = () => {
         autocomplete="description"
       />
       {hasErrors && <Error>Please enter valid details!</Error>}
-      <Button to={"/catalog/" + item.id}>SAVE CHANGES</Button>
+      <Button>SAVE CHANGES</Button>
     </Form>
   );
 };
