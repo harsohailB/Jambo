@@ -260,20 +260,6 @@
       "sizes": "",
       "description": "",
       "images": []
-    },
-    {
-      "id": 15,
-      "name": "UniTee",
-      "price": 27.99,
-      "folderName": "uni-tee",
-      "thumbnailImage": {
-        "imageName": "uni-tee.jpg",
-        "color": "None"
-      },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "images": []
     }
   ]
 }

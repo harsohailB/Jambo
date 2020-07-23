@@ -6,7 +6,8 @@ import Dropdown from "../styled/Dropdown";
 import Button from "../styled/Button";
 import { useLocation } from "react-router-dom";
 import { getItemById, getItems } from "../../actions/items";
-import { ADD_ITEM_TO_SC } from "../../actions/types";
+import { deleteItemById } from "../../actions/items";
+import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
 
 const Wrapper = styled.div`
@@ -173,7 +174,10 @@ const ItemPage = () => {
   };
 
   const handleRemoveItem = () => {
-    // TODO remove item
+    deleteItemById(user, item.id);
+    setTimeout(() => {
+      history.push("/catalog");
+    }, 500);
   };
 
   const handleEditItem = () => {
