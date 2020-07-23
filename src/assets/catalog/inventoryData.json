@@ -2,14 +2,14 @@
   "items": [
     {
       "id": 1,
-      "name": "Beandddd",
+      "name": "Bean",
       "price": 22.99,
       "folderName": "bean",
       "thumbnailImage": {
         "imageName": "bean.jpg",
         "color": "Forest Green"
       },
-      "colors": "Forest Green/Graphite Heather/Maroon/Deep Orange/test",
+      "colors": "Forest Green/Graphite Heather/Maroon/Deep Orange",
       "sizes": "One size",
       "description": "Don't brave the elements without the proper headwear. Good for winter spring or fall, customize this knit beanie for your chilly weather go-to cap! For every task that takes you outdoors stay comfortable, stylish, and warm!",
       "images": [

@@ -39,7 +39,6 @@ const CatalogPage = () => {
 
   useEffect(() => {
     getItems().then((fetchedItems) => {
-      console.log(fetchedItems);
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {
@@ -65,7 +64,11 @@ const CatalogPage = () => {
   return (
     <Wrapper>
       <Title>Products</Title>
-      <FilterBar productCount={items.length} />
+      <FilterBar
+        items={items}
+        setItems={setItems}
+        productCount={items.length}
+      />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
   );
