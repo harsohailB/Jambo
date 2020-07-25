@@ -100,9 +100,20 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [searchClicked, setSearchClicked] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
-  const handleSearchClick = () => {
-    setSearchClicked(!searchClicked);
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    if (searchClicked) {
+      setSearchClicked(false);
+      history.push("/search/" + searchInput);
+    } else {
+      setSearchClicked(!searchClicked);
+    }
+  };
+
+  const handleSearchInputChange = (evt) => {
+    setSearchInput(evt.target.value);
   };
 
   const handleLogout = (e) => {
@@ -134,7 +145,14 @@ const Navbar = () => {
 
       <IconsWrapper>
         {searchClicked && (
-          <SearchBar type="search" placeholder="Search"></SearchBar>
+          <form onSubmit={handleSearchClick}>
+            <SearchBar
+              type="search"
+              placeholder="Search"
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            ></SearchBar>
+          </form>
         )}
         <Icon onClick={handleSearchClick}>
           <FaSearch size={24} />
