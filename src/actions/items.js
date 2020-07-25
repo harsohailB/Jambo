@@ -93,4 +93,31 @@ const createFolderForNewItem = async (user, folderName) => {
   }
 
   return response.data;
+
+export const deleteItemById = async (user, id) => {
+  const params = "?username=" + user.username + "&password=" + user.password;
+
+  const response = await axios.delete(
+    `${config.endpoint}/items/${id + params}`
+  );
+
+  if (response.status !== 200) {
+    throw "deleteItemByID failed with error code " + response.status;
+  }
+
+  return { message: "Item " + id + " deleted" };
+}
+
+export const updateItemById = async (user, updatedItem) => {
+  const params = "?username=" + user.username + "&password=" + user.password;
+  const response = await axios.put(
+    `${config.endpoint}/items/${updatedItem.id + params}`,
+    updatedItem
+  );
+
+  if (response.status !== 200) {
+    throw "editItemByID failed with error code " + response.status;
+  }
+
+  return { message: "Item " + updatedItem.id + " edited" };
 };

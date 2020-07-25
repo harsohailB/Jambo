@@ -6,24 +6,33 @@ const server = jsonServer.create();
 const dbPath = "./src/assets/catalog/inventoryData.json";
 const router = jsonServer.router(dbPath);
 const middlewares = jsonServer.defaults();
+require("dotenv").config();
+
 
 // Set default middlewares
 server.use(middlewares);
 
-/************AUTHORIZATION***************/
 
+/************AUTHORIZATION***************/
+  
 const isAuthorizableRequest = (req) => {
-  return (
-    req.method === "POST" ||
-    req.method === "PUT" ||
-    req.method === "DELETE" ||
-    req.method === "PATCH"
-  );
+  if (req.originalUrl === "/session_id") {
+    return false;
+  } else {
+    return (
+      req.method === "POST" ||
+      req.method === "PUT" ||
+      req.method === "DELETE" ||
+      req.method === "PATCH"
+    );
+  }
 };
 
 const isAuthorized = (req) => {
-  // TODO use env for store username and password
-  return req.query.username === "admin" && req.query.password === "password";
+  return (
+    req.query.username === process.env.ADMIN_USERNAME &&
+    req.query.password === process.env.ADMIN_PASSWORD
+  );
 };
 
 // Server POST, PUT, DELETE, PATCH auth
@@ -81,6 +90,26 @@ server.post("/upload", (req, res) => {
 });
 
 /*************************************/
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+// Stripe checkout session route
+server.post("/session_id", async (req, res) => {
+  let session = await stripe.checkout.sessions
+    .create({
+      shipping_address_collection: {
+        allowed_countries: ["CA"],
+      },
+      payment_method_types: ["card"],
+      line_items: req.body.line_items,
+      success_url: "http://localhost:3000/",
+      cancel_url: "http://localhost:3000/cart",
+    })
+    .catch((err) => {
+      throw err;
+    });
+  res.jsonp(session.id);
+});
 
 // Use default router
 server.use(router);

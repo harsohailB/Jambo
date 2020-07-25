@@ -6,8 +6,8 @@ export const loginUser = (username, password) => {
     return {
       type: LOGIN_USER,
       user: {
-        username,
-        password,
+        username: username,
+        password: password,
       },
     };
   } else {
