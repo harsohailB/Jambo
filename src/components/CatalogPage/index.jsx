@@ -3,6 +3,9 @@ import styled from "styled-components";
 import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
+import Form from "../styled/Form";
+import Input from "../styled/Input";
+import { useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,11 +38,15 @@ const ItemsWrapper = styled.div`
 `;
 
 const CatalogPage = () => {
+  const location = useLocation();
   const [items, setItems] = useState([]);
+  const [searchInput, setSearchInput] = useState(
+    location.data ? location.data : ""
+  );
 
   useEffect(() => {
+    console.log(location);
     getItems().then((fetchedItems) => {
-      console.log(fetchedItems);
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {
@@ -48,8 +55,16 @@ const CatalogPage = () => {
     });
   }, []);
 
+  const handleSearchInputChange = (evt) => {
+    setSearchInput(evt.target.value);
+  };
+
   const renderItems = () => {
-    return items.map((item) => (
+    const filteredItems = items.filter((item) =>
+      item.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+
+    return filteredItems.map((item) => (
       <Item
         key={item.id}
         id={item.id}
@@ -66,6 +81,14 @@ const CatalogPage = () => {
   return (
     <Wrapper>
       <Title>Products</Title>
+      <Form>
+        <Input
+          type="search"
+          placeholder="Search"
+          value={searchInput}
+          onChange={handleSearchInputChange}
+        ></Input>
+      </Form>
       <FilterBar productCount={items.length} />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>

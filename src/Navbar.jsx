@@ -104,9 +104,12 @@ const Navbar = () => {
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    if (searchClicked) {
+    if (searchClicked && searchInput.length !== 0) {
       setSearchClicked(false);
-      history.push("/search/" + searchInput);
+      history.push({
+        pathname: "/catalog",
+        data: searchInput,
+      });
     } else {
       setSearchClicked(!searchClicked);
     }
