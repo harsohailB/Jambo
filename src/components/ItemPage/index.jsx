@@ -9,7 +9,7 @@ import { getItemById, updateItemById } from "../../actions/items";
 import { deleteItemById } from "../../actions/items";
 import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
-import { FaCheckSquare, FaSquare } from "react-icons/fa";
+import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 
 const Wrapper = styled.div`
   display: flex;
@@ -111,10 +111,11 @@ const Icon = styled.div`
   margin: 5px;
   color: #557b97;
   cursor: pointer;
-  width: 21px;
+  width: -webkit-fit-content;
+  height: -webkit-fit-content;
 
   & :hover {
-    color: #131516;
+    color: black;
   }
   & > svg {
     transition: color 0.1s linear;
@@ -285,9 +286,9 @@ const ItemPage = () => {
               <FeatureItemOption onClick={handleFeatureClick}>
                 <Icon>
                   {item.featured ? (
-                    <FaCheckSquare size={24} />
+                    <FaCheckCircle size={24} />
                   ) : (
-                    <FaSquare size={24} />
+                    <FaRegCircle size={24} />
                   )}
                 </Icon>
                 Featured Item
