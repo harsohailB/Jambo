@@ -61,6 +61,7 @@ const CatalogPage = () => {
       ></Item>
     ));
   };
+
   return (
     <Wrapper>
       <Title>Products</Title>

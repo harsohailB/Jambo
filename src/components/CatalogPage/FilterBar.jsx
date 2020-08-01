@@ -45,17 +45,17 @@ const InventoryCount = styled.p`
   white-space: nowrap;
 `;
 
-const FilterBar = (props) => {
+const FilterBar = ({ items, setItems, productCount }) => {
   const user = useSelector((state) => state.user);
   const sortingOptions = [
     "Alphabetically, A-Z",
     "Alphabetically, Z-A",
-    "Featured",
-    "Best-Selling",
+    "*Featured",
+    "*Best-Selling",
     "Price, low to high",
     "Price, high to low",
-    "Date, new to old",
-    "Date, old to new",
+    "*Date, new to old",
+    "*Date, old to new",
   ];
   const filteringOptions = [
     "All Products",
@@ -84,7 +84,12 @@ const FilterBar = (props) => {
 
   const updateSelectedSortingOption = (evt) => {
     setSelectedSortingOption(evt.target.value);
-    props.setItems(sortCatalog(props.items, evt.target.value));
+    sortCatalog(items, evt.target.value);
+    let tempItems = [];
+    items.forEach((item) => {
+      tempItems.push(item);
+    });
+    setItems(tempItems);
   };
 
   return (
@@ -105,7 +110,7 @@ const FilterBar = (props) => {
         </Filter>
         {user && <Button to="/add-item">ADD ITEM</Button>}
       </FilterWrapper>
-      <InventoryCount>{props.productCount} products</InventoryCount>
+      <InventoryCount>{productCount} products</InventoryCount>
     </Wrapper>
   );
 };
