@@ -41,6 +41,7 @@ const ItemsWrapper = styled.div`
 const CatalogPage = () => {
   const location = useLocation();
   const [items, setItems] = useState([]);
+  const [displayedItems, setDisplayedItems] = useState([]);
 
   useEffect(() => {
     console.log(location);
@@ -49,6 +50,7 @@ const CatalogPage = () => {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
+        setDisplayedItems(fetchedItems);
       }
     });
   }, [location]);
@@ -56,11 +58,11 @@ const CatalogPage = () => {
   const renderItems = () => {
     let filteredItems = [];
     if (location.data) {
-      filteredItems = items.filter((item) =>
+      filteredItems = displayedItems.filter((item) =>
         item.name.toLowerCase().includes(location.data.toLowerCase())
       );
     } else {
-      filteredItems = items;
+      filteredItems = displayedItems;
     }
 
     return filteredItems.map((item) => (
@@ -87,7 +89,12 @@ const CatalogPage = () => {
       ) : (
         <Title>Products</Title>
       )}
-      <FilterBar productCount={items.length} />
+      <FilterBar
+        items={items}
+        displayedItems={displayedItems}
+        setDisplayedItems={setDisplayedItems}
+        productCount={items.length}
+      />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
   );
