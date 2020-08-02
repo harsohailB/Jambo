@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
 import Button from "../styled/Button";
-import { getItems } from "../../actions/items";
 
 import { sortCatalog } from "./sortingAlgorithms";
 
@@ -46,7 +45,12 @@ const InventoryCount = styled.p`
   white-space: nowrap;
 `;
 
-const FilterBar = ({ items, setItems, productCount }) => {
+const FilterBar = ({
+  items,
+  displayedItems,
+  setDisplayedItems,
+  productCount,
+}) => {
   const user = useSelector((state) => state.user);
   const sortingOptions = [
     "Alphabetically, A-Z",
@@ -57,7 +61,7 @@ const FilterBar = ({ items, setItems, productCount }) => {
   ];
   const filteringOptions = [
     "All Products",
-    "Accesories",
+    "Accessories",
     "Case",
     "Cotton",
     "Crew Neck",
@@ -67,9 +71,28 @@ const FilterBar = ({ items, setItems, productCount }) => {
     "Hats",
     "Hoodies",
     "Long Sleeves",
+    "Matte",
+    "Men's Clothing",
+    "Original",
+    "Original T-Shirt",
+    "Phone Cases",
+    "Regular Fit",
+    "Shirt",
+    "Short Sleeve",
+    "Slim",
+    "Sweatshirts",
+    "T",
+    "T-Shirt",
+    "T-Shirts",
+    "Tee",
+    "Unisex",
+    "Women's Clothing",
   ];
   const [selectedSortingOption, setSelectedSortingOption] = useState(
     sortingOptions[0]
+  );
+  const [selectedFiteringOption, setSelectedFilteringOption] = useState(
+    filteringOptions[0]
   );
 
   const renderSortingOptions = () => {
@@ -83,11 +106,35 @@ const FilterBar = ({ items, setItems, productCount }) => {
   const updateSelectedSortingOption = (evt) => {
     setSelectedSortingOption(evt.target.value);
     let sortedItems = sortCatalog(items, evt.target.value);
+    let filteredItems = filterItems(sortedItems, selectedFiteringOption);
     let tempItems = [];
-    sortedItems.forEach((item) => {
+    filteredItems.forEach((item) => {
       tempItems.push(item);
     });
-    setItems(tempItems);
+    setDisplayedItems(tempItems);
+  };
+
+  const updateSelectedFilteringOption = (evt) => {
+    setSelectedFilteringOption(evt.target.value);
+    if (evt.target.value === "All Products") {
+      setDisplayedItems(items);
+    } else {
+      let filteredItems = filterItems(displayedItems, evt.target.value);
+      setDisplayedItems(filteredItems);
+    }
+  };
+
+  const filterItems = (items, filteringOption) => {
+    let filteredItems = [];
+    if (filteringOption != "All Products") {
+      items.forEach((item) => {
+        if (item.tags.includes(filteringOption)) {
+          filteredItems.push(item);
+        }
+      });
+      return filteredItems;
+    }
+    return items;
   };
 
   return (
@@ -95,7 +142,12 @@ const FilterBar = ({ items, setItems, productCount }) => {
       <FilterWrapper>
         <Filter>
           <FilterText>FILTER BY</FilterText>
-          <Dropdown>{renderFilteringOptions()}</Dropdown>
+          <Dropdown
+            value={selectedFiteringOption}
+            onChange={updateSelectedFilteringOption}
+          >
+            {renderFilteringOptions()}
+          </Dropdown>
         </Filter>
         <Filter>
           <FilterText>SORT BY</FilterText>

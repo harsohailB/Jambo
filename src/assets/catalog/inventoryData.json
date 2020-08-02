@@ -13,6 +13,7 @@
       "sizes": "One size",
       "description": "Don't brave the elements without the proper headwear. Good for winter spring or fall, customize this knit beanie for your chilly weather go-to cap! For every task that takes you outdoors stay comfortable, stylish, and warm!",
       "featured": true,
+      "tags": ["Accessories", "Embroidery", "Hats"],
       "images": [
         {
           "imageName": "bean.jpg",
@@ -92,6 +93,7 @@
       "colors": "Soft Cream",
       "sizes": "L",
       "description": "This t-shirt is everything you've dreamed of and more. It feels soft and lightweight, with the right amount of stretch. It's comfortable and flattering for both men and women. ",
+      "tags": ["Original", "Original T-Shirt"],
       "images": [
         {
           "imageName": "big-logo-tee.jpg",
@@ -144,6 +146,16 @@
       "colors": "Dark Heather/Ash/Forest Green/Kiwi/Light Pink/Light Blue/Navy/Sport Grey/White/Black",
       "sizes": "S/M/L/XL/2XL/3XL/4XL/5XL",
       "description": "This t-shirt is everything you've dreamed of and more. It feels soft and lightweight, with the right amount of stretch. It's comfortable and flattering for both men and women.",
+      "tags": [
+        "Crew Neck",
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "T-Shirts",
+        "Tee",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "big-logo-tee2.jpg",
@@ -240,6 +252,15 @@
       "colors": "Indigo Blue/Ash/Forest Green/Gold/Light Pink/Charcoal/Dark Chocolate/Light Blue/Antique Cherry Red/Navy/Sand/Sport Grey/White/Black",
       "sizes": "S/M/L/XL/2XL",
       "description": "A sturdy and warm sweatshirt bound to keep you warm in the colder months. A pre-shrunk, classic fit sweater that's made with air-jet spun yarn for a soft feel.",
+      "tags": [
+        "Crew Neck",
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "Sweatshirts",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "classic-crew.jpg",
@@ -367,6 +388,14 @@
       "colors": "Military Green/Gold/Light Pink/Charcoal/Forest Green/Sport Grey/White/Black/Light Blue/Sand",
       "sizes": "S/M/L/XL/2XL",
       "description": "Crafted for comfort, this lighter weight sweatshirt is perfect for relaxing. Once put on, it will be impossible to take off.",
+      "tags": [
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "Hoodies",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "classic-hoodie.jpg",
@@ -462,6 +491,15 @@
       "colors": "White/Dark Chocolate/Navy/Red/Sport Grey/Black",
       "sizes": "S/M/L/XL/2XL",
       "description": "This shirt is classy like you",
+      "tags": [
+        "Crew Neck",
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "T-Shirts",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "classic-tee.jpg",
@@ -525,6 +563,7 @@
       "colors": "Black/Navy/White",
       "sizes": "S/M/L/XL/2XL/3XL",
       "description": "Something we've all got in common.",
+      "tags": [],
       "images": [
         {
           "imageName": "humani-tee.jpg",
@@ -552,6 +591,7 @@
       "colors": "iPhone 7 Plus, iPhone 8 Plus Slim/iPhone 7, iPhone 8 Slim/iPhone 6 or 6s Slim",
       "sizes": "Glossy",
       "description": "This sleek iPhone case protects your phone from scratches, dust, oil, and dirt. It has a solid back and flexible sides that make it easy to take on and off, with precisely aligned port openings.",
+      "tags": ["Accessories", "Case", "Glossy", "Matte", "Phone Cases", "Slim"],
       "images": [
         {
           "imageName": "loyalty-case.jpg",
@@ -579,6 +619,7 @@
       "colors": "iPhone 7 Plus, iPhone 8 Plus Slim/iPhone 7, iPhone 8 Slim/iPhone 6 or 6s Slim",
       "sizes": "Glossy",
       "description": "This sleek iPhone case protects your phone from scratches, dust, oil, and dirt. It has a solid back and flexible sides that make it easy to take on and off, with precisely aligned port openings.",
+      "tags": ["Accessories", "Case", "Glossy", "Matte", "Phone Cases", "Slim"],
       "images": [
         {
           "imageName": "tenacity-case.jpg",
@@ -606,6 +647,15 @@
       "colors": "Forest/Gold/Red/White/Athletic Heather/Sky Blue",
       "sizes": "S/M/L/XL/2XL",
       "description": "This unisex long sleeve is both cozy and stylish. Preshrunk 100% cotton tee with high quality print will serve as a style statement for years to come. Legacies live on.",
+      "tags": [
+        "Crew Neck",
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "Long Sleeves",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "legacy-sleeve.jpg",
@@ -669,6 +719,7 @@
       "colors": "Heather Olive/White",
       "sizes": "XS or SM/M or L",
       "description": "Love knows no bounds.",
+      "tags": ["Cotton", "Shirt", "Short Sleeve", "T-Shirts", "Tee"],
       "images": [
         {
           "imageName": "loyal-tee.jpg",
@@ -692,6 +743,7 @@
       "colors": "White/Black/Navy/Sport Grey",
       "sizes": "S/M/L/XL/2XL/3XL",
       "description": "Love knows no bounds.",
+      "tags": ["Cotton", "Shirt", "Short Sleeve", "T-Shirts", "Tee"],
       "images": [
         {
           "imageName": "loyal-tee2.jpg",
@@ -724,6 +776,16 @@
       "colors": "White/Black/Navy",
       "sizes": "S/M/L/XL/2XL/3XL",
       "description": "Every human being's got their own battles, but you're strong because you've pushed through and got over them. Mountains serve as a reminder that no matter how seemingly impossible a challenge may be, there'll always be a way. Fight for that.",
+      "tags": [
+        "Crew Neck",
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "T-Shirts",
+        "Tee",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "tenaci-tee.jpg",
@@ -751,6 +813,14 @@
       "colors": "White/Black/Sport Grey/Gold/Military Green/Forest Green/Navy/Light Pink",
       "sizes": "S/M/L/XL/2XL/3XL",
       "description": "Every human being's got their own battles, but you're strong because you've pushed through and got over them. Mountains serve as a reminder that no matter how seemingly impossible a challenge may be, there'll always be a way. Fight for that.",
+      "tags": [
+        "DTG",
+        "Hoodies",
+        "Men's Clothing",
+        "Regular Fit",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "tenaci-hoodie.jpg",
@@ -798,6 +868,16 @@
       "colors": "Black/Navy",
       "sizes": "S/M/L/XL/2XL/3XL",
       "description": "Good vibes all around. ",
+      "tags": [
+        "Crew Neck",
+        "DTG",
+        "Men's Clothing",
+        "Regular Fit",
+        "T-Shirts",
+        "Tee",
+        "Unisex",
+        "Women's Clothing"
+      ],
       "images": [
         {
           "imageName": "uni-tee.jpg",

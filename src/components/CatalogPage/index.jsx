@@ -87,7 +87,8 @@ const CatalogPage = () => {
       )}
       <FilterBar
         items={items}
-        setItems={setDisplayedItems}
+        displayedItems={displayedItems}
+        setDisplayedItems={setDisplayedItems}
         productCount={items.length}
       />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
