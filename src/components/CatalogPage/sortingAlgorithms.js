@@ -20,8 +20,7 @@ const sortAlphabetically = (items) => {
 };
 
 const sortFeatured = (items) => {
-  items.filter((item) => item.featured === true);
-  return items;
+  return items.filter((item) => item.featured === true);
 };
 
 const sortPriceLowToHigh = (items) => {

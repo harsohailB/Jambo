@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
 import Button from "../styled/Button";
+import { getItems } from "../../actions/items";
 
 import { sortCatalog } from "./sortingAlgorithms";
 
@@ -81,9 +82,9 @@ const FilterBar = ({ items, setItems, productCount }) => {
 
   const updateSelectedSortingOption = (evt) => {
     setSelectedSortingOption(evt.target.value);
-    sortCatalog(items, evt.target.value);
+    let sortedItems = sortCatalog(items, evt.target.value);
     let tempItems = [];
-    items.forEach((item) => {
+    sortedItems.forEach((item) => {
       tempItems.push(item);
     });
     setItems(tempItems);
