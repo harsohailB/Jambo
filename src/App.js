@@ -51,7 +51,7 @@ const App = () => {
           <Route path="/story" component={StoryPage}></Route>
           <Route path="/contact" component={ContactPage}></Route>
           <Route path="/cart" component={ShoppingCartPage}></Route>
-          <Route path="/search" component={SearchPage}></Route>
+          {/* <Route path="/search/:query" component={SearchPage}></Route> */}
           <Route path="/login" component={LoginPage}></Route>
           <Route path="/add-item" component={AddItemPage}></Route>
           <Route path="/edit-item/:id" component={EditItemPage}></Route>

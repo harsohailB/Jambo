@@ -3,6 +3,9 @@ import styled from "styled-components";
 import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
+import Form from "../styled/Form";
+import Input from "../styled/Input";
+import { useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,21 +38,31 @@ const ItemsWrapper = styled.div`
 `;
 
 const CatalogPage = () => {
+  const location = useLocation();
   const [items, setItems] = useState([]);
 
   useEffect(() => {
+    console.log(location);
     getItems().then((fetchedItems) => {
-      console.log(fetchedItems);
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
       }
     });
-  }, []);
+  }, [location]);
 
   const renderItems = () => {
-    return items.map((item) => (
+    let filteredItems = [];
+    if (location.data) {
+      filteredItems = items.filter((item) =>
+        item.name.toLowerCase().includes(location.data.toLowerCase())
+      );
+    } else {
+      filteredItems = items;
+    }
+
+    return filteredItems.map((item) => (
       <Item
         key={item.id}
         id={item.id}
@@ -62,9 +75,14 @@ const CatalogPage = () => {
       ></Item>
     ));
   };
+
   return (
     <Wrapper>
-      <Title>Products</Title>
+      {location.data ? (
+        <Title>Search results for "{location.data}"</Title>
+      ) : (
+        <Title>Products</Title>
+      )}
       <FilterBar productCount={items.length} />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
