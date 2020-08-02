@@ -127,8 +127,13 @@ const FilterBar = ({
     } else {
       filteredItems = sortedItems;
     }
+
+    let tempItems = [];
+    filteredItems.forEach((item) => {
+      tempItems.push(item);
+    });
     // UPDATE
-    setDisplayedItems(filteredItems);
+    setDisplayedItems(tempItems);
   };
 
   return (
