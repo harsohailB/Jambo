@@ -87,13 +87,49 @@
       "folderName": "big-logo-tee",
       "thumbnailImage": {
         "imageName": "big-logo-tee.jpg",
-        "color": "None"
+        "color": "Soft Cream"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "Soft Cream",
+      "sizes": "L",
+      "description": "This t-shirt is everything you've dreamed of and more. It feels soft and lightweight, with the right amount of stretch. It's comfortable and flattering for both men and women. ",
+      "images": [
+        {
+          "imageName": "big-logo-tee.jpg",
+          "color": "Soft Cream"
+        },
+        {
+          "imageName": "big-logo-tee-blue.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-red.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-green.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-hailey.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-light-pink.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-orange.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-pink.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee-yellow.jpg",
+          "color": "None"
+        }
+      ]
     },
     {
       "id": 3,
@@ -104,11 +140,91 @@
         "imageName": "big-logo-tee2.jpg",
         "color": "None"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "Dark Heather/Ash/Forest Green/Kiwi/Light Pink/Light Blue/Navy/Sport Grey/White/Black",
+      "sizes": "S/M/L/XL/2XL/3XL/4XL/5XL",
+      "description": "This t-shirt is everything you've dreamed of and more. It feels soft and lightweight, with the right amount of stretch. It's comfortable and flattering for both men and women.",
+      "images": [
+        {
+          "imageName": "big-logo-tee2.jpg",
+          "color": "Dark Heather"
+        },
+        {
+          "imageName": "big-logo-tee2-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-white.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "big-logo-tee2-white-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "big-logo-tee2-black-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-ash.jpg",
+          "color": "Ash"
+        },
+        {
+          "imageName": "big-logo-tee2-ash-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-sportgrey.jpg",
+          "color": "Sport Grey"
+        },
+        {
+          "imageName": "big-logo-tee2-sportgrey-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-kiwi.jpg",
+          "color": "Kiwi"
+        },
+        {
+          "imageName": "big-logo-tee2-kiwi-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-forestgreen.jpg",
+          "color": "Forest Green"
+        },
+        {
+          "imageName": "big-logo-tee2-forestgreen-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-lightblue.jpg",
+          "color": "Light Blue"
+        },
+        {
+          "imageName": "big-logo-tee2-lightblue-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-navy.jpg",
+          "color": "Navy"
+        },
+        {
+          "imageName": "big-logo-tee2-navy-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "big-logo-tee2-lightpink.jpg",
+          "color": "Light Pink"
+        },
+        {
+          "imageName": "big-logo-tee2-lightpink-back.jpg",
+          "color": "None"
+        }
+      ]
     },
     {
       "id": 4,
@@ -119,11 +235,123 @@
         "imageName": "classic-crew.jpg",
         "color": "None"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "Indigo Blue/Ash/Forest Green/Gold/Light Pink/Charcoal/Dark Chocolate/Light Blue/Antique Cherry Red/Navy/Sand/Sport Grey/White/Black",
+      "sizes": "S/M/L/XL/2XL",
+      "description": "A sturdy and warm sweatshirt bound to keep you warm in the colder months. A pre-shrunk, classic fit sweater that's made with air-jet spun yarn for a soft feel.",
+      "images": [
+        {
+          "imageName": "classic-crew.jpg",
+          "color": "Indigo Blue"
+        },
+        {
+          "imageName": "classic-crew-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-white.jpg",
+          "color": "Ash"
+        },
+        {
+          "imageName": "classic-crew-white-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-fg.jpg",
+          "color": "Forest Green"
+        },
+        {
+          "imageName": "classic-crew-fg-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-gold.jpg",
+          "color": "Gold"
+        },
+        {
+          "imageName": "classic-crew-gold-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-lp.jpg",
+          "color": "Light Pink"
+        },
+        {
+          "imageName": "classic-crew-lp-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-char.jpg",
+          "color": "Charcoal"
+        },
+        {
+          "imageName": "classic-crew-char-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-dc.jpg",
+          "color": "Dark Chocolate"
+        },
+        {
+          "imageName": "classic-crew-dc-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-lb.jpg",
+          "color": "Light Blue"
+        },
+        {
+          "imageName": "classic-crew-lb-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-acr.jpg",
+          "color": "Antique Cherry Red"
+        },
+        {
+          "imageName": "classic-crew-acr-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-navy.jpg",
+          "color": "Navy"
+        },
+        {
+          "imageName": "classic-crew-navy-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-sand.jpg",
+          "color": "Sand"
+        },
+        {
+          "imageName": "classic-crew-sand-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-sg.jpg",
+          "color": "Sport Grey"
+        },
+        {
+          "imageName": "classic-crew-sg-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-white.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "classic-crew-white-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-crew-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "classic-crew-black-back.jpg",
+          "color": "None"
+        }
+      ]
     },
     {
       "id": 5,
@@ -132,13 +360,93 @@
       "folderName": "classic-hoodie",
       "thumbnailImage": {
         "imageName": "classic-hoodie.jpg",
-        "color": "None"
+        "color": "Military Green"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "Military Green/Gold/Light Pink/Charcoal/Forest Green/Sport Grey/White/Black/Light Blue/Sand",
+      "sizes": "S/M/L/XL/2XL",
+      "description": "Crafted for comfort, this lighter weight sweatshirt is perfect for relaxing. Once put on, it will be impossible to take off.",
+      "images": [
+        {
+          "imageName": "classic-hoodie.jpg",
+          "color": "Military Green"
+        },
+        {
+          "imageName": "classic-hoodie-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-white.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "classic-hoodie-white-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "classic-hoodie-black-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-sand.jpg",
+          "color": "Sand"
+        },
+        {
+          "imageName": "classic-hoodie-sand-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-sg.jpg",
+          "color": "Sport Grey"
+        },
+        {
+          "imageName": "classic-hoodie-sg-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-gold.jpg",
+          "color": "Gold"
+        },
+        {
+          "imageName": "classic-hoodie-gold-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-char.jpg",
+          "color": "Charcoal"
+        },
+        {
+          "imageName": "classic-hoodie-char-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-fg.jpg",
+          "color": "Forest Green"
+        },
+        {
+          "imageName": "classic-hoodie-fg-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-lb.jpg",
+          "color": "Light Blue"
+        },
+        {
+          "imageName": "classic-hoodie-lb-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-lp.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-hoodie-lp-back.jpg",
+          "color": "Light Pink"
+        }
+      ]
     },
     {
       "id": 6,
@@ -147,13 +455,61 @@
       "folderName": "classic-tee",
       "thumbnailImage": {
         "imageName": "classic-tee.jpg",
-        "color": "None"
+        "color": "White"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "White/Dark Chocolate/Navy/Red/Sport Grey/Black",
+      "sizes": "S/M/L/XL/2XL",
+      "description": "This shirt is classy like you",
+      "images": [
+        {
+          "imageName": "classic-tee.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "classic-tee-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-tee-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "classic-tee-black-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-tee-sportgrey.jpg",
+          "color": "Sport Grey"
+        },
+        {
+          "imageName": "classic-tee-sportgrey-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-tee-darkchoc.jpg",
+          "color": "Dark Chocolate"
+        },
+        {
+          "imageName": "classic-tee-darkchoc-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-tee-navy.jpg",
+          "color": "Navy"
+        },
+        {
+          "imageName": "classic-tee-navy-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "classic-tee-red.jpg",
+          "color": "Red"
+        },
+        {
+          "imageName": "classic-tee-red-back.jpg",
+          "color": "None"
+        }
+      ]
     },
     {
       "id": 7,
@@ -162,13 +518,25 @@
       "folderName": "humani-tee",
       "thumbnailImage": {
         "imageName": "humani-tee.jpg",
-        "color": "None"
+        "color": "Black"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "Black/Navy/White",
+      "sizes": "S/M/L/XL/2XL/3XL",
+      "description": "Something we've all got in common.",
+      "images": [
+        {
+          "imageName": "humani-tee.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "humani-tee-navy.jpg",
+          "color": "Navy"
+        },
+        {
+          "imageName": "humani-tee-white.jpg",
+          "color": "White"
+        }
+      ]
     },
     {
       "id": 8,
@@ -177,13 +545,25 @@
       "folderName": "loyalty-case",
       "thumbnailImage": {
         "imageName": "loyalty-case.jpg",
-        "color": "None"
+        "color": "iPhone 7 Plus, iPhone 8 Plus Slim"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "iPhone 7 Plus, iPhone 8 Plus Slim/iPhone 7, iPhone 8 Slim/iPhone 6 or 6s Slim",
+      "sizes": "Glossy",
+      "description": "This sleek iPhone case protects your phone from scratches, dust, oil, and dirt. It has a solid back and flexible sides that make it easy to take on and off, with precisely aligned port openings.",
+      "images": [
+        {
+          "imageName": "loyalty-case.jpg",
+          "color": "iPhone 7 Plus, iPhone 8 Plus Slim"
+        },
+        {
+          "imageName": "loyalty-case2.jpg",
+          "color": "iPhone 7, iPhone 8 Slim"
+        },
+        {
+          "imageName": "loyalty-case3.jpg",
+          "color": "iPhone 6 or 6s Slim"
+        }
+      ]
     },
     {
       "id": 9,
@@ -192,13 +572,25 @@
       "folderName": "tenacity-case",
       "thumbnailImage": {
         "imageName": "tenacity-case.jpg",
-        "color": "None"
+        "color": "iPhone 7 Plus, iPhone 8 Plus Slim"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "iPhone 7 Plus, iPhone 8 Plus Slim/iPhone 7, iPhone 8 Slim/iPhone 6 or 6s Slim",
+      "sizes": "Glossy",
+      "description": "This sleek iPhone case protects your phone from scratches, dust, oil, and dirt. It has a solid back and flexible sides that make it easy to take on and off, with precisely aligned port openings.",
+      "images": [
+        {
+          "imageName": "tenacity-case.jpg",
+          "color": "iPhone 7 Plus, iPhone 8 Plus Slim"
+        },
+        {
+          "imageName": "tenacity-case2.jpg",
+          "color": "iPhone 7, iPhone 8 Slim"
+        },
+        {
+          "imageName": "tenacity-case3.jpg",
+          "color": "iPhone 6 or 6s Slim"
+        }
+      ]
     },
     {
       "id": 10,
@@ -207,13 +599,61 @@
       "folderName": "legacy-sleeve",
       "thumbnailImage": {
         "imageName": "legacy-sleeve.jpg",
-        "color": "None"
+        "color": "Forest"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": true,
-      "images": []
+      "colors": "Forest/Gold/Red/White/Athletic Heather/Sky Blue",
+      "sizes": "S/M/L/XL/2XL",
+      "description": "This unisex long sleeve is both cozy and stylish. Preshrunk 100% cotton tee with high quality print will serve as a style statement for years to come. Legacies live on.",
+      "images": [
+        {
+          "imageName": "legacy-sleeve.jpg",
+          "color": "Forest"
+        },
+        {
+          "imageName": "legacy-sleeve-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "legacy-sleeve-white.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "legacy-sleeve-white-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "legacy-sleeve-ah.jpg",
+          "color": "Athletic Heather"
+        },
+        {
+          "imageName": "legacy-sleeve-ah-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "legacy-sleeve-gold.jpg",
+          "color": "Gold"
+        },
+        {
+          "imageName": "legacy-sleeve-gold-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "legacy-sleeve-sb.jpg",
+          "color": "Sky Blue"
+        },
+        {
+          "imageName": "legacy-sleeve-sb-back.jpg",
+          "color": "None"
+        },
+        {
+          "imageName": "legacy-sleeve-red.jpg",
+          "color": "Red"
+        },
+        {
+          "imageName": "legacy-sleeve-red-back.jpg",
+          "color": "None"
+        }
+      ]
     },
     {
       "id": 11,
@@ -222,13 +662,21 @@
       "folderName": "loyal-tee",
       "thumbnailImage": {
         "imageName": "loyal-tee.jpg",
-        "color": "None"
+        "color": "Heather Olive"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "Heather Olive/White",
+      "sizes": "XS or SM/M or L",
+      "description": "Love knows no bounds.",
+      "images": [
+        {
+          "imageName": "loyal-tee.jpg",
+          "color": "Heather Olive"
+        },
+        {
+          "imageName": "loyal-tee2.jpg",
+          "color": "White"
+        }
+      ]
     },
     {
       "id": 12,
@@ -237,13 +685,29 @@
       "folderName": "loyal-tee2",
       "thumbnailImage": {
         "imageName": "loyal-tee2.jpg",
-        "color": "None"
+        "color": "White"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "White/Black/Navy/Sport Grey",
+      "sizes": "S/M/L/XL/2XL/3XL",
+      "description": "Love knows no bounds.",
+      "images": [
+        {
+          "imageName": "loyal-tee2.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "loyal-tee2-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "loyal-tee2-navy.jpg",
+          "color": "Navy"
+        },
+        {
+          "imageName": "loyal-tee2-sportgrey.jpg",
+          "color": "Sport Grey"
+        }
+      ]
     },
     {
       "id": 13,
@@ -252,13 +716,25 @@
       "folderName": "tenaci-tee",
       "thumbnailImage": {
         "imageName": "tenaci-tee.jpg",
-        "color": "None"
+        "color": "White"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": true,
-      "images": []
+      "colors": "White/Black/Navy",
+      "sizes": "S/M/L/XL/2XL/3XL",
+      "description": "Every human being's got their own battles, but you're strong because you've pushed through and got over them. Mountains serve as a reminder that no matter how seemingly impossible a challenge may be, there'll always be a way. Fight for that.",
+      "images": [
+        {
+          "imageName": "tenaci-tee.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "tenaci-tee-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "tenaci-tee-navy.jpg",
+          "color": "Navy"
+        }
+      ]
     },
     {
       "id": 14,
@@ -267,13 +743,68 @@
       "folderName": "tenaci-hoodie",
       "thumbnailImage": {
         "imageName": "tenaci-hoodie.jpg",
-        "color": "None"
+        "color": "White"
       },
-      "colors": "",
-      "sizes": "",
-      "description": "",
-      "featured": false,
-      "images": []
+      "colors": "White/Black/Sport Grey/Gold/Military Green/Forest Green/Navy/Light Pink",
+      "sizes": "S/M/L/XL/2XL/3XL",
+      "description": "Every human being's got their own battles, but you're strong because you've pushed through and got over them. Mountains serve as a reminder that no matter how seemingly impossible a challenge may be, there'll always be a way. Fight for that.",
+      "images": [
+        {
+          "imageName": "tenaci-hoodie.jpg",
+          "color": "White"
+        },
+        {
+          "imageName": "tenaci-hoodie-black.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "tenaci-hoodie-sg.jpg",
+          "color": "Sport Grey"
+        },
+        {
+          "imageName": "tenaci-hoodie-gold.jpg",
+          "color": "Gold"
+        },
+        {
+          "imageName": "tenaci-hoodie-mg.jpg",
+          "color": "Military Green"
+        },
+        {
+          "imageName": "tenaci-hoodie-fg.jpg",
+          "color": "Forest Green"
+        },
+        {
+          "imageName": "tenaci-hoodie-navy.jpg",
+          "color": "Navy"
+        },
+        {
+          "imageName": "tenaci-hoodie-lp.jpg",
+          "color": "Light Pink"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "UniTee :)",
+      "price": 27.99,
+      "folderName": "uni-tee",
+      "thumbnailImage": {
+        "imageName": "uni-tee.jpg",
+        "color": "Black"
+      },
+      "colors": "Black/Navy",
+      "sizes": "S/M/L/XL/2XL/3XL",
+      "description": "Good vibes all around. ",
+      "images": [
+        {
+          "imageName": "uni-tee.jpg",
+          "color": "Black"
+        },
+        {
+          "imageName": "uni-tee2.jpg",
+          "color": "Navy"
+        }
+      ]
     }
   ]
 }
