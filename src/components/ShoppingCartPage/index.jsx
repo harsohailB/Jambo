@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import currency from "currency.js";
 import { loadStripe } from "@stripe/stripe-js";
 import { createCheckoutSession } from "../../actions/payments";
+import { Helmet } from 'react-helmet';
 
 const Wrapper = styled.div`
   display: flex;
@@ -154,6 +155,9 @@ const ShoppingCartPage = () => {
 
   return (
     <Wrapper>
+      <Helmet>
+          <title>Your Shopping Cart - JAMBO</title>
+      </Helmet>
       <Title>Your cart</Title>
       {shoppingCartItems.length !== 0 ? renderCart() : renderEmptyCart()}
     </Wrapper>

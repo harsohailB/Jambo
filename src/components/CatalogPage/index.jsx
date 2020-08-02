@@ -6,6 +6,7 @@ import { getItems } from "../../actions/items";
 import Form from "../styled/Form";
 import Input from "../styled/Input";
 import { useLocation } from "react-router-dom";
+import { Helmet } from 'react-helmet'
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,6 +79,9 @@ const CatalogPage = () => {
 
   return (
     <Wrapper>
+    <Helmet>
+      <title>Products - JAMBO</title>
+    </Helmet>
       {location.data ? (
         <Title>Search results for "{location.data}"</Title>
       ) : (

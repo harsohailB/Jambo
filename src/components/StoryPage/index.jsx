@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Title from "../styled/Title"
+import { Helmet } from 'react-helmet';
 
 import storyImage from "../../assets/story-page-image.webp"
 
@@ -38,6 +39,9 @@ const Message = styled.p`
 const StoryPage = () => {
     return(
         <Wrapper>
+            <Helmet>
+                <title>Story - JAMBO</title>
+            </Helmet>
             <Title>Story</Title>
             <MessageWrapper>
                 <Message>

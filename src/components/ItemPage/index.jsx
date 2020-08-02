@@ -10,6 +10,7 @@ import { deleteItemById } from "../../actions/items";
 import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import { Helmet } from 'react-helmet'
 
 const Wrapper = styled.div`
   display: flex;
@@ -243,6 +244,9 @@ const ItemPage = () => {
     <div>
       {item ? (
         <Wrapper>
+          <Helmet>
+            <title>{item.name} - JAMBO</title>
+          </Helmet>
           <PreviewWrapper>
             <MainImageWrapper>
               {mainImage ? (
