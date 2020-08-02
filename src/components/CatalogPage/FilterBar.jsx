@@ -105,36 +105,30 @@ const FilterBar = ({
 
   const updateSelectedSortingOption = (evt) => {
     setSelectedSortingOption(evt.target.value);
-    let sortedItems = sortCatalog(items, evt.target.value);
-    let filteredItems = filterItems(sortedItems, selectedFiteringOption);
-    let tempItems = [];
-    filteredItems.forEach((item) => {
-      tempItems.push(item);
-    });
-    setDisplayedItems(tempItems);
+    updateCatalog(items, evt.target.value, selectedFiteringOption);
   };
 
   const updateSelectedFilteringOption = (evt) => {
     setSelectedFilteringOption(evt.target.value);
-    if (evt.target.value === "All Products") {
-      setDisplayedItems(items);
-    } else {
-      let filteredItems = filterItems(displayedItems, evt.target.value);
-      setDisplayedItems(filteredItems);
-    }
+    updateCatalog(items, selectedSortingOption, evt.target.value);
   };
 
-  const filterItems = (items, filteringOption) => {
+  const updateCatalog = (items, sortingOption, filteringOption) => {
+    // SORT
+    let sortedItems = sortCatalog(items, sortingOption);
+    // FILTER
     let filteredItems = [];
-    if (filteringOption != "All Products") {
-      items.forEach((item) => {
+    if (filteringOption !== "All Products") {
+      sortedItems.forEach((item) => {
         if (item.tags.includes(filteringOption)) {
           filteredItems.push(item);
         }
       });
-      return filteredItems;
+    } else {
+      filteredItems = sortedItems;
     }
-    return items;
+    // UPDATE
+    setDisplayedItems(filteredItems);
   };
 
   return (
