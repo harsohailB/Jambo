@@ -38,7 +38,6 @@ const Credits = styled.p`
 const Footer = () => {
   return (
     <Wrapper>
-      <PageReference to="/catalog">Search</PageReference>
       <Image src={paymentMethods}></Image>
       <Credits>© 2020, JAMBO Website by Harsohail Brar & Ryan Holt</Credits>
     </Wrapper>

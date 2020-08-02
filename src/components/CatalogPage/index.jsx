@@ -40,9 +40,6 @@ const ItemsWrapper = styled.div`
 const CatalogPage = () => {
   const location = useLocation();
   const [items, setItems] = useState([]);
-  const [searchInput, setSearchInput] = useState(
-    location.data ? location.data : ""
-  );
 
   useEffect(() => {
     console.log(location);
@@ -53,16 +50,17 @@ const CatalogPage = () => {
         setItems(fetchedItems);
       }
     });
-  }, []);
-
-  const handleSearchInputChange = (evt) => {
-    setSearchInput(evt.target.value);
-  };
+  }, [location]);
 
   const renderItems = () => {
-    const filteredItems = items.filter((item) =>
-      item.name.toLowerCase().includes(searchInput.toLowerCase())
-    );
+    let filteredItems = [];
+    if (location.data) {
+      filteredItems = items.filter((item) =>
+        item.name.toLowerCase().includes(location.data.toLowerCase())
+      );
+    } else {
+      filteredItems = items;
+    }
 
     return filteredItems.map((item) => (
       <Item
@@ -80,15 +78,11 @@ const CatalogPage = () => {
 
   return (
     <Wrapper>
-      <Title>Products</Title>
-      <Form>
-        <Input
-          type="search"
-          placeholder="Search"
-          value={searchInput}
-          onChange={handleSearchInputChange}
-        ></Input>
-      </Form>
+      {location.data ? (
+        <Title>Search results for "{location.data}"</Title>
+      ) : (
+        <Title>Products</Title>
+      )}
       <FilterBar productCount={items.length} />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
