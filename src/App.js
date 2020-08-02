@@ -17,6 +17,7 @@ import ls from "local-storage";
 import { useDispatch } from "react-redux";
 import { LOGIN_USER, LOGOUT_USER, FETCH_SC_ITEMS } from "./actions/types";
 import EditItemPage from "./components/EditItemPage";
+import { Helmet } from 'react-helmet';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="app-container">
+        <Helmet>
+          <title>JAMBO APPAREL</title>
+        </Helmet>
         <AnnouncementHeader />
         <Navbar />
         <Switch>

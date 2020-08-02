@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Title from "../styled/Title";
 import EditItemForm from "./EditItemForm";
+import { Helmet } from 'react-helmet'
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,6 +17,9 @@ const EditItemPage = () => {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>Edit Item - JAMBO</title>
+      </Helmet>
       {user ? <EditItemForm /> : <Title>You're not supposed to be here!</Title>}
     </Wrapper>
   );
