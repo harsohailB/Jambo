@@ -50,12 +50,9 @@ const FilterBar = ({ items, setItems, productCount }) => {
   const sortingOptions = [
     "Alphabetically, A-Z",
     "Alphabetically, Z-A",
-    "*Featured",
-    "*Best-Selling",
+    "Featured",
     "Price, low to high",
     "Price, high to low",
-    "*Date, new to old",
-    "*Date, old to new",
   ];
   const filteringOptions = [
     "All Products",
