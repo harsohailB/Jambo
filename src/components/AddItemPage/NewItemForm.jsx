@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import ImageForm from "./ImageForm";
@@ -70,6 +71,7 @@ const Label = styled.label`
 
 const NewItemForm = () => {
   const user = useSelector((state) => state.user);
+  const history = useHistory();
   const [newItem, setNewItem] = useState({
     name: "",
     folderName: "",
@@ -114,7 +116,9 @@ const NewItemForm = () => {
     // Check image inputs
     let result = false;
     newItem.images.forEach((image) => {
+      console.log(image);
       if (image.file === null || image.imageName === "") {
+        console.log("IN");
         setHasErrors(true);
         result = true;
       }
@@ -131,6 +135,7 @@ const NewItemForm = () => {
     if (!checkForErrors()) {
       try {
         uploadItem(user, newItem);
+        history.push("/catalog");
       } catch (error) {
         setHasErrors(true);
         console.log(error);

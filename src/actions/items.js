@@ -93,6 +93,7 @@ const createFolderForNewItem = async (user, folderName) => {
   }
 
   return response.data;
+};
 
 export const deleteItemById = async (user, id) => {
   const params = "?username=" + user.username + "&password=" + user.password;
@@ -106,7 +107,7 @@ export const deleteItemById = async (user, id) => {
   }
 
   return { message: "Item " + id + " deleted" };
-}
+};
 
 export const updateItemById = async (user, updatedItem) => {
   const params = "?username=" + user.username + "&password=" + user.password;
