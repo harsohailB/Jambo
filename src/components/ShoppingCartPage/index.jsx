@@ -105,8 +105,7 @@ const ShoppingCartPage = () => {
     let line_items = [];
     shoppingCartItems.forEach((item) => {
       line_items.push({
-        name: item.name,
-        description: item.color + "/" + item.size,
+        name: item.name + " (" + item.color + "/" + item.size + ")",
         amount: Math.round(item.price * 100),
         currency: "cad",
         quantity: item.quantity,
