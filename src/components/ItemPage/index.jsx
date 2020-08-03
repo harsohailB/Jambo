@@ -171,6 +171,7 @@ const Dropdown = styled.select`
 
   @media (max-width: 768px) {
     margin-bottom: 10px;
+    font-size: 22px;
   }
 `;
 
