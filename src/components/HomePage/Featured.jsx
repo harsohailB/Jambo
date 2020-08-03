@@ -28,6 +28,10 @@ const ItemWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 17.5px;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const Featured = () => {

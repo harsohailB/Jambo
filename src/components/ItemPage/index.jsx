@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Dropdown from "../styled/Dropdown";
 import Button from "../styled/Button";
 import { useLocation } from "react-router-dom";
 import { getItemById, updateItemById } from "../../actions/items";
@@ -10,12 +9,16 @@ import { deleteItemById } from "../../actions/items";
 import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   margin-top: 50px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const PreviewWrapper = styled.div`
@@ -25,6 +28,11 @@ const PreviewWrapper = styled.div`
   align-items: flex-end;
   max-width: 50%;
   margin-right: 50px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 90%;
+  }
 `;
 
 const MainImageWrapper = styled.div`
@@ -32,6 +40,10 @@ const MainImageWrapper = styled.div`
   justify-content: flex-end;
   overflow: hidden;
   margin-bottom: 25px;
+
+  @media (max-width: 768px) {
+    margin-left: 50px;
+  }
 `;
 
 const MainImage = styled.img`
@@ -41,6 +53,10 @@ const MainImage = styled.img`
 
   &:hover {
     transform: scale(3);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -70,6 +86,12 @@ const InfoWrapper = styled.div`
   justify-content: flex-start;
   width: 20%;
   margin-top: 50px;
+
+  @media (max-width: 768px) {
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 80%;
+  }
 `;
 
 const Name = styled.h3`
@@ -106,6 +128,10 @@ const DropdownWrapper = styled.div`
   flex-grow: 2;
   margin-top: 25px;
   margin-bottom: 5px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Icon = styled.div`
@@ -132,6 +158,22 @@ const FeatureItemOption = styled.span`
   font-weight: 400;
   cursor: pointer;
   color: #3d4246;
+`;
+
+const Dropdown = styled.select`
+  padding: 10px 28px 10px 18px;
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
+  line-height: 1.5;
+  border: 0 solid transparent;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const ItemPage = () => {

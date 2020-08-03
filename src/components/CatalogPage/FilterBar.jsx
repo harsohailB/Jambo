@@ -14,6 +14,11 @@ const Wrapper = styled.div`
   margin-right: 150px;
   max-width: 1500px;
   width: 75%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const FilterWrapper = styled.div`

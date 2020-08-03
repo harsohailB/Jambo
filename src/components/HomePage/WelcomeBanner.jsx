@@ -28,6 +28,10 @@ const ContentWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
 `;
 
 const Title = styled.h1`

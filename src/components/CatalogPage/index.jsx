@@ -6,7 +6,7 @@ import { getItems } from "../../actions/items";
 import Form from "../styled/Form";
 import Input from "../styled/Input";
 import { useLocation } from "react-router-dom";
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +36,10 @@ const ItemsWrapper = styled.div`
   margin-right: 150px;
   flex-grow: 5;
   max-width: 1400px;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const CatalogPage = () => {
@@ -81,9 +85,9 @@ const CatalogPage = () => {
 
   return (
     <Wrapper>
-    <Helmet>
-      <title>Products - JAMBO</title>
-    </Helmet>
+      <Helmet>
+        <title>Products - JAMBO</title>
+      </Helmet>
       {location.data ? (
         <Title>Search results for "{location.data}"</Title>
       ) : (
