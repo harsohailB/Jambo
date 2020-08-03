@@ -10,6 +10,8 @@ import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
+import Carousel from "react-elastic-carousel";
+import { useWindowResize } from "beautiful-react-hooks";
 
 const Wrapper = styled.div`
   display: flex;
@@ -177,6 +179,11 @@ const Dropdown = styled.select`
 `;
 
 const ItemPage = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+  useWindowResize((event: React.SyntheticEvent) => {
+    setIsMobile(window.innerWidth < 728);
+  });
+
   const user = useSelector((state) => state.user);
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const dispatch = useDispatch();
@@ -189,6 +196,13 @@ const ItemPage = () => {
   const [mainImage, setMainImage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+
+  const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 100, itemsToShow: 2 },
+    { width: 200, itemsToShow: 3 },
+    { width: 300, itemsToShow: 4 },
+  ];
 
   useEffect(() => {
     try {
@@ -228,6 +242,10 @@ const ItemPage = () => {
         onClick={() => setMainImage(image)}
       ></SmallImage>
     ));
+  };
+
+  const renderMobileImageCarousel = () => {
+    return <Carousel breakPoints={breakPoints}>{renderSmallImages()}</Carousel>;
   };
 
   const updateSelectedColor = (evt) => {
@@ -308,7 +326,11 @@ const ItemPage = () => {
               )}
             </MainImageWrapper>
 
-            <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
+            {!isMobile ? (
+              <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
+            ) : (
+              renderMobileImageCarousel()
+            )}
           </PreviewWrapper>
 
           <InfoWrapper>
