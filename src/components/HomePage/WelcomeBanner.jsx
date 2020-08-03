@@ -28,7 +28,7 @@ const ContentWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
-
+  object-fit: cover;
   @media (max-width: 768px) {
     height: 300px;
   }
