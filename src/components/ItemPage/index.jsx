@@ -50,7 +50,6 @@ const MainImage = styled.img`
   width: 50%;
   height: 100%;
   transition: all 0.3s ease;
-  margin-right: 50px;
 
   &:hover {
     transform: scale(3);
