@@ -34,6 +34,8 @@ const PreviewWrapper = styled.div`
   @media (max-width: 768px) {
     max-width: 100%;
     width: 100%;
+    margin-left: 5%;
+    width: 90%;
   }
 `;
 
