@@ -46,8 +46,9 @@ const MainImageWrapper = styled.div`
 
 const MainImage = styled.img`
   width: 50%;
-  height: auto;
+  height: 100%;
   transition: all 0.3s ease;
+  margin-right: 50px;
 
   &:hover {
     transform: scale(3);
@@ -63,7 +64,8 @@ const SmallImageWrapper = styled.div`
   justify-content: flex-end;
   flex-wrap: wrap;
   flex-grow: 4;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
 `;
 
 const SmallImage = styled.img`

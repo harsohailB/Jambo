@@ -5,7 +5,7 @@ import Carousel from "react-elastic-carousel";
 
 const SmallImage = styled.img`
   width: 110px;
-  height: auto;
+  height: 100%;
   cursor: pointer;
   margin: 10px;
   padding: 2px;
