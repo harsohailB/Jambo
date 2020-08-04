@@ -115,7 +115,7 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
   const [menuClicked, setMenuClicked] = useState(false);
   useWindowResize((event: React.SyntheticEvent) => {
-    setIsMobile(window.innerWidth < 728);
+    setIsMobile(window.innerWidth < 800);
   });
 
   const user = useSelector((state) => state.user);
