@@ -34,6 +34,10 @@ const Message = styled.p`
     color: #838B92;
     line-height: 1.5;
     max-width: 50%;
+    @media (max-width: 768px) {
+    font-size: 20px;
+    max-width: 75%;
+  }
 `;
 
 const StoryPage = () => {

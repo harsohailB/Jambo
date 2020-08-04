@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import currency from "currency.js";
 import { loadStripe } from "@stripe/stripe-js";
 import { createCheckoutSession } from "../../actions/payments";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,6 +24,10 @@ const ItemsWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 70%;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 const TableWrapper = styled.table`
@@ -101,8 +105,7 @@ const ShoppingCartPage = () => {
     let line_items = [];
     shoppingCartItems.forEach((item) => {
       line_items.push({
-        name: item.name,
-        description: item.color + "/" + item.size,
+        name: item.name + " (" + item.color + "/" + item.size + ")",
         amount: Math.round(item.price * 100),
         currency: "cad",
         quantity: item.quantity,
@@ -156,7 +159,7 @@ const ShoppingCartPage = () => {
   return (
     <Wrapper>
       <Helmet>
-          <title>Your Shopping Cart - JAMBO</title>
+        <title>Your Shopping Cart - JAMBO</title>
       </Helmet>
       <Title>Your cart</Title>
       {shoppingCartItems.length !== 0 ? renderCart() : renderEmptyCart()}

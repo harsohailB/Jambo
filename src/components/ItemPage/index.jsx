@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Dropdown from "../styled/Dropdown";
 import Button from "../styled/Button";
 import { useLocation } from "react-router-dom";
 import { getItemById, updateItemById } from "../../actions/items";
@@ -10,12 +9,18 @@ import { deleteItemById } from "../../actions/items";
 import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
+import ImageCarousel from "./ImageCarousel";
+import { useWindowResize } from "beautiful-react-hooks";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   margin-top: 50px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const PreviewWrapper = styled.div`
@@ -25,6 +30,11 @@ const PreviewWrapper = styled.div`
   align-items: flex-end;
   max-width: 50%;
   margin-right: 50px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 100%;
+  }
 `;
 
 const MainImageWrapper = styled.div`
@@ -36,11 +46,16 @@ const MainImageWrapper = styled.div`
 
 const MainImage = styled.img`
   width: 50%;
-  height: auto;
+  height: 100%;
   transition: all 0.3s ease;
+  margin-right: 50px;
 
   &:hover {
     transform: scale(3);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -49,7 +64,8 @@ const SmallImageWrapper = styled.div`
   justify-content: flex-end;
   flex-wrap: wrap;
   flex-grow: 4;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
 `;
 
 const SmallImage = styled.img`
@@ -70,6 +86,12 @@ const InfoWrapper = styled.div`
   justify-content: flex-start;
   width: 20%;
   margin-top: 50px;
+
+  @media (max-width: 768px) {
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 80%;
+  }
 `;
 
 const Name = styled.h3`
@@ -106,6 +128,10 @@ const DropdownWrapper = styled.div`
   flex-grow: 2;
   margin-top: 25px;
   margin-bottom: 5px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Icon = styled.div`
@@ -134,7 +160,29 @@ const FeatureItemOption = styled.span`
   color: #3d4246;
 `;
 
+const Dropdown = styled.select`
+  padding: 10px 28px 10px 18px;
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
+  line-height: 1.5;
+  border: 0 solid transparent;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+`;
+
 const ItemPage = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+  useWindowResize((event: React.SyntheticEvent) => {
+    setIsMobile(window.innerWidth < 728);
+  });
+
   const user = useSelector((state) => state.user);
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const dispatch = useDispatch();
@@ -266,7 +314,15 @@ const ItemPage = () => {
               )}
             </MainImageWrapper>
 
-            <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
+            {!isMobile ? (
+              <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
+            ) : (
+              <ImageCarousel
+                item={item}
+                images={images}
+                setMainImage={setMainImage}
+              />
+            )}
           </PreviewWrapper>
 
           <InfoWrapper>
