@@ -66,6 +66,28 @@ server.post("/session_id", async (req, res) => {
   res.jsonp(session.id);
 });
 
+/******** Email subscribe route ************/
+const emailAlreadyExists = (email) => {
+  let result = false;
+  const db = router.db;
+  const currentEmails = db.__wrapped__.emails;
+  currentEmails.forEach((currEmail) => {
+    if (currEmail.email === email) {
+      result = true;
+    }
+  });
+  return result;
+};
+
+server.post("/emails", async (req, res, next) => {
+  if (!emailAlreadyExists(req.body.email)) {
+    next();
+  } else {
+    res.sendStatus(409);
+  }
+});
+/**************************************** */
+
 // Use default router
 server.use(router);
 server.listen(3001, () => {
