@@ -12,7 +12,11 @@ require("dotenv").config();
 server.use(middlewares);
 
 const isAuthorizableRequest = (req) => {
-  if (req.originalUrl === "/session_id") {
+  if (req.method === "GET" && req.originalUrl === "/emails") {
+    return true;
+  }
+
+  if (req.originalUrl === "/session_id" || req.originalUrl === "/emails") {
     return false;
   } else {
     return (

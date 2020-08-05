@@ -889,5 +889,19 @@
         }
       ]
     }
+  ],
+  "emails": [
+    {
+      "id": 0,
+      "email": "a@gmail.com"
+    },
+    {
+      "email": "b@gmail.com",
+      "id": 1
+    },
+    {
+      "email": "c@gmail.com",
+      "id": 2
+    }
   ]
 }
