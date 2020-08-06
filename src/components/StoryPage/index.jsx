@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Title from "../styled/Title"
+import { Helmet } from 'react-helmet';
 
 import storyImage from "../../assets/story-page-image.webp"
 
@@ -33,11 +34,18 @@ const Message = styled.p`
     color: #838B92;
     line-height: 1.5;
     max-width: 50%;
+    @media (max-width: 768px) {
+    font-size: 20px;
+    max-width: 75%;
+  }
 `;
 
 const StoryPage = () => {
     return(
         <Wrapper>
+            <Helmet>
+                <title>Story - JAMBO</title>
+            </Helmet>
             <Title>Story</Title>
             <MessageWrapper>
                 <Message>

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../actions/users";
 import Title from "../styled/Title";
+import { Helmet } from 'react-helmet'
 
 const Wrapper = styled.div`
     display: flex;
@@ -93,6 +94,9 @@ const LoginForm = () => {
 
     return(
         <Wrapper>
+            <Helmet>
+                <title>Login - JAMBO</title>
+            </Helmet>
             {!user ?
                 <Form onSubmit={handleFormSubmit}>
                     <Input
