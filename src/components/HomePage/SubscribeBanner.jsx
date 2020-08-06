@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Form from "../styled/Form";
 import Input from "../styled/Input";
 import { addEmail } from "../../actions/emails";
+import { AnimateOnChange, animations } from "react-animation";
 
 const Wrapper = styled.div`
   margin-top: 55px;
@@ -60,20 +61,41 @@ const Button = styled.button`
   font-size: 14px;
 `;
 
+const ConfirmationMessage = styled.div`
+  background-color: #d66e40;
+  padding: 10px 55px;
+  font-size: 16px;
+  font-family: "Oswald", sans-serif;
+  font-style: normal;
+  color: white;
+  wdith: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+`;
+
 const SubscribeBanner = () => {
   const [email, setEmail] = useState("");
+  const [subscribeConfirmation, setSubscribeConfirmation] = useState(false);
+  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
 
   const handleEmailChange = (evt) => {
     setEmail(evt.target.value);
   };
 
   const handleSubmit = (e) => {
-    if (email.length !== 0) {
+    e.preventDefault();
+    if (email.length !== 0 && !subscribeConfirmation) {
       try {
         addEmail(email);
+        setSubscribeConfirmation(true);
+        setEmail("");
       } catch (err) {
         console.log(err);
       }
+    }
+
+    if (subscribeConfirmation) {
+      setAlreadySubscribed(true);
     }
   };
 
@@ -93,6 +115,12 @@ const SubscribeBanner = () => {
         ></Input>
         <Button>SUBSCRIBE</Button>
       </Form>
+      {subscribeConfirmation && !alreadySubscribed && (
+        <ConfirmationMessage>You are now subscribed!</ConfirmationMessage>
+      )}
+      {alreadySubscribed && (
+        <ConfirmationMessage>You are already subscribed!</ConfirmationMessage>
+      )}
     </Wrapper>
   );
 };

@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Title from "../styled/Title";
 import { Helmet } from "react-helmet";
-import { getEmails } from "../../actions/emails";
+import { getEmails, deleteEmail } from "../../actions/emails";
 import Button from "../styled/Button";
+import { FaTrash } from "react-icons/fa";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,41 +14,83 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const ButtonsWrapper = styled.div`
+const EmailWrapper = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+`;
+
+const Subtitle = styled.p`
+  font-size: 18px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #69727b;
+  line-height: 1.5;
+`;
+
+const Icon = styled.div`
+  color: #3d4246;
+  cursor: pointer;
+
+  & :hover {
+    color: red;
+  }
+  & > svg {
+    transition: color 0.1s linear;
+  }
 `;
 
 const SubscriberPage = () => {
   const user = useSelector((state) => state.user);
   const [emails, setEmails] = useState([]);
-  const [csvMode, setCSVMode] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    if (user) {
+      try {
+        getEmails(user).then((fetchedEmails) => {
+          setEmails(fetchedEmails);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [user]);
+
+  const handleEmailDelete = (email) => {
     try {
-      getEmails(user).then((fetchedEmails) => {
-        setEmails(fetchedEmails);
-      });
+      deleteEmail(user, email);
+      setEmails(emails.filter((obj) => obj.id !== email.id));
     } catch (err) {
       console.log(err);
     }
-  }, []);
-
-  const renderColumnEmails = () => {
-    return emails.map((obj) => <p>{obj.email}</p>);
   };
 
-  const renderCSVEmails = () => {
-    let emailList = "";
-    emails.forEach((obj) => {
-      emailList += obj.email + ",";
-    });
-    return <p>{emailList}</p>;
+  const renderEmails = () => {
+    return emails.map((obj) => (
+      <EmailWrapper>
+        <Subtitle>{obj.email}</Subtitle>
+        <Icon onClick={() => handleEmailDelete(obj)}>
+          <FaTrash size={18} />
+        </Icon>
+      </EmailWrapper>
+    ));
   };
 
   const handleButtonClick = () => {
-    setCSVMode(!csvMode);
+    let emailsCSV = "";
+    emails.forEach((obj) => {
+      emailsCSV += obj.email + ",";
+    });
+    var textField = document.createElement("textarea");
+    textField.innerText = emailsCSV;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    setCopied(true);
   };
 
   return (
@@ -60,9 +103,9 @@ const SubscriberPage = () => {
         <Wrapper>
           <Title>Subscribers</Title>
           <Button onClick={handleButtonClick}>
-            {csvMode ? "Column Mode" : "CSV Mode"}
+            {!copied ? "Copy to clipboard (CSV)" : "Copying Success!"}
           </Button>
-          {csvMode ? renderCSVEmails() : renderColumnEmails()}
+          {renderEmails()}
         </Wrapper>
       ) : (
         <Title>You're not supposed to be here!</Title>

@@ -22,3 +22,17 @@ export const addEmail = async (email) => {
 
   return { message: "Email " + email + " subscribed!" };
 };
+
+export const deleteEmail = async (user, email) => {
+  const params = "?username=" + user.username + "&password=" + user.password;
+
+  const response = await axios.delete(
+    `${config.endpoint}/emails/${email.id}/${params}`
+  );
+
+  if (response.status !== 200) {
+    throw "deleteEmail failed with error code " + response.status;
+  }
+
+  return response.data;
+};

@@ -16,7 +16,11 @@ const isAuthorizableRequest = (req) => {
     return true;
   }
 
-  if (req.originalUrl === "/session_id" || req.originalUrl === "/emails") {
+  if (req.originalUrl === "/emails" && req.method === "POST") {
+    return false;
+  }
+
+  if (req.originalUrl === "/session_id") {
     return false;
   } else {
     return (
@@ -29,7 +33,7 @@ const isAuthorizableRequest = (req) => {
 };
 
 const isAuthorized = (req) => {
-  // TODO use env for store username and password
+  console.log(req.query.username);
   return (
     req.query.username === process.env.ADMIN_USERNAME &&
     req.query.password === process.env.ADMIN_PASSWORD
