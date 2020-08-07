@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { LOGIN_USER, LOGOUT_USER, FETCH_SC_ITEMS } from "./actions/types";
 import EditItemPage from "./components/EditItemPage";
 import { Helmet } from "react-helmet";
+import SubscriberPage from "./components/SubscriberPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/login" component={LoginPage}></Route>
           <Route path="/add-item" component={AddItemPage}></Route>
           <Route path="/edit-item/:id" component={EditItemPage}></Route>
+          <Route path="/subscribers" component={SubscriberPage}></Route>
         </Switch>
         <Footer />
       </div>
