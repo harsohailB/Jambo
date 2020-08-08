@@ -3,6 +3,10 @@ import styled from "styled-components";
 import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
+import Form from "../styled/Form";
+import Input from "../styled/Input";
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,24 +36,40 @@ const ItemsWrapper = styled.div`
   margin-right: 150px;
   flex-grow: 5;
   max-width: 1400px;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const CatalogPage = () => {
+  const location = useLocation();
   const [items, setItems] = useState([]);
+  const [displayedItems, setDisplayedItems] = useState([]);
 
   useEffect(() => {
+    console.log(location);
     getItems().then((fetchedItems) => {
-      console.log(fetchedItems);
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
+        setDisplayedItems(fetchedItems);
       }
     });
-  }, []);
+  }, [location]);
 
   const renderItems = () => {
-    return items.map((item) => (
+    let filteredItems = [];
+    if (location.data) {
+      filteredItems = displayedItems.filter((item) =>
+        item.name.toLowerCase().includes(location.data.toLowerCase())
+      );
+    } else {
+      filteredItems = displayedItems;
+    }
+
+    return filteredItems.map((item) => (
       <Item
         key={item.id}
         id={item.id}
@@ -62,10 +82,23 @@ const CatalogPage = () => {
       ></Item>
     ));
   };
+
   return (
     <Wrapper>
-      <Title>Products</Title>
-      <FilterBar productCount={items.length} />
+      <Helmet>
+        <title>Products - JAMBO</title>
+      </Helmet>
+      {location.data ? (
+        <Title>Search results for "{location.data}"</Title>
+      ) : (
+        <Title>Products</Title>
+      )}
+      <FilterBar
+        items={items}
+        displayedItems={displayedItems}
+        setDisplayedItems={setDisplayedItems}
+        productCount={items.length}
+      />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
   );

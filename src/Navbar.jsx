@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FaSearch, FaShoppingCart, FaDoorOpen } from "react-icons/fa";
+import { FaSearch, FaShoppingCart, FaDoorOpen, FaBars } from "react-icons/fa";
 import styled from "styled-components";
 import logo from "./assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { LOGOUT_USER } from "./actions/types";
+import { useWindowResize } from "beautiful-react-hooks";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const NavbarWrapper = styled.div`
   background-color: white;
@@ -17,6 +23,12 @@ const NavbarWrapper = styled.div`
 const PagesWrapper = styled.nav`
   display: flex;
   list-style: none;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
 `;
 
 const PageReference = styled(Link)`
@@ -42,7 +54,8 @@ const LogoWrapper = styled(Link)`
 `;
 
 const Logo = styled.img`
-  max-width: 220px;
+  width: 220px;
+  height: 71px;
   margin-top: 15px;
   margin-bottom: 15px;
 `;
@@ -92,17 +105,41 @@ const SearchBar = styled.input`
   line-height: 1.5;
   padding: 10px 18px;
   transition: all 0.5s;
+
+  @media (max-width: 768px) {
+    left: ;
+  }
 `;
 
 const Navbar = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+  const [menuClicked, setMenuClicked] = useState(false);
+  useWindowResize((event: React.SyntheticEvent) => {
+    setIsMobile(window.innerWidth < 800);
+  });
+
   const user = useSelector((state) => state.user);
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const dispatch = useDispatch();
   const history = useHistory();
   const [searchClicked, setSearchClicked] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
-  const handleSearchClick = () => {
-    setSearchClicked(!searchClicked);
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    if (searchClicked && searchInput.length !== 0) {
+      setSearchClicked(false);
+      history.push({
+        pathname: "/catalog",
+        data: searchInput,
+      });
+    } else {
+      setSearchClicked(!searchClicked);
+    }
+  };
+
+  const handleSearchInputChange = (evt) => {
+    setSearchInput(evt.target.value);
   };
 
   const handleLogout = (e) => {
@@ -119,39 +156,89 @@ const Navbar = () => {
     return count;
   };
 
+  const handleMenuClick = () => {
+    setMenuClicked(!menuClicked);
+  };
+
   return (
-    <NavbarWrapper>
-      <LogoWrapper to="/">
-        <Logo src={logo}></Logo>
-      </LogoWrapper>
+    <Wrapper>
+      <NavbarWrapper>
+        <LogoWrapper to="/">
+          <Logo src={logo}></Logo>
+        </LogoWrapper>
 
-      <PagesWrapper>
-        <PageReference to="/">Home</PageReference>
-        <PageReference to="/catalog">Catalog</PageReference>
-        <PageReference to="/story">Story</PageReference>
-        <PageReference to="/contact">Contact</PageReference>
-      </PagesWrapper>
-
-      <IconsWrapper>
-        {searchClicked && (
-          <SearchBar type="search" placeholder="Search"></SearchBar>
+        {!isMobile && (
+          <PagesWrapper>
+            <PageReference to="/">Home</PageReference>
+            <PageReference to="/catalog">Catalog</PageReference>
+            <PageReference to="/story">Story</PageReference>
+            <PageReference to="/contact">Contact</PageReference>
+          </PagesWrapper>
         )}
-        <Icon onClick={handleSearchClick}>
-          <FaSearch size={24} />
-        </Icon>
-        <Icon to="/cart">
-          <FaShoppingCart size={24} />
-          {shoppingCartItems.length !== 0 && (
-            <CartCounter>{getCartItemCount()}</CartCounter>
+
+        <IconsWrapper>
+          {searchClicked && !isMobile && (
+            <form onSubmit={handleSearchClick}>
+              <SearchBar
+                type="search"
+                placeholder="Search"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              ></SearchBar>
+            </form>
           )}
-        </Icon>
-        {user && (
-          <Icon onClick={handleLogout}>
-            <FaDoorOpen size={24} />
+          <Icon onClick={handleSearchClick}>
+            <FaSearch size={24} />
           </Icon>
-        )}
-      </IconsWrapper>
-    </NavbarWrapper>
+          <Icon to="/cart">
+            <FaShoppingCart size={24} />
+            {shoppingCartItems.length !== 0 && (
+              <CartCounter>{getCartItemCount()}</CartCounter>
+            )}
+          </Icon>
+          {user && (
+            <Icon onClick={handleLogout}>
+              <FaDoorOpen size={24} />
+            </Icon>
+          )}
+          {isMobile && (
+            <Icon onClick={handleMenuClick}>
+              <FaBars size={24} />
+            </Icon>
+          )}
+        </IconsWrapper>
+      </NavbarWrapper>
+
+      {searchClicked && isMobile && (
+        <PagesWrapper>
+          <form onSubmit={handleSearchClick}>
+            <SearchBar
+              type="search"
+              placeholder="Search"
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            ></SearchBar>
+          </form>
+        </PagesWrapper>
+      )}
+
+      {menuClicked && (
+        <PagesWrapper>
+          <PageReference onClick={() => setMenuClicked(false)} to="/">
+            Home
+          </PageReference>
+          <PageReference onClick={() => setMenuClicked(false)} to="/catalog">
+            Catalog
+          </PageReference>
+          <PageReference onClick={() => setMenuClicked(false)} to="/story">
+            Story
+          </PageReference>
+          <PageReference onClick={() => setMenuClicked(false)} to="/contact">
+            Contact
+          </PageReference>
+        </PagesWrapper>
+      )}
+    </Wrapper>
   );
 };
 

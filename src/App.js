@@ -17,6 +17,8 @@ import ls from "local-storage";
 import { useDispatch } from "react-redux";
 import { LOGIN_USER, LOGOUT_USER, FETCH_SC_ITEMS } from "./actions/types";
 import EditItemPage from "./components/EditItemPage";
+import { Helmet } from "react-helmet";
+import SubscriberPage from "./components/SubscriberPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,6 +44,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="app-container">
+        <Helmet>
+          <title>JAMBO APPAREL</title>
+        </Helmet>
         <AnnouncementHeader />
         <Navbar />
         <Switch>
@@ -51,10 +56,11 @@ const App = () => {
           <Route path="/story" component={StoryPage}></Route>
           <Route path="/contact" component={ContactPage}></Route>
           <Route path="/cart" component={ShoppingCartPage}></Route>
-          <Route path="/search" component={SearchPage}></Route>
+          {/* <Route path="/search/:query" component={SearchPage}></Route> */}
           <Route path="/login" component={LoginPage}></Route>
           <Route path="/add-item" component={AddItemPage}></Route>
           <Route path="/edit-item/:id" component={EditItemPage}></Route>
+          <Route path="/subscribers" component={SubscriberPage}></Route>
         </Switch>
         <Footer />
       </div>

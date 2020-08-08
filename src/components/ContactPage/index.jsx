@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Title from "../styled/Title"
+import { Helmet } from 'react-helmet'
 
 import contactImage from "../../assets/contact-page-image.webp"
 
@@ -33,11 +34,18 @@ const Message = styled.p`
     color: #838B92;
     line-height: 1.5;
     max-width: 50%;
+    @media (max-width: 768px) {
+    font-size: 20px;
+    max-width: 75%;
+  }
 `;
 
 const ContactPage = () => {
     return(
         <Wrapper>
+          <Helmet>
+            <title>Contact - JAMBO</title>
+          </Helmet>
             <Title>Contact</Title>
             <MessageWrapper>
                 <Message>
