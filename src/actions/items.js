@@ -21,6 +21,80 @@ export const getItemById = async (id) => {
   return response.data;
 };
 
+export const uploadItem = async (user, newItem) => {
+  createFolderForNewItem(user, newItem.folderName);
+
+  newItem.images.forEach((image) => {
+    uploadImage(user, image, newItem.folderName);
+  });
+
+  const response = await axios.post(
+    `${config.endpoint}/items?username=` +
+      user.username +
+      "&password=" +
+      user.password,
+    newItem
+  );
+
+  if (response.status !== 200) {
+    throw (
+      "uploadItem failed with error code " +
+      response.status +
+      ": " +
+      response.data.message
+    );
+  }
+
+  return response.data;
+};
+
+const uploadImage = async (user, image, folderName) => {
+  const data = new FormData();
+  data.append("file", image.file);
+
+  const response = await axios.post(
+    `${config.endpoint}/upload?username=` +
+      user.username +
+      "&password=" +
+      user.password +
+      "&folderName=" +
+      folderName,
+    data
+  );
+
+  if (response.status !== 200) {
+    throw (
+      "uploadImage failed with error code " +
+      response.status +
+      ": " +
+      response.data.message
+    );
+  }
+
+  return response.data;
+};
+
+const createFolderForNewItem = async (user, folderName) => {
+  const response = await axios.post(
+    `${config.endpoint}/create-folder?username=` +
+      user.username +
+      "&password=" +
+      user.password,
+    { folderName }
+  );
+
+  if (response.status !== 200) {
+    throw (
+      "createFolderForNewItem failed with error code " +
+      response.status +
+      ": " +
+      response.data.message
+    );
+  }
+
+  return response.data;
+};
+
 export const deleteItemById = async (user, id) => {
   const params = "?username=" + user.username + "&password=" + user.password;
 
