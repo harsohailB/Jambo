@@ -12,13 +12,16 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "beautiful-react-hooks": "^0.27.2",
+    "concurrently": "^5.3.0",
     "connected-react-router": "^6.8.0",
     "currency.js": "^1.2.2",
     "d3": "^5.16.0",
+    "express": "^4.17.1",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
     "json-server": "^0.16.1",
     "local-storage": "^2.0.0",
+    "multer": "^1.4.2",
     "react": "^16.13.1",
     "react-animation": "^1.2.2",
     "react-dom": "^16.13.1",
@@ -41,7 +44,8 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"node server.js\"",
+    "server": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

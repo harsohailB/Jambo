@@ -11,7 +11,17 @@ require("dotenv").config();
 // Set default middlewares
 server.use(middlewares);
 
+/************AUTHORIZATION***************/
+
 const isAuthorizableRequest = (req) => {
+  if (req.method === "GET" && req.originalUrl.split("/").includes("emails")) {
+    return true;
+  }
+
+  if (req.originalUrl === "/emails" && req.method === "POST") {
+    return false;
+  }
+
   if (req.originalUrl === "/session_id") {
     return false;
   } else {
@@ -25,7 +35,6 @@ const isAuthorizableRequest = (req) => {
 };
 
 const isAuthorized = (req) => {
-  // TODO use env for store username and password
   return (
     req.query.username === process.env.ADMIN_USERNAME &&
     req.query.password === process.env.ADMIN_PASSWORD
@@ -41,6 +50,52 @@ server.use((req, res, next) => {
     next();
   }
 });
+
+/****************************************/
+
+/************IMAGE UPLOAD ROUTE**********/
+
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+const inventoryPath = "src/assets/catalog/inventory";
+
+server.post("/create-folder", (req, res) => {
+  fs.mkdir(
+    path.join(__dirname, inventoryPath + "/" + req.body.folderName),
+    (err) => {
+      if (err) {
+        return console.error(err);
+      }
+      console.log("Directory created successfully!");
+    }
+  );
+});
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, inventoryPath + "/" + req.query.folderName);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage }).single("file");
+
+server.post("/upload", (req, res) => {
+  console.log(req.query);
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    return res.status(200).send(req.file);
+  });
+});
+
+/*************************************/
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -62,8 +117,31 @@ server.post("/session_id", async (req, res) => {
   res.jsonp(session.id);
 });
 
+/******** Email subscribe route ************/
+const emailAlreadyExists = (email) => {
+  let result = false;
+  const db = router.db;
+  const currentEmails = db.__wrapped__.emails;
+  currentEmails.forEach((currEmail) => {
+    if (currEmail.email === email) {
+      result = true;
+    }
+  });
+  return result;
+};
+
+server.post("/emails", async (req, res, next) => {
+  if (!emailAlreadyExists(req.body.email)) {
+    next();
+  } else {
+    res.sendStatus(409);
+  }
+});
+/**************************************** */
+
 // Use default router
+const PORT = process.env.PORT || 3001;
 server.use(router);
-server.listen(3001, () => {
-  console.log("JAMBO back-end server is running");
+server.listen(PORT, () => {
+  console.log("JAMBO back-end server is running on port " + PORT);
 });
