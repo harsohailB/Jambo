@@ -8,14 +8,11 @@ import { getItemById, updateItemById } from "../../actions/items";
 import { deleteItemById } from "../../actions/items";
 import { ADD_ITEM_TO_SC, REMOVE_ITEM_FROM_SC } from "../../actions/types";
 import Title from "../styled/Title";
-<<<<<<< HEAD
-import { Facebook, Twitter } from 'react-sharingbuttons'
-=======
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import ImageCarousel from "./ImageCarousel";
 import { useWindowResize } from "beautiful-react-hooks";
->>>>>>> 73f3253726362b9e41770bf79ad8513dc37c718f
+import { Facebook, Twitter } from 'react-sharingbuttons'
 
 const Wrapper = styled.div`
   display: flex;
@@ -155,6 +152,40 @@ const Icon = styled.div`
   }
 `;
 
+const FbBox = styled.div`
+  display: flex;  
+  alignItems: center;
+  justify-content: center;
+  font-family: Righteous, sans-serif;
+  font-style: bold;
+  font-weight: 400;
+  font-color: black;
+  background-color: #3b5998;
+  padding: 15px 40px 15px 40px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px #8b9dc3;
+  margin: 20px 20px;
+  theme: #3b5998;
+  padding-left: 50px;
+`;
+
+const TwBox = styled.div`
+  display: flex;  
+  alignItems: center;
+  justify-content: center;
+  font-family: Righteous, sans-serif;
+  font-style: bold;
+  font-weight: 400;
+  font-color: black;
+  background-color: #1DA1F2;
+  padding: 15px 40px 15px 40px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px #FFFFFF;
+  margin: 20px 20px;
+  theme: #1DA1F2;
+  padding-left: 50px;
+`;
+
 const FeatureItemOption = styled.span`
   display: flex;
   jsutify-content: center;
@@ -184,76 +215,10 @@ const Dropdown = styled.select`
 `;
 
 const ItemPage = () => {
-<<<<<<< HEAD
-    const user = useSelector((state) => state.user);
-    const shoppingCartItems = useSelector((state) => state.shoppingCart);
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const history = useHistory();
-    const [item, setItem] = useState(null);
-    const [itemColors, setItemColors] = useState(null);
-    const [itemSizes, setItemSizes] = useState(null);
-    const [images, setImages] = useState([]);
-    const [mainImage, setMainImage] = useState(null);
-    const [selectedColor, setSelectedColor] = useState(null);
-    const [selectedSize, setSelectedSize] = useState(null);
-    const shareText = 'Check this site!'
-    //const url = window.location.href
-    const url = 'www.jamboapparel.com'
-
-    useEffect(() => {
-        try {
-            const itemId = location.pathname.split("/").reverse()[0];
-            getItemById(itemId).then(fetchedItem => {
-                setItem(fetchedItem);
-                setImages(fetchedItem.images);
-                setItemColors(fetchedItem.colors.split('/'));
-                setSelectedColor(fetchedItem.colors.split('/')[0]);
-                setItemSizes(fetchedItem.sizes.split('/'));
-                setSelectedSize(fetchedItem.sizes.split('/')[0]);
-                setMainImage(fetchedItem.thumbnailImage);
-            })
-        } catch (e) {
-            console.log("ItemPage UseEffect ERROR")
-            console.log(e);
-        }
-    }, [location]);
-
-    const renderItemColors = () => {
-        const itemColors = item.colors.split('/')
-        return itemColors.map(color => (
-            <option>{color}</option>
-        ));
-    };
-
-    const renderItemSizes = () => {
-        const itemSizes = item.sizes.split('/')
-        return itemSizes.map(size => (
-            <option>{size}</option>
-        ));
-    };
-
-    const mystyle = {
-        color: "white",
-        backgroundColor: "DodgerBlue",
-        padding: "10px",
-        fontFamily: "Arial"
-      };
-
-    const renderSmallImages = () => {
-        return images.map(image => (
-            <SmallImage 
-                src={require("../../assets/catalog/inventory/" + item.folderName + "/" + image.imageName)}
-                onClick={() => setMainImage(image)}
-            ></SmallImage>
-        ));
-    }
-=======
   const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
   useWindowResize((event: React.SyntheticEvent) => {
     setIsMobile(window.innerWidth < 728);
   });
->>>>>>> 73f3253726362b9e41770bf79ad8513dc37c718f
 
   const user = useSelector((state) => state.user);
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
@@ -267,6 +232,9 @@ const ItemPage = () => {
   const [mainImage, setMainImage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  //const url = window.location.href
+  const url = window.location.href;
+  const shareText = "Checkout this amazing product from Jambo";
 
   useEffect(() => {
     try {
@@ -294,6 +262,13 @@ const ItemPage = () => {
   const renderItemSizes = () => {
     const itemSizes = item.sizes.split("/");
     return itemSizes.map((size) => <option>{size}</option>);
+  };
+
+  const mystyle = {
+    color: "white",
+    backgroundColor: "DodgerBlue",
+    padding: "10px",
+    fontFamily: "Arial"
   };
 
   const renderSmallImages = () => {
@@ -426,6 +401,12 @@ const ItemPage = () => {
                 Featured Item
               </FeatureItemOption>
             )}
+          <FbBox>
+            <Facebook url={url} shareText={shareText}></Facebook>
+          </FbBox>
+          <TwBox>
+          <Twitter url={url} shareText={shareText}/>
+          </TwBox>
           </InfoWrapper>
         </Wrapper>
       ) : (
@@ -435,45 +416,4 @@ const ItemPage = () => {
   );
 };
 
-<<<<<<< HEAD
-    return(
-        <div>
-            {item ? 
-                <Wrapper>
-                    <PreviewWrapper>
-                        <MainImageWrapper>
-                            {mainImage ? 
-                                <MainImage src={require("../../assets/catalog/inventory/" + item.folderName + "/" + mainImage.imageName)}></MainImage>
-                            :   <MainImage src={require("../../assets/catalog/inventory/" + item.folderName + "/" + item.thumbnailImage.imageName)}></MainImage>}
-                        </MainImageWrapper>
-
-                        <SmallImageWrapper>
-                            {renderSmallImages()}
-                        </SmallImageWrapper>
-                    </PreviewWrapper>
-
-                    <InfoWrapper>
-                        <Name>{item.name}</Name>
-                        <Price>${item.price}</Price>
-                        <DropdownWrapper>
-                            <Dropdown value={selectedColor} onChange={updateSelectedColor}>{renderItemColors()}</Dropdown>
-                            <Dropdown value={selectedSize} onChange={updateSelectedSize}>{renderItemSizes()}</Dropdown>
-                        </DropdownWrapper>
-                        <Button onClick={handleAddToCartClick} to="/cart">ADD TO CART</Button>
-                        <Description>{item.description}</Description>
-                        {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
-                        {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
-                        <Facebook url={url} style={mystyle}></Facebook>
-                        <h1></h1>
-                        <Twitter url={url} shareText={shareText}/>
-                    </InfoWrapper>
-                </Wrapper> : 
-                <Title>Loading...</Title>}
-        </div>
-    );
-}
-
-export default ItemPage
-=======
 export default ItemPage;
->>>>>>> 73f3253726362b9e41770bf79ad8513dc37c718f

@@ -79,11 +79,7 @@ const Slideshow = () => {
     return(
         <Wrapper>
             <ContentWrapper>
-<<<<<<< HEAD
                 <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "600">
-=======
-                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "400">
->>>>>>> 2aee4a9012bf1d4f69fe8ce9def909aafaf0eebb
                     <Title>{slideshowTitle}</Title>
                 </AnimateOnChange>
                 <DotsWrapper>
