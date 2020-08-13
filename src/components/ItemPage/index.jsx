@@ -12,7 +12,8 @@ import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import ImageCarousel from "./ImageCarousel";
 import { useWindowResize } from "beautiful-react-hooks";
-import { Facebook, Twitter } from 'react-sharingbuttons'
+import { Facebook, Twitter, Pinterest } from 'react-sharingbuttons'
+import 'react-sharingbuttons/dist/main.css'
 
 const Wrapper = styled.div`
   display: flex;
@@ -159,7 +160,7 @@ const FbBox = styled.div`
   font-family: Righteous, sans-serif;
   font-style: bold;
   font-weight: 400;
-  font-color: black;
+  font-color: #000000;
   background-color: #3b5998;
   padding: 15px 40px 15px 40px;
   border-radius: 10px;
@@ -176,7 +177,7 @@ const TwBox = styled.div`
   font-family: Righteous, sans-serif;
   font-style: bold;
   font-weight: 400;
-  font-color: black;
+  font-color: #000000;
   background-color: #1DA1F2;
   padding: 15px 40px 15px 40px;
   border-radius: 10px;
@@ -184,6 +185,14 @@ const TwBox = styled.div`
   margin: 20px 20px;
   theme: #1DA1F2;
   padding-left: 50px;
+`;
+
+const shareBoxes = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: Righteous, sans-serif;
+  font-weight: 400;
 `;
 
 const FeatureItemOption = styled.span`
@@ -401,12 +410,11 @@ const ItemPage = () => {
                 Featured Item
               </FeatureItemOption>
             )}
-          <FbBox>
-            <Facebook url={url} shareText={shareText}></Facebook>
-          </FbBox>
-          <TwBox>
-          <Twitter url={url} shareText={shareText}/>
-          </TwBox>
+          <shareBoxes>
+            <Facebook url={url}></Facebook>
+            <Twitter url={url} shareText={shareText}/>
+            <Pinterest url = {url} shareText={shareText}></Pinterest>
+          </shareBoxes>
           </InfoWrapper>
         </Wrapper>
       ) : (

@@ -66,10 +66,37 @@ const IconsWrapper = styled.div`
   width: fit-content;
 `;
 
+const cartColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+
 const Icon = styled(Link)`
   margin: 10px;
+  padding: 0px 0px 0px 0px;
   color: #3d4246;
   cursor: pointer;
+
+  & :hover {
+    color: #131516;
+  }
+  & > svg {
+    transition: color 0.1s linear;
+  }
+`;
+
+
+const IconForCart = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+  padding: 0px 0px 0px 0px;
+  color: #3d4246;
+  cursor: pointer;
+
 
   & :hover {
     color: #131516;
@@ -84,13 +111,18 @@ const CartCounter = styled.div`
   height: 18px;
   border-radius: 50%;
   background-color: orange;
+  position: absolute;
   float: left;
   z-index: 1000;
   font-size: 12px;
+  margin: 10px 0px 27px 12px;
   font-family: Oswald, sans-serif;
   font-style: normal;
   font-weight: 600;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `;
 
 const SearchBar = styled.input`
@@ -190,12 +222,12 @@ const Navbar = () => {
           <Icon onClick={handleSearchClick}>
             <FaSearch size={24} />
           </Icon>
-          <Icon to="/cart">
-            <FaShoppingCart size={24} />
+          <IconForCart to="/cart">
             {shoppingCartItems.length !== 0 && (
-              <CartCounter>{getCartItemCount()}</CartCounter>
+            <CartCounter>{getCartItemCount()}</CartCounter>
             )}
-          </Icon>
+            <FaShoppingCart size={24} />
+          </IconForCart>
           {user && (
             <Icon onClick={handleLogout}>
               <FaDoorOpen size={24} />
