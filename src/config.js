@@ -1,12 +1,10 @@
 let config = {
   api: {
-    protocol: "http",
-    host: "localhost",
-    port: 3001,
+    protocol: "https",
+    host: "jambo-backend.herokuapp.com",
   },
 };
 
-config.endpoint =
-  config.api.protocol + "://" + config.api.host + ":" + config.api.port;
+config.endpoint = config.api.protocol + "://" + config.api.host;
 
 module.exports = config;
