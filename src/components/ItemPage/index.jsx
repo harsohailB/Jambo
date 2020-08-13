@@ -12,6 +12,8 @@ import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import ImageCarousel from "./ImageCarousel";
 import { useWindowResize } from "beautiful-react-hooks";
+import { Facebook, Twitter, Pinterest } from "react-sharingbuttons";
+import "react-sharingbuttons/dist/main.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,7 +73,7 @@ const SmallImageWrapper = styled.div`
 
 const SmallImage = styled.img`
   width: 110px;
-  height: auto;
+  height: 100%;
   cursor: pointer;
   margin: 10px;
   padding: 2px;
@@ -150,6 +152,40 @@ const Icon = styled.div`
   }
 `;
 
+const FontBox = styled.div`
+  font-family: Righteous, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+const TwBox = styled.div`
+  display: flex;
+  alignitems: center;
+  justify-content: center;
+  font-family: Righteous, sans-serif;
+  font-style: bold;
+  font-weight: 400;
+  font-color: #000000;
+  background-color: #1da1f2;
+  padding: 15px 40px 15px 40px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px #ffffff;
+  margin: 20px 20px;
+  theme: #1da1f2;
+  padding-left: 50px;
+`;
+
+const shareBoxes = styled.div`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: Righteous, sans-serif;
+  font-weight: 400;
+`;
+
 const FeatureItemOption = styled.span`
   display: flex;
   jsutify-content: center;
@@ -196,6 +232,9 @@ const ItemPage = () => {
   const [mainImage, setMainImage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  //const url = window.location.href
+  const url = window.location.href;
+  const shareText = "Checkout this amazing product from Jambo";
 
   useEffect(() => {
     try {
@@ -223,6 +262,13 @@ const ItemPage = () => {
   const renderItemSizes = () => {
     const itemSizes = item.sizes.split("/");
     return itemSizes.map((size) => <option>{size}</option>);
+  };
+
+  const mystyle = {
+    color: "white",
+    backgroundColor: "DodgerBlue",
+    padding: "10px",
+    fontFamily: "Arial",
   };
 
   const renderSmallImages = () => {
@@ -355,6 +401,13 @@ const ItemPage = () => {
                 Featured Item
               </FeatureItemOption>
             )}
+            <shareBoxes>
+              <FontBox>
+                <Facebook url={url}></Facebook>
+                <Twitter url={url} shareText={shareText} />
+                <Pinterest url={url} shareText={shareText}></Pinterest>
+              </FontBox>
+            </shareBoxes>
           </InfoWrapper>
         </Wrapper>
       ) : (

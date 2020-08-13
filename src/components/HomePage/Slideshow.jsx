@@ -49,9 +49,12 @@ const DotsWrapper = styled.div`
 `;
 
 const Dot = styled.div`
-    margin: 5px;
+    margin: 3px;
     color: white;
     cursor: pointer;
+    opacity: 0.3;
+    active: blue;
+    focus: blue;
 
     & :hover {
         color: #131516;
@@ -76,7 +79,7 @@ const Slideshow = () => {
     return(
         <Wrapper>
             <ContentWrapper>
-                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "400">
+                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "600">
                     <Title>{slideshowTitle}</Title>
                 </AnimateOnChange>
                 <DotsWrapper>
