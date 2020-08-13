@@ -8,9 +8,13 @@ const router = jsonServer.router(dbPath);
 const middlewares = jsonServer.defaults();
 require("dotenv").config();
 
+
 // Set default middlewares
 server.use(middlewares);
 
+
+/************AUTHORIZATION***************/
+  
 const isAuthorizableRequest = (req) => {
   if (req.method === "GET" && req.originalUrl.split("/").includes("emails")) {
     return true;
@@ -33,7 +37,6 @@ const isAuthorizableRequest = (req) => {
 };
 
 const isAuthorized = (req) => {
-  console.log(req.query.username);
   return (
     req.query.username === process.env.ADMIN_USERNAME &&
     req.query.password === process.env.ADMIN_PASSWORD
@@ -49,6 +52,52 @@ server.use((req, res, next) => {
     next();
   }
 });
+
+/****************************************/
+
+/************IMAGE UPLOAD ROUTE**********/
+
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+const inventoryPath = "src/assets/catalog/inventory";
+
+server.post("/create-folder", (req, res) => {
+  fs.mkdir(
+    path.join(__dirname, inventoryPath + "/" + req.body.folderName),
+    (err) => {
+      if (err) {
+        return console.error(err);
+      }
+      console.log("Directory created successfully!");
+    }
+  );
+});
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, inventoryPath + "/" + req.query.folderName);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage }).single("file");
+
+server.post("/upload", (req, res) => {
+  console.log(req.query);
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    return res.status(200).send(req.file);
+  });
+});
+
+/*************************************/
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
