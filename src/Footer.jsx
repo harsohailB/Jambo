@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import paymentMethods from "./assets/payment-methods.PNG";
+import newpaymentMethods from "./assets/new-payment-methods.JPG";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ const Credits = styled.p`
 const Footer = () => {
   return (
     <Wrapper>
-      <Image src={paymentMethods}></Image>
+      <Image src={newpaymentMethods}></Image>
       <Credits>© 2020, JAMBO Website by Harsohail Brar & Ryan Holt</Credits>
     </Wrapper>
   );
