@@ -97,7 +97,7 @@ const CatalogPage = () => {
         items={items}
         displayedItems={displayedItems}
         setDisplayedItems={setDisplayedItems}
-        productCount={items.length}
+        productCount={displayedItems.length}
       />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
