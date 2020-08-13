@@ -50,12 +50,7 @@ const InventoryCount = styled.p`
   white-space: nowrap;
 `;
 
-const FilterBar = ({
-  items,
-  displayedItems,
-  setDisplayedItems,
-  productCount,
-}) => {
+const FilterBar = ({ items, displayedItems, setDisplayedItems }) => {
   const user = useSelector((state) => state.user);
   const sortingOptions = [
     "Alphabetically, A-Z",
@@ -164,7 +159,7 @@ const FilterBar = ({
         </Filter>
         {user && <Button to="/add-item">ADD ITEM</Button>}
       </FilterWrapper>
-      <InventoryCount>{productCount} products</InventoryCount>
+      <InventoryCount>{displayedItems.length} products</InventoryCount>
     </Wrapper>
   );
 };
