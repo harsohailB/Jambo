@@ -1,7 +1,7 @@
 let config = {
   api: {
-    protocol: "https",
-    host: "jambo-backend.herokuapp.com",
+    protocol: "http",
+    host: "localhost:3000",
   },
 };
 
