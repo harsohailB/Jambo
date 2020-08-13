@@ -12,8 +12,8 @@ import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import ImageCarousel from "./ImageCarousel";
 import { useWindowResize } from "beautiful-react-hooks";
-import { Facebook, Twitter, Pinterest } from 'react-sharingbuttons';
-import 'react-sharingbuttons/dist/main.css'
+import { Facebook, Twitter, Pinterest } from "react-sharingbuttons";
+import "react-sharingbuttons/dist/main.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ const SmallImageWrapper = styled.div`
 
 const SmallImage = styled.img`
   width: 110px;
-  height: auto;
+  height: 100%;
   cursor: pointer;
   margin: 10px;
   padding: 2px;
@@ -126,7 +126,6 @@ const Description = styled.h3`
   margin-top: 25px;
 `;
 
-
 const DropdownWrapper = styled.div`
   display: flex;
   flex-grow: 2;
@@ -154,7 +153,7 @@ const Icon = styled.div`
 `;
 
 const FontBox = styled.div`
-  font-family: Righteous,sans-serif;
+  font-family: Righteous, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -163,19 +162,19 @@ const FontBox = styled.div`
 `;
 
 const TwBox = styled.div`
-  display: flex;  
-  alignItems: center;
+  display: flex;
+  alignitems: center;
   justify-content: center;
   font-family: Righteous, sans-serif;
   font-style: bold;
   font-weight: 400;
   font-color: #000000;
-  background-color: #1DA1F2;
+  background-color: #1da1f2;
   padding: 15px 40px 15px 40px;
   border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px #FFFFFF;
+  box-shadow: 2px 2px 2px 2px #ffffff;
   margin: 20px 20px;
-  theme: #1DA1F2;
+  theme: #1da1f2;
   padding-left: 50px;
 `;
 
@@ -269,7 +268,7 @@ const ItemPage = () => {
     color: "white",
     backgroundColor: "DodgerBlue",
     padding: "10px",
-    fontFamily: "Arial"
+    fontFamily: "Arial",
   };
 
   const renderSmallImages = () => {
@@ -402,13 +401,13 @@ const ItemPage = () => {
                 Featured Item
               </FeatureItemOption>
             )}
-          <shareBoxes>
-            <FontBox>
-              <Facebook url={url} ></Facebook>
-              <Twitter url={url} shareText={shareText}/>
-              <Pinterest url = {url} shareText={shareText}></Pinterest>
-            </FontBox>
-          </shareBoxes>
+            <shareBoxes>
+              <FontBox>
+                <Facebook url={url}></Facebook>
+                <Twitter url={url} shareText={shareText} />
+                <Pinterest url={url} shareText={shareText}></Pinterest>
+              </FontBox>
+            </shareBoxes>
           </InfoWrapper>
         </Wrapper>
       ) : (
