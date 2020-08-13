@@ -8,13 +8,11 @@ const router = jsonServer.router(dbPath);
 const middlewares = jsonServer.defaults();
 require("dotenv").config();
 
-
 // Set default middlewares
 server.use(middlewares);
 
-
 /************AUTHORIZATION***************/
-  
+
 const isAuthorizableRequest = (req) => {
   if (req.method === "GET" && req.originalUrl.split("/").includes("emails")) {
     return true;
@@ -142,7 +140,8 @@ server.post("/emails", async (req, res, next) => {
 /**************************************** */
 
 // Use default router
+const PORT = process.env.PORT || 3001;
 server.use(router);
-server.listen(3001, () => {
-  console.log("JAMBO back-end server is running");
+server.listen(PORT, () => {
+  console.log("JAMBO back-end server is running on port " + PORT);
 });
