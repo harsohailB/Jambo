@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
-import Button from "../styled/Button";
-
+import { Link } from "react-router-dom";
 import { sortCatalog } from "./sortingAlgorithms";
 
 const Wrapper = styled.div`
@@ -29,6 +28,7 @@ const Filter = styled.div`
   display: flex;
 `;
 
+
 const FilterText = styled.label`
   font-size: 14px;
   font-family: Oswald, sans-serif;
@@ -50,7 +50,36 @@ const InventoryCount = styled.p`
   white-space: nowrap;
 `;
 
-const FilterBar = ({ items, displayedItems, setDisplayedItems }) => {
+const Button = styled(Link)`
+    font-family: Righteous,sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    padding: 10px 18px;
+    display: inline-block;
+    width: auto;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 8px 15px;
+    background-color: #557b97;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: normal;
+    font-size: 14px;
+    margin: 5px;
+    padding: 15px;
+`;
+
+const FilterBar = ({
+  items,
+  displayedItems,
+  setDisplayedItems,
+  productCount,
+}) => {
   const user = useSelector((state) => state.user);
   const sortingOptions = [
     "Alphabetically, A-Z",

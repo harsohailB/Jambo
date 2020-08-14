@@ -41,6 +41,7 @@ const Title = styled.h1`
     font-family: Righteous,sans-serif;
     margin-top: 300px;
     margin-bottom: 200px;
+    opacity: 0.65;
 `;
 
 const DotsWrapper = styled.div`
@@ -71,15 +72,25 @@ const Slideshow = () => {
     const [slideshowImage, setSlideshowImage] = useState(slideshowImages[0]);
     const [slideshowTitle, setSlideshowTitle] = useState(slideshowTitles[0]);
 
-    const handleSlideshowChange = index => {
-        setSlideshowImage(slideshowImages[index]);
+    const handleSlideShowTitle = index => {
         setSlideshowTitle(slideshowTitles[index]);
+    }
+
+    const handleSlideshowChange = index => {
+        setTimeout(
+            () => setSlideshowImage(slideshowImages[index]), 
+            100
+          );
+        setTimeout(
+            () => setSlideshowTitle(slideshowTitles[index]), 
+            150
+        );  
     }
 
     return(
         <Wrapper>
             <ContentWrapper>
-                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "600">
+                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut={100}>
                     <Title>{slideshowTitle}</Title>
                 </AnimateOnChange>
                 <DotsWrapper>
@@ -94,7 +105,7 @@ const Slideshow = () => {
                     </Dot>
                 </DotsWrapper>
             </ContentWrapper>
-            <AnimateOnChange durationOut = "400">
+            <AnimateOnChange animationIn="fadeIn" animationOut="fadeOut">
                 <Image src={slideshowImage}></Image>
             </AnimateOnChange>
         </Wrapper>
