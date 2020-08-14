@@ -95,9 +95,14 @@ const CatalogPage = () => {
       )}
       <FilterBar
         items={items}
-        displayedItems={displayedItems}
+        displayedItems={
+          location.data
+            ? displayedItems.filter((item) =>
+                item.name.toLowerCase().includes(location.data.toLowerCase())
+              )
+            : displayedItems
+        }
         setDisplayedItems={setDisplayedItems}
-        productCount={items.length}
       />
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>

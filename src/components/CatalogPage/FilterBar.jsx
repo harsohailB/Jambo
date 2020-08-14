@@ -188,7 +188,7 @@ const FilterBar = ({
         </Filter>
         {user && <Button to="/add-item">ADD ITEM</Button>}
       </FilterWrapper>
-      <InventoryCount>{productCount} products</InventoryCount>
+      <InventoryCount>{displayedItems.length} products</InventoryCount>
     </Wrapper>
   );
 };
