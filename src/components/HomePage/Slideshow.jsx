@@ -77,14 +77,20 @@ const Slideshow = () => {
     }
 
     const handleSlideshowChange = index => {
-        setSlideshowImage(slideshowImages[index]);
-        setTimeout(handleSlideShowTitle(index), 10000);
+        setTimeout(
+            () => setSlideshowImage(slideshowImages[index]), 
+            100
+          );
+        setTimeout(
+            () => setSlideshowTitle(slideshowTitles[index]), 
+            150
+        );  
     }
 
     return(
         <Wrapper>
             <ContentWrapper>
-                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut = "7000">
+                <AnimateOnChange animationIn="fadeInUp" animationOut="fadeOut" durationOut={100}>
                     <Title>{slideshowTitle}</Title>
                 </AnimateOnChange>
                 <DotsWrapper>
@@ -99,7 +105,7 @@ const Slideshow = () => {
                     </Dot>
                 </DotsWrapper>
             </ContentWrapper>
-            <AnimateOnChange animationIn="fadeIn" animationOut="fadeOut" durationOut = "700">
+            <AnimateOnChange animationIn="fadeIn" animationOut="fadeOut">
                 <Image src={slideshowImage}></Image>
             </AnimateOnChange>
         </Wrapper>

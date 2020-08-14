@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
-import Button from "../styled/Button";
-
+import { Link } from "react-router-dom";
 import { sortCatalog } from "./sortingAlgorithms";
 
 const Wrapper = styled.div`
@@ -29,9 +28,6 @@ const Filter = styled.div`
   display: flex;
 `;
 
-const ExtraPadding = styled.div`
-  padding: 0px 40px 0px 40px;
-`;
 
 const FilterText = styled.label`
   font-size: 14px;
@@ -52,6 +48,30 @@ const InventoryCount = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+const Button = styled(Link)`
+    font-family: Righteous,sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    padding: 10px 18px;
+    display: inline-block;
+    width: auto;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 8px 15px;
+    background-color: #557b97;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: normal;
+    font-size: 14px;
+    margin: 5px;
+    padding: 15px;
 `;
 
 const FilterBar = ({
@@ -166,7 +186,7 @@ const FilterBar = ({
             {renderSortingOptions()}
           </Dropdown>
         </Filter>
-        {user && <ExtraPadding><Button to="/add-item">ADD ITEM</Button></ExtraPadding>}
+        {user && <Button to="/add-item">ADD ITEM</Button>}
       </FilterWrapper>
       <InventoryCount>{productCount} products</InventoryCount>
     </Wrapper>
