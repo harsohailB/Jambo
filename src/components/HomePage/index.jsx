@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+const ExtraPadding = styled.div`
+  padding: 15px;
+`;
+
 const HomePage = () => {
   const user = useSelector((state) => state.user);
 
@@ -26,7 +30,9 @@ const HomePage = () => {
       <SubscribeBanner />
       {user && (
         <Wrapper>
-          <Button to="/subscribers">View Subscribers</Button>
+          <ExtraPadding>
+            <Button to="/subscribers">View Subscribers</Button>
+          </ExtraPadding>
         </Wrapper>
       )}
     </div>

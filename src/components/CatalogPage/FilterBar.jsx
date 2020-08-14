@@ -29,6 +29,10 @@ const Filter = styled.div`
   display: flex;
 `;
 
+const ExtraPadding = styled.div`
+  padding: 0px 40px 0px 40px;
+`;
+
 const FilterText = styled.label`
   font-size: 14px;
   font-family: Oswald, sans-serif;
@@ -162,7 +166,7 @@ const FilterBar = ({
             {renderSortingOptions()}
           </Dropdown>
         </Filter>
-        {user && <Button to="/add-item">ADD ITEM</Button>}
+        {user && <ExtraPadding><Button to="/add-item">ADD ITEM</Button></ExtraPadding>}
       </FilterWrapper>
       <InventoryCount>{productCount} products</InventoryCount>
     </Wrapper>
