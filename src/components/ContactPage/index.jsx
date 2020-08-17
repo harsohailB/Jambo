@@ -49,8 +49,7 @@ const ContactPage = () => {
       <MessageWrapper>
         <Message>
           Sorry, no returns or exchanges, as we are print-on-demand. Feel free
-          to contact us using the email address below: jamboapparel@outlook.com
-          :)
+          to contact us using the email address below: jamboapparel@gmail.com :)
         </Message>
       </MessageWrapper>
       <Image src={contactImage}></Image>
