@@ -21,12 +21,17 @@ const NavbarWrapper = styled.div`
 `;
 
 const PagesWrapper = styled.nav`
+  position: absolute;
+  left: 50%;
+  width: 500px;
+  margin-left: -250px;
   display: flex;
   list-style: none;
   align-items: center;
-  padding: 0px 135px 0px 0px;
+  justify-content: center;
 
   @media (max-width: 768px) {
+    position: relative;
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
@@ -74,7 +79,6 @@ const cartColumn = styled.div`
   justify-content: center;
 `;
 
-
 const Icon = styled(Link)`
   margin: 10px;
   padding: 0px 0px 0px 0px;
@@ -89,7 +93,6 @@ const Icon = styled(Link)`
   }
 `;
 
-
 const IconForCart = styled(Link)`
   display: flex;
   flex-direction: column;
@@ -98,7 +101,6 @@ const IconForCart = styled(Link)`
   padding: 0px 0px 0px 0px;
   color: #3d4246;
   cursor: pointer;
-
 
   & :hover {
     color: #131516;
@@ -150,6 +152,9 @@ const Navbar = () => {
   const [menuClicked, setMenuClicked] = useState(false);
   useWindowResize((event: React.SyntheticEvent) => {
     setIsMobile(window.innerWidth < 800);
+    if (!isMobile) {
+      setMenuClicked(false);
+    }
   });
 
   const user = useSelector((state) => state.user);
@@ -226,7 +231,7 @@ const Navbar = () => {
           </Icon>
           <IconForCart to="/cart">
             {shoppingCartItems.length !== 0 && (
-            <CartCounter>{getCartItemCount()}</CartCounter>
+              <CartCounter>{getCartItemCount()}</CartCounter>
             )}
             <FaShoppingCart size={24} />
           </IconForCart>
