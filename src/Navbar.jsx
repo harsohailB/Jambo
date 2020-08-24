@@ -23,6 +23,8 @@ const NavbarWrapper = styled.div`
 const PagesWrapper = styled.nav`
   display: flex;
   list-style: none;
+  align-items: center;
+  padding: 0px 135px 0px 0px;
 
   @media (max-width: 768px) {
     flex-direction: column;
