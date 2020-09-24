@@ -353,7 +353,7 @@
         "imageName": "classic-hoodie.jpg",
         "color": "Military Green"
       },
-      "colors": "Military Green/Gold/Light Pink/Charcoal/Forest Green/Sport Grey/White/Black/Light Blue/Sand",
+      "colors": "Military Green/Gold/Light Pink/Charcoal/Sport Grey/White/Black",
       "sizes": "S/M/L/XL/2XL",
       "description": "Crafted for comfort, this lighter weight sweatshirt is perfect for relaxing. Once put on, it will be impossible to take off.",
       "tags": [
@@ -390,14 +390,6 @@
           "color": "None"
         },
         {
-          "imageName": "classic-hoodie-sand.jpg",
-          "color": "Sand"
-        },
-        {
-          "imageName": "classic-hoodie-sand-back.jpg",
-          "color": "None"
-        },
-        {
           "imageName": "classic-hoodie-sg.jpg",
           "color": "Sport Grey"
         },
@@ -419,22 +411,6 @@
         },
         {
           "imageName": "classic-hoodie-char-back.jpg",
-          "color": "None"
-        },
-        {
-          "imageName": "classic-hoodie-fg.jpg",
-          "color": "Forest Green"
-        },
-        {
-          "imageName": "classic-hoodie-fg-back.jpg",
-          "color": "None"
-        },
-        {
-          "imageName": "classic-hoodie-lb.jpg",
-          "color": "Light Blue"
-        },
-        {
-          "imageName": "classic-hoodie-lb-back.jpg",
           "color": "None"
         },
         {
