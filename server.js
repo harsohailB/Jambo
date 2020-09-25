@@ -108,7 +108,7 @@ server.post("/session_id", async (req, res) => {
       },
       payment_method_types: ["card"],
       line_items: req.body.line_items,
-      success_url: "http://localhost:3000/",
+      success_url: "http://localhost:3000/success",
       cancel_url: "http://localhost:3000/cart",
     })
     .catch((err) => {
