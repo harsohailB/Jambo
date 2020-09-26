@@ -13,6 +13,7 @@ const AnnouncementMessage = styled.div`
   font-family: "Oswald", sans-serif;
   font-style: normal;
   color: white;
+  text-align: center;
 `;
 
 const AnnouncementHeader = () => {
