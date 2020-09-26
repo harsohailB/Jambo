@@ -7,4 +7,4 @@ export const QUANTITY_CHANGE = "QUANTITY_CHANGE";
 export const GET_ITEMS = "GET_ITEMS";
 export const GET_ITEM_BY_ID = "GET_ITEM_BY_ID";
 export const ADD_ITEM = "ADD_ITEM";
-
+export const CLEAR_CART = "CLEAR_CART";
