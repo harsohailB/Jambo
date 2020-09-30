@@ -64,7 +64,7 @@ const MainImage = styled.img`
 
 const SmallImageWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: left;
   flex-wrap: wrap;
   flex-grow: 4;
   max-width: 600px;

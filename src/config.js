@@ -11,7 +11,7 @@ config.endpoint = config.api.protocol + "://" + config.api.host;
 
 module.exports = config;
 
-// Local Developement
+//Local Developement
 // let config = {
 //   api: {
 //     protocol: "http",
