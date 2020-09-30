@@ -19,6 +19,7 @@ import { LOGIN_USER, LOGOUT_USER, FETCH_SC_ITEMS } from "./actions/types";
 import EditItemPage from "./components/EditItemPage";
 import { Helmet } from "react-helmet";
 import SubscriberPage from "./components/SubscriberPage";
+import SuccessPage from "./components/SuccessPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const App = () => {
           <Route path="/add-item" component={AddItemPage}></Route>
           <Route path="/edit-item/:id" component={EditItemPage}></Route>
           <Route path="/subscribers" component={SubscriberPage}></Route>
+          <Route path="/success" component={SuccessPage}></Route>
         </Switch>
         <Footer />
       </div>
