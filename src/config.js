@@ -3,11 +3,11 @@
 let config = {
   api: {
     protocol: "https",
-    host: "localhost:3001",
+    host: "jambo-backend.herokuapp.com",
   },
 };
 
-config.endpoint = config.api.host;
+config.endpoint = config.api.protocol + "://" + config.api.host;
 
 module.exports = config;
 
