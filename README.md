@@ -4,7 +4,7 @@
 
 ## Description
 
-This project is to migrate Jambo Apparel's (NPO) business from the dependency of Shopify to its own proprietary website supported by open source libraries. By doing this, the NPO can save money that is spent on deployment and direct it towards growth and donations for its objective.
+This project is to migrate Jambo Apparel's (NPO) e-commerce store from the dependency of Shopify to its own proprietary website supported by open source libraries. By doing this, the NPO can save money that is spent on deployment and direct it towards growth and donations for its objective.
 
 ## Technologies Used
 
