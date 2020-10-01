@@ -139,6 +139,22 @@ server.post("/emails", async (req, res, next) => {
 });
 /**************************************** */
 
+/******** User login route ************/
+server.get("/login", async (req, res, next) => {
+  const username = req.query.username;
+  const password = req.query.password;
+
+  if (
+    username === process.env.ADMIN_USERNAME &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
+/**************************************** */
+
 // Use default router
 const PORT = process.env.PORT || 3001;
 server.use(router);
