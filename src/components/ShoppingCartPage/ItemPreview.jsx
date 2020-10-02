@@ -147,18 +147,20 @@ const ItemPreview = (props) => {
   };
 
   const getSelectedImageLink = () => {
+    var imageLink;
     item.images.forEach((image) => {
       if (item.color === image.color) {
-        return image.imageLink;
+        imageLink = image.imageLink;
       }
     });
+    return imageLink;
   };
 
   return (
     <TableRow>
       <td>
         <ProductWrapper to={"/catalog/" + item.id}>
-          <Image src={getSelectedImageLink}></Image>
+          <Image src={getSelectedImageLink()}></Image>
           <ItemInfoWrapper>
             <ItemName>{item.name}</ItemName>
             <ItemDetail>Color: {item.color}</ItemDetail>
