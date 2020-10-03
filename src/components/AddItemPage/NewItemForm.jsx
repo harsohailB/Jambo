@@ -74,7 +74,6 @@ const NewItemForm = () => {
   const history = useHistory();
   const [newItem, setNewItem] = useState({
     name: "",
-    folderName: "",
     price: "",
     colors: "",
     sizes: "",
@@ -84,8 +83,7 @@ const NewItemForm = () => {
       {
         id: 0,
         color: "None",
-        imageName: "",
-        file: null,
+        imageLink: "",
       },
     ],
   });
@@ -116,7 +114,6 @@ const NewItemForm = () => {
     // Check image inputs
     let result = false;
     newItem.images.forEach((image) => {
-      console.log(image);
       if (image.file === null || image.imageName === "") {
         console.log("IN");
         setHasErrors(true);
@@ -128,13 +125,14 @@ const NewItemForm = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setNewItem({
+    let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
-    });
+    };
+    console.log("handleFormSubmit -> tempNewItem", tempNewItem);
     if (!checkForErrors()) {
       try {
-        uploadItem(user, newItem);
+        uploadItem(user, tempNewItem);
         history.push("/catalog");
       } catch (error) {
         setHasErrors(true);
@@ -148,7 +146,6 @@ const NewItemForm = () => {
     setNewItem({
       ...newItem,
       name: input,
-      folderName: input.toLowerCase().replace(" ", "-"),
     });
   };
 
