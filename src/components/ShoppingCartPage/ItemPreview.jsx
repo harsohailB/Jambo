@@ -127,8 +127,8 @@ const ItemPreview = (props) => {
   };
 
   const handleQuantityChange = (evt) => {
-    if (evt.target.value < 0) {
-      evt.target.value = 0;
+    if (evt.target.value < 1) {
+      evt.target.value = 1;
     } else if (evt.target.value > 100) {
       evt.target.value = 100;
     }

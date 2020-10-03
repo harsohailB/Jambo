@@ -108,7 +108,7 @@ server.post("/session_id", async (req, res) => {
       },
       payment_method_types: ["card"],
       line_items: req.body.line_items,
-      success_url: "http://localhost:3000/",
+      success_url: "http://localhost:3000/success",
       cancel_url: "http://localhost:3000/cart",
     })
     .catch((err) => {
@@ -135,6 +135,22 @@ server.post("/emails", async (req, res, next) => {
     next();
   } else {
     res.sendStatus(409);
+  }
+});
+/**************************************** */
+
+/******** User login route ************/
+server.get("/login", async (req, res, next) => {
+  const username = req.query.username;
+  const password = req.query.password;
+
+  if (
+    username === process.env.ADMIN_USERNAME &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
   }
 });
 /**************************************** */
