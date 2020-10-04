@@ -7,7 +7,8 @@ import HomePage from "./components/HomePage";
 import CatalogPage from "./components/CatalogPage";
 import StoryPage from "./components/StoryPage";
 import ContactPage from "./components/ContactPage";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import ErrorPage from "./components/ErrorPage";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import ShoppingCartPage from "./components/ShoppingCartPage";
 import SearchPage from "./components/SearchPage";
 import ItemPage from "./components/ItemPage";
@@ -63,6 +64,8 @@ const App = () => {
           <Route path="/edit-item/:id" component={EditItemPage}></Route>
           <Route path="/subscribers" component={SubscriberPage}></Route>
           <Route path="/success" component={SuccessPage}></Route>
+          <Route path="/404" component={ErrorPage}></Route>
+          <Redirect to="404" />
         </Switch>
         <Footer />
       </div>
