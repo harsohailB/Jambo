@@ -22,14 +22,13 @@ const ImageCarousel = ({ item, images, setMainImage }) => {
     { width: 200, itemsToShow: 3 },
     { width: 300, itemsToShow: 4 },
   ];
+  const placeHolderImageLink =
+    "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
 
   const renderImages = () => {
     return images.map((image) => (
       <SmallImage
-        src={require("../../assets/catalog/inventory/" +
-          item.folderName +
-          "/" +
-          image.imageName)}
+        src={image.imageLink !== "" ? image.imageLink : placeHolderImageLink}
         onClick={() => setMainImage(image)}
       ></SmallImage>
     ));

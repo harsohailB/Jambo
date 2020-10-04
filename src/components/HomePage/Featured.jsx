@@ -52,14 +52,12 @@ const Featured = () => {
   }, []);
 
   const renderFeaturedItems = () => {
+    console.log("renderFeaturedItems -> featuredItems", featuredItems);
     return featuredItems.map((item) => (
       <Item
         key={item.id}
         id={item.id}
-        path={require("../../assets/catalog/inventory/" +
-          item.folderName +
-          "/" +
-          item.thumbnailImage.imageName)}
+        imageLink={item.thumbnailImage.imageLink}
         name={item.name}
         price={item.price}
       ></Item>
