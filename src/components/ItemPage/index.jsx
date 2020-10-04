@@ -65,7 +65,7 @@ const MainImage = styled.img`
 
 const SmallImageWrapper = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: center;
   flex-wrap: wrap;
   flex-grow: 4;
   max-width: 600px;
@@ -216,9 +216,9 @@ const ItemPage = () => {
     "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
 
   useEffect(() => {
-    try {
-      const itemId = location.pathname.split("/").reverse()[0];
-      getItemById(itemId).then((fetchedItem) => {
+    const itemId = location.pathname.split("/").reverse()[0];
+    getItemById(itemId)
+      .then((fetchedItem) => {
         setItem(fetchedItem);
         setImages(fetchedItem.images);
         setItemColors(fetchedItem.colors.split("/"));
@@ -226,11 +226,10 @@ const ItemPage = () => {
         setItemSizes(fetchedItem.sizes.split("/"));
         setSelectedSize(fetchedItem.sizes.split("/")[0]);
         setMainImage(fetchedItem.thumbnailImage);
+      })
+      .catch((error) => {
+        history.push("/404");
       });
-    } catch (e) {
-      console.log("ItemPage UseEffect ERROR");
-      console.log(e);
-    }
   }, [location]);
 
   const renderItemColors = () => {
