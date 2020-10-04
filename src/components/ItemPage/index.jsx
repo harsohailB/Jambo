@@ -11,6 +11,7 @@ import Title from "../styled/Title";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import ImageCarousel from "./ImageCarousel";
+import ConfirmationPopUp from "./ConfirmationPopUp";
 import { useWindowResize } from "beautiful-react-hooks";
 import { Facebook, Twitter, Pinterest } from "react-sharingbuttons";
 import "react-sharingbuttons/dist/main.css";
@@ -232,6 +233,7 @@ const ItemPage = () => {
   const [mainImage, setMainImage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   //const url = window.location.href
   const url = window.location.href;
   const shareText = "Checkout this amazing product from Jambo";
@@ -264,13 +266,6 @@ const ItemPage = () => {
     return itemSizes.map((size) => <option>{size}</option>);
   };
 
-  const mystyle = {
-    color: "white",
-    backgroundColor: "DodgerBlue",
-    padding: "10px",
-    fontFamily: "Arial",
-  };
-
   const renderSmallImages = () => {
     return images.map((image) => (
       <SmallImage
@@ -296,7 +291,7 @@ const ItemPage = () => {
     setSelectedSize(evt.target.value);
   };
 
-  const handleRemoveItem = () => {
+  const removeItem = () => {
     deleteItemById(user, item.id);
     setTimeout(() => {
       history.push("/catalog");
@@ -388,7 +383,17 @@ const ItemPage = () => {
             </Button>
             <Description>{item.description}</Description>
             {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
-            {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
+            {user && (
+              <Button onClick={() => setConfirmationPopUp(true)}>
+                REMOVE ITEM
+              </Button>
+            )}
+            {confirmationPopUp && (
+              <ConfirmationPopUp
+                setConfirmationPopUp={setConfirmationPopUp}
+                removeItem={removeItem}
+              />
+            )}
             {user && (
               <FeatureItemOption onClick={handleFeatureClick}>
                 <Icon>

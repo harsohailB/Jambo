@@ -1,55 +1,6 @@
 {
   "items": [
     {
-      "id": 1,
-      "name": "Bean",
-      "price": 22.99,
-      "folderName": "bean",
-      "thumbnailImage": {
-        "imageName": "bean.jpg",
-        "color": "Forest Green"
-      },
-      "colors": "Forest Green/Graphite Heather/Maroon/Deep Orange",
-      "sizes": "One size",
-      "description": "Don't brave the elements without the proper headwear. Good for winter spring or fall, customize this knit beanie for your chilly weather go-to cap! For every task that takes you outdoors stay comfortable, stylish, and warm!",
-      "featured": true,
-      "tags": ["Accessories", "Embroidery", "Hats"],
-      "images": [
-        {
-          "imageName": "bean.jpg",
-          "color": "Forest Green"
-        },
-        {
-          "imageName": "bean-top.jpg",
-          "color": "None"
-        },
-        {
-          "imageName": "bean-gh.jpg",
-          "color": "Graphite Heather"
-        },
-        {
-          "imageName": "bean-gh2.jpg",
-          "color": "None"
-        },
-        {
-          "imageName": "bean-do.jpg",
-          "color": "Deep Orange"
-        },
-        {
-          "imageName": "bean-do-top.jpg",
-          "color": "None"
-        },
-        {
-          "imageName": "bean-m.jpg",
-          "color": "Maroon"
-        },
-        {
-          "imageName": "bean-m-top.jpg",
-          "color": "None"
-        }
-      ]
-    },
-    {
       "id": 2,
       "name": "Big Logo Tee",
       "price": 29.99,
@@ -61,7 +12,10 @@
       "colors": "Soft Cream",
       "sizes": "L",
       "description": "This t-shirt is everything you've dreamed of and more. It feels soft and lightweight, with the right amount of stretch. It's comfortable and flattering for both men and women. ",
-      "tags": ["Original", "Original T-Shirt"],
+      "tags": [
+        "Original",
+        "Original T-Shirt"
+      ],
       "images": [
         {
           "imageName": "big-logo-tee.jpg",
@@ -535,7 +489,14 @@
       "colors": "iPhone 7 Plus, iPhone 8 Plus Slim/iPhone 7, iPhone 8 Slim/iPhone 6 or 6s Slim",
       "sizes": "Glossy",
       "description": "This sleek iPhone case protects your phone from scratches, dust, oil, and dirt. It has a solid back and flexible sides that make it easy to take on and off, with precisely aligned port openings.",
-      "tags": ["Accessories", "Case", "Glossy", "Matte", "Phone Cases", "Slim"],
+      "tags": [
+        "Accessories",
+        "Case",
+        "Glossy",
+        "Matte",
+        "Phone Cases",
+        "Slim"
+      ],
       "images": [
         {
           "imageName": "loyalty-case.jpg",
@@ -563,7 +524,14 @@
       "colors": "iPhone 7 Plus, iPhone 8 Plus Slim/iPhone 7, iPhone 8 Slim/iPhone 6 or 6s Slim",
       "sizes": "Glossy",
       "description": "This sleek iPhone case protects your phone from scratches, dust, oil, and dirt. It has a solid back and flexible sides that make it easy to take on and off, with precisely aligned port openings.",
-      "tags": ["Accessories", "Case", "Glossy", "Matte", "Phone Cases", "Slim"],
+      "tags": [
+        "Accessories",
+        "Case",
+        "Glossy",
+        "Matte",
+        "Phone Cases",
+        "Slim"
+      ],
       "images": [
         {
           "imageName": "tenacity-case.jpg",
@@ -663,7 +631,13 @@
       "colors": "Heather Olive/White",
       "sizes": "XS or SM/M or L",
       "description": "Love knows no bounds.",
-      "tags": ["Cotton", "Shirt", "Short Sleeve", "T-Shirts", "Tee"],
+      "tags": [
+        "Cotton",
+        "Shirt",
+        "Short Sleeve",
+        "T-Shirts",
+        "Tee"
+      ],
       "images": [
         {
           "imageName": "loyal-tee.jpg",
@@ -687,7 +661,13 @@
       "colors": "White/Black/Navy/Sport Grey",
       "sizes": "S/M/L/XL/2XL/3XL",
       "description": "Love knows no bounds.",
-      "tags": ["Cotton", "Shirt", "Short Sleeve", "T-Shirts", "Tee"],
+      "tags": [
+        "Cotton",
+        "Shirt",
+        "Short Sleeve",
+        "T-Shirts",
+        "Tee"
+      ],
       "images": [
         {
           "imageName": "loyal-tee2.jpg",
