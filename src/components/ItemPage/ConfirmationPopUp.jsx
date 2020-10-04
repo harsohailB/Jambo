@@ -33,7 +33,7 @@ const ConfirmationPopUp = (props) => {
     <Wrapper>
       <Subtitle>Are you sure?</Subtitle>
       <IconsWrapper>
-        <Icon style={{ color: "green" }} onClick={props.removeItem()}>
+        <Icon style={{ color: "green" }} onClick={() => props.removeItem()}>
           <FaCheck size={24} />
         </Icon>
         <Icon
