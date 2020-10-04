@@ -133,6 +133,7 @@ const ItemPreview = (props) => {
       evt.target.value = 100;
     }
     setItem({ ...item, quantity: evt.target.value });
+
     dispatch({
       type: QUANTITY_CHANGE,
       item: item,
@@ -145,16 +146,21 @@ const ItemPreview = (props) => {
     return parseFloat(item.price * item.quantity).toFixed(2);
   };
 
+  const getSelectedImageLink = () => {
+    var imageLink;
+    item.images.forEach((image) => {
+      if (item.color === image.color) {
+        imageLink = image.imageLink;
+      }
+    });
+    return imageLink;
+  };
+
   return (
     <TableRow>
       <td>
         <ProductWrapper to={"/catalog/" + item.id}>
-          <Image
-            src={require("../../assets/catalog/inventory/" +
-              item.folderName +
-              "/" +
-              item.selectedImageName)}
-          ></Image>
+          <Image src={getSelectedImageLink()}></Image>
           <ItemInfoWrapper>
             <ItemName>{item.name}</ItemName>
             <ItemDetail>Color: {item.color}</ItemDetail>

@@ -22,12 +22,6 @@ export const getItemById = async (id) => {
 };
 
 export const uploadItem = async (user, newItem) => {
-  createFolderForNewItem(user, newItem.folderName);
-
-  newItem.images.forEach((image) => {
-    uploadImage(user, image, newItem.folderName);
-  });
-
   const response = await axios.post(
     `${config.endpoint}/items?username=` +
       user.username +

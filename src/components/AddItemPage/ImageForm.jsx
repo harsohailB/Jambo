@@ -11,15 +11,30 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+const Input = styled.input`
+  border: 1px solid rgba(61, 66, 70, 0.85);
+  background-color: #fff;
+  width: 437px;
+  border-radius: 2px;
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #3d4246;
+  line-height: 1.5;
+  padding: 10px 18px;
+  width: 100%;
+`;
+
 const UploadWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  flex-grow: 2;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
-
-const ImageInput = styled.input``;
 
 const Icon = styled(Link)`
   margin: 10px;
@@ -34,8 +49,17 @@ const Icon = styled(Link)`
   }
 `;
 
+const PreviewImage = styled.img`
+  width: 50px;
+  height: auto;
+  margin-right: 5px;
+`;
+
 const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(0);
+  const placeHolderImageLink =
+    "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
+  const [imageURL, setImageURL] = useState("");
 
   const renderColourOptions = () => {
     return getArrayOfColours().map((color) => <option>{color}</option>);
@@ -45,7 +69,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     newItem.images.push({
       id: id,
       color: "None",
-      file: null,
+      imageLink: "",
     });
     setId(id + 1);
   };
@@ -72,27 +96,26 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     newItem.images.push(image);
   };
 
-  const handleFileSelected = (evt, image) => {
+  const handleURLChange = (evt, image) => {
+    setImageURL(evt.target.value);
     image = {
       ...image,
-      imageName: evt.target.files[0].name,
-      file: evt.target.files[0],
+      imageLink: evt.target.value,
     };
     newItem.images.pop();
-    if (newItem.images.length === 0) {
-      setNewItem({ ...newItem, thumbnailImage: image });
-    }
     newItem.images.push(image);
   };
 
   const renderImageInputs = () => {
     return newItem.images.map((image) => (
-      <UploadWrapper>
-        <ImageInput
-          type="file"
-          accept="image/jpeg,image/jpg"
-          onChange={(evt) => handleFileSelected(evt, image)}
-        ></ImageInput>
+      <UploadWrapper id={image.id}>
+        <PreviewImage
+          src={image.imageLink == "" ? placeHolderImageLink : image.imageLink}
+        />
+        <Input
+          placeholder="Image URL"
+          onChange={(evt) => handleURLChange(evt, image)}
+        ></Input>
         <Dropdown onChange={(evt) => handleDropdownChange(evt, image)}>
           {renderColourOptions()}
         </Dropdown>
