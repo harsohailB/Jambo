@@ -237,9 +237,9 @@ const ItemPage = () => {
   const shareText = "Checkout this amazing product from Jambo";
 
   useEffect(() => {
-    try {
-      const itemId = location.pathname.split("/").reverse()[0];
-      getItemById(itemId).then((fetchedItem) => {
+    const itemId = location.pathname.split("/").reverse()[0];
+    getItemById(itemId)
+      .then((fetchedItem) => {
         setItem(fetchedItem);
         setImages(fetchedItem.images);
         setItemColors(fetchedItem.colors.split("/"));
@@ -247,11 +247,10 @@ const ItemPage = () => {
         setItemSizes(fetchedItem.sizes.split("/"));
         setSelectedSize(fetchedItem.sizes.split("/")[0]);
         setMainImage(fetchedItem.thumbnailImage);
+      })
+      .catch((error) => {
+        history.push("/404");
       });
-    } catch (e) {
-      console.log("ItemPage UseEffect ERROR");
-      console.log(e);
-    }
   }, [location]);
 
   const renderItemColors = () => {

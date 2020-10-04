@@ -12,7 +12,12 @@ export const getItems = async () => {
 };
 
 export const getItemById = async (id) => {
-  let response = await axios.get(`${config.endpoint}/items/${id}`);
+  try {
+    var response = await axios.get(`${config.endpoint}/items/${id}`);
+  } catch (error) {
+    console.log(error);
+    response = { status: 404 };
+  }
 
   if (response.status !== 200) {
     throw "getItemsById failed with error code " + response.status;
@@ -22,12 +27,6 @@ export const getItemById = async (id) => {
 };
 
 export const uploadItem = async (user, newItem) => {
-  createFolderForNewItem(user, newItem.folderName);
-
-  newItem.images.forEach((image) => {
-    uploadImage(user, image, newItem.folderName);
-  });
-
   const response = await axios.post(
     `${config.endpoint}/items?username=` +
       user.username +
