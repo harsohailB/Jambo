@@ -45,9 +45,15 @@ const Price = styled.h3`
 `;
 
 const Item = (props) => {
+  const placeHolderImageLink =
+    "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
   return (
     <Wrapper to={"/catalog/" + props.id}>
-      <Image src={props.path}></Image>
+      {props.imageLink !== "" ? (
+        <Image src={props.imageLink}></Image>
+      ) : (
+        <Image src={placeHolderImageLink}></Image>
+      )}
       <Name>{props.name}</Name>
       <Price>${props.price}</Price>
     </Wrapper>

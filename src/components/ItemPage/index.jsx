@@ -11,6 +11,7 @@ import Title from "../styled/Title";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import ImageCarousel from "./ImageCarousel";
+import ConfirmationPopUp from "./ConfirmationPopUp";
 import { useWindowResize } from "beautiful-react-hooks";
 import { Facebook, Twitter, Pinterest } from "react-sharingbuttons";
 import "react-sharingbuttons/dist/main.css";
@@ -161,31 +162,6 @@ const FontBox = styled.div`
   vertical-align: middle;
 `;
 
-const TwBox = styled.div`
-  display: flex;
-  alignitems: center;
-  justify-content: center;
-  font-family: Righteous, sans-serif;
-  font-style: bold;
-  font-weight: 400;
-  font-color: #000000;
-  background-color: #1da1f2;
-  padding: 15px 40px 15px 40px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px #ffffff;
-  margin: 20px 20px;
-  theme: #1da1f2;
-  padding-left: 50px;
-`;
-
-const shareBoxes = styled.div`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-family: Righteous, sans-serif;
-  font-weight: 400;
-`;
-
 const FeatureItemOption = styled.span`
   display: flex;
   jsutify-content: center;
@@ -232,9 +208,12 @@ const ItemPage = () => {
   const [mainImage, setMainImage] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   //const url = window.location.href
   const url = window.location.href;
   const shareText = "Checkout this amazing product from Jambo";
+  const placeHolderImageLink =
+    "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
 
   useEffect(() => {
     const itemId = location.pathname.split("/").reverse()[0];
@@ -263,20 +242,10 @@ const ItemPage = () => {
     return itemSizes.map((size) => <option>{size}</option>);
   };
 
-  const mystyle = {
-    color: "white",
-    backgroundColor: "DodgerBlue",
-    padding: "10px",
-    fontFamily: "Arial",
-  };
-
   const renderSmallImages = () => {
     return images.map((image) => (
       <SmallImage
-        src={require("../../assets/catalog/inventory/" +
-          item.folderName +
-          "/" +
-          image.imageName)}
+        src={image.imageLink !== "" ? image.imageLink : placeHolderImageLink}
         onClick={() => setMainImage(image)}
       ></SmallImage>
     ));
@@ -295,7 +264,7 @@ const ItemPage = () => {
     setSelectedSize(evt.target.value);
   };
 
-  const handleRemoveItem = () => {
+  const removeItem = () => {
     deleteItemById(user, item.id);
     setTimeout(() => {
       history.push("/catalog");
@@ -312,7 +281,6 @@ const ItemPage = () => {
       type: ADD_ITEM_TO_SC,
       item: {
         ...item,
-        selectedImageName: mainImage.imageName,
         color: selectedColor,
         quantity: "1",
         size: selectedSize,
@@ -344,19 +312,9 @@ const ItemPage = () => {
           <PreviewWrapper>
             <MainImageWrapper>
               {mainImage ? (
-                <MainImage
-                  src={require("../../assets/catalog/inventory/" +
-                    item.folderName +
-                    "/" +
-                    mainImage.imageName)}
-                ></MainImage>
+                <MainImage src={mainImage.imageLink}></MainImage>
               ) : (
-                <MainImage
-                  src={require("../../assets/catalog/inventory/" +
-                    item.folderName +
-                    "/" +
-                    item.thumbnailImage.imageName)}
-                ></MainImage>
+                <MainImage src={placeHolderImageLink}></MainImage>
               )}
             </MainImageWrapper>
 
@@ -387,7 +345,17 @@ const ItemPage = () => {
             </Button>
             <Description>{item.description}</Description>
             {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
-            {user && <Button onClick={handleRemoveItem}>REMOVE ITEM</Button>}
+            {user && (
+              <Button onClick={() => setConfirmationPopUp(true)}>
+                REMOVE ITEM
+              </Button>
+            )}
+            {confirmationPopUp && (
+              <ConfirmationPopUp
+                setConfirmationPopUp={setConfirmationPopUp}
+                removeItem={removeItem}
+              />
+            )}
             {user && (
               <FeatureItemOption onClick={handleFeatureClick}>
                 <Icon>
