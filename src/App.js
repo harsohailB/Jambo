@@ -53,19 +53,19 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
-          <Route path="/catalog/:id" component={ItemPage}></Route>
-          <Route path="/catalog" component={CatalogPage}></Route>
-          <Route path="/story" component={StoryPage}></Route>
-          <Route path="/contact" component={ContactPage}></Route>
-          <Route path="/cart" component={ShoppingCartPage}></Route>
+          <Route exact path="/catalog/:id" component={ItemPage}></Route>
+          <Route exact path="/catalog" component={CatalogPage}></Route>
+          <Route exact path="/story" component={StoryPage}></Route>
+          <Route exact path="/contact" component={ContactPage}></Route>
+          <Route exact path="/cart" component={ShoppingCartPage}></Route>
           {/* <Route path="/search/:query" component={SearchPage}></Route> */}
-          <Route path="/login" component={LoginPage}></Route>
-          <Route path="/add-item" component={AddItemPage}></Route>
-          <Route path="/edit-item/:id" component={EditItemPage}></Route>
-          <Route path="/subscribers" component={SubscriberPage}></Route>
-          <Route path="/success" component={SuccessPage}></Route>
-          <Route path="/404" component={ErrorPage}></Route>
-          <Redirect to="404" />
+          <Route exact path="/login" component={LoginPage}></Route>
+          <Route exact path="/add-item" component={AddItemPage}></Route>
+          <Route exact path="/edit-item/:id" component={EditItemPage}></Route>
+          <Route exact path="/subscribers" component={SubscriberPage}></Route>
+          <Route exact path="/success" component={SuccessPage}></Route>
+          <Route exact path="/404" component={ErrorPage}></Route>
+          <Redirect to="/404" />
         </Switch>
         <Footer />
       </div>
