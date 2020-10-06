@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Title from "../styled/Title";
 import { Helmet } from "react-helmet";
 import { CLEAR_CART } from "../../actions/types";
+import successSVG from "../../assets/svgs/success.svg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +24,10 @@ const Subtitle = styled.h1`
   max-width: 50%;
   margin-bottom: 25px;
   text-align: center;
+`;
+
+const Image = styled.img`
+  width: 30vw;
 `;
 
 const SuccessPage = () => {
@@ -47,6 +52,7 @@ const SuccessPage = () => {
         have any questions about your feel free to contact us at{" "}
         <a href="jamboapparel@gmail.com">jamboapparel@gmail.com</a>
       </Subtitle>
+      <Image src={successSVG}></Image>
     </Wrapper>
   );
 };
