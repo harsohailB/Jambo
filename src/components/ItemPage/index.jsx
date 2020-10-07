@@ -165,7 +165,6 @@ const FontBox = styled.div`
 
 const FeatureItemOption = styled.span`
   display: flex;
-  jsutify-content: center;
   align-items: center;
   font-family: Righteous, sans-serif;
   font-style: normal;

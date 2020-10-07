@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import ImageForm from "./ImageForm";
+import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { uploadItem } from "../../actions/items";
 
 const Form = styled.form`
@@ -69,6 +70,31 @@ const Label = styled.label`
   margin-left: 10px;
 `;
 
+const Icon = styled.div`
+  margin: 5px;
+  color: #557b97;
+  cursor: pointer;
+  width: -webkit-fit-content;
+  height: -webkit-fit-content;
+
+  & :hover {
+    color: black;
+  }
+  & > svg {
+    transition: color 0.1s linear;
+  }
+`;
+
+const FeatureItemOption = styled.span`
+  display: flex;
+  align-items: center;
+  font-family: Righteous, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  cursor: pointer;
+  color: #3d4246;
+`;
+
 const NewItemForm = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
@@ -78,6 +104,8 @@ const NewItemForm = () => {
     colors: "",
     sizes: "",
     description: "",
+    tags: "",
+    featured: false,
     thumbnailImage: null,
     images: [
       {
@@ -128,6 +156,7 @@ const NewItemForm = () => {
     let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
+      tags: newItem.tags.split("/"),
     };
     console.log("handleFormSubmit -> tempNewItem", tempNewItem);
     if (!checkForErrors()) {
@@ -174,6 +203,20 @@ const NewItemForm = () => {
     setNewItem({
       ...newItem,
       description: evt.target.value,
+    });
+  };
+
+  const handleTagsChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      tags: evt.target.value,
+    });
+  };
+
+  const handleFeatureClick = () => {
+    setNewItem({
+      ...newItem,
+      featured: !newItem.featured,
     });
   };
 
@@ -224,6 +267,25 @@ const NewItemForm = () => {
         placeholder="The item is ..."
         autocomplete="description"
       />
+      <Label>Tags (case sensitive)</Label>
+      <Input
+        hasError={false}
+        label="tags"
+        onChange={handleTagsChange}
+        value={newItem.tags}
+        placeholder="Accessories/Embroidery/Hats"
+        autocomplete="tags"
+      />
+      <FeatureItemOption onClick={handleFeatureClick}>
+        <Icon>
+          {newItem.featured ? (
+            <FaCheckCircle size={24} />
+          ) : (
+            <FaRegCircle size={24} />
+          )}
+        </Icon>
+        Featured Item
+      </FeatureItemOption>
       <Label>Add images here:</Label>
       <Label>
         (Note: First Picture will be thumbnail and DON'T put spaces in
