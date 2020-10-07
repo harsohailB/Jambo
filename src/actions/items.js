@@ -12,7 +12,12 @@ export const getItems = async () => {
 };
 
 export const getItemById = async (id) => {
-  let response = await axios.get(`${config.endpoint}/items/${id}`);
+  try {
+    var response = await axios.get(`${config.endpoint}/items/${id}`);
+  } catch (error) {
+    console.log(error);
+    response = { status: 404 };
+  }
 
   if (response.status !== 200) {
     throw "getItemsById failed with error code " + response.status;
