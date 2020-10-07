@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   margin-top: 50px;
+  justify-content: flex-start;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -29,10 +30,9 @@ const Wrapper = styled.div`
 const PreviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  max-width: 50%;
-  margin-right: 50px;
+  align-items: center;
+  max-width: 45%;
+  margin-left: 200px;
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -44,13 +44,13 @@ const PreviewWrapper = styled.div`
 
 const MainImageWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   overflow: hidden;
   margin-bottom: 25px;
 `;
 
 const MainImage = styled.img`
-  width: 50%;
+  width: 45%;
   height: 100%;
   transition: all 0.3s ease;
 
@@ -65,7 +65,7 @@ const MainImage = styled.img`
 
 const SmallImageWrapper = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: center;
   flex-wrap: wrap;
   flex-grow: 4;
   max-width: 600px;
@@ -90,6 +90,7 @@ const InfoWrapper = styled.div`
   justify-content: flex-start;
   width: 20%;
   margin-top: 50px;
+  padding-right: 100px;
 
   @media (max-width: 768px) {
     margin-left: 50px;
@@ -216,9 +217,9 @@ const ItemPage = () => {
     "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
 
   useEffect(() => {
-    try {
-      const itemId = location.pathname.split("/").reverse()[0];
-      getItemById(itemId).then((fetchedItem) => {
+    const itemId = location.pathname.split("/").reverse()[0];
+    getItemById(itemId)
+      .then((fetchedItem) => {
         setItem(fetchedItem);
         setImages(fetchedItem.images);
         setItemColors(fetchedItem.colors.split("/"));
@@ -226,11 +227,10 @@ const ItemPage = () => {
         setItemSizes(fetchedItem.sizes.split("/"));
         setSelectedSize(fetchedItem.sizes.split("/")[0]);
         setMainImage(fetchedItem.thumbnailImage);
+      })
+      .catch((error) => {
+        history.push("/404");
       });
-    } catch (e) {
-      console.log("ItemPage UseEffect ERROR");
-      console.log(e);
-    }
   }, [location]);
 
   const renderItemColors = () => {
