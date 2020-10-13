@@ -7,6 +7,7 @@ const Wrapper = styled(Link)`
   flex-direction: column;
   cursor: pointer;
   text-decoration: none;
+  padding : 0 20px;
 
   & :hover {
     opacity: 80%;
