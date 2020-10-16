@@ -30,15 +30,24 @@ const Title = styled.h1`
 
 const ItemsWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-flow: row wrap;
+  justify-content: flex-start;
   margin-left: 150px;
   margin-right: 150px;
   flex-grow: 5;
-  max-width: 1400px;
+  max-width: 1450px;
+
+  &:after {
+    content: "";
+    flex-basis: 250px;
+  }
 
   @media (max-width: 768px) {
     width: 80%;
+    &:after {
+      content: "";
+      flex-basis: 150px;
+    }
   }
 `;
 
