@@ -6,6 +6,7 @@ import logo from "./assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { LOGOUT_USER } from "./actions/types";
 import { useWindowResize } from "beautiful-react-hooks";
+import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   display: flex;
@@ -217,14 +218,20 @@ const Navbar = () => {
 
         <IconsWrapper>
           {searchClicked && !isMobile && (
-            <form onSubmit={handleSearchClick}>
-              <SearchBar
-                type="search"
-                placeholder="Search"
-                value={searchInput}
-                onChange={handleSearchInputChange}
-              ></SearchBar>
-            </form>
+            <motion.div
+              initial={{ width: "0px" }}
+              animate={{ width: ["0px", "200px", "175px"] }}
+              transition={{ duration: 0.7, times: [0, 0.5, 0.7] }}
+            >
+              <form onSubmit={handleSearchClick}>
+                <SearchBar
+                  type="search"
+                  placeholder="Search"
+                  value={searchInput}
+                  onChange={handleSearchInputChange}
+                ></SearchBar>
+              </form>
+            </motion.div>
           )}
           <Icon onClick={handleSearchClick}>
             <FaSearch size={24} />
@@ -250,14 +257,20 @@ const Navbar = () => {
 
       {searchClicked && isMobile && (
         <PagesWrapper>
-          <form onSubmit={handleSearchClick}>
-            <SearchBar
-              type="search"
-              placeholder="Search"
-              value={searchInput}
-              onChange={handleSearchInputChange}
-            ></SearchBar>
-          </form>
+          <motion.div
+            initial={{ height: "0px" }}
+            animate={{ height: ["0px", "100px", "60px"] }}
+            transition={{ duration: 0.7, times: [0, 0.5, 0.7] }}
+          >
+            <form onSubmit={handleSearchClick}>
+              <SearchBar
+                type="search"
+                placeholder="Search"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              ></SearchBar>
+            </form>
+          </motion.div>
         </PagesWrapper>
       )}
 
