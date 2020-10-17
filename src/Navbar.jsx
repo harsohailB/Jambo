@@ -275,20 +275,26 @@ const Navbar = () => {
       )}
 
       {menuClicked && (
-        <PagesWrapper>
-          <PageReference onClick={() => setMenuClicked(false)} to="/">
-            Home
-          </PageReference>
-          <PageReference onClick={() => setMenuClicked(false)} to="/catalog">
-            Catalog
-          </PageReference>
-          <PageReference onClick={() => setMenuClicked(false)} to="/story">
-            Story
-          </PageReference>
-          <PageReference onClick={() => setMenuClicked(false)} to="/contact">
-            Contact
-          </PageReference>
-        </PagesWrapper>
+        <motion.div
+          initial={{ height: "0px" }}
+          animate={{ height: ["0px", "240px", "220px"] }}
+          transition={{ duration: 0.7, times: [0, 0.5, 0.7] }}
+        >
+          <PagesWrapper>
+            <PageReference onClick={() => setMenuClicked(false)} to="/">
+              Home
+            </PageReference>
+            <PageReference onClick={() => setMenuClicked(false)} to="/catalog">
+              Catalog
+            </PageReference>
+            <PageReference onClick={() => setMenuClicked(false)} to="/story">
+              Story
+            </PageReference>
+            <PageReference onClick={() => setMenuClicked(false)} to="/contact">
+              Contact
+            </PageReference>
+          </PagesWrapper>
+        </motion.div>
       )}
     </Wrapper>
   );
