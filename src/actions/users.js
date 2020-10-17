@@ -2,8 +2,13 @@ import axios from "axios";
 import config from "../config";
 import { LOGIN_USER } from "./types";
 
+var bcrypt = require("bcryptjs");
+var salt = bcrypt.genSaltSync(10);
+
 export const loginUser = async (username, password) => {
-  const params = "?username=" + username + "&password=" + password;
+  let hashedPassword = bcrypt.hashSync(password, salt);
+
+  const params = "?username=" + username + "&password=" + hashedPassword;
 
   const response = await axios.get(`${config.endpoint}/login/${params}`);
 
@@ -12,7 +17,7 @@ export const loginUser = async (username, password) => {
       type: LOGIN_USER,
       user: {
         username: username,
-        password: password,
+        password: hashedPassword,
       },
     };
   } else if (response.status === 401) {

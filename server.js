@@ -140,13 +140,16 @@ server.post("/emails", async (req, res, next) => {
 /**************************************** */
 
 /******** User login route ************/
+var bcrypt = require("bcryptjs");
+var salt = bcrypt.genSaltSync(10);
+
 server.get("/login", async (req, res, next) => {
   const username = req.query.username;
   const password = req.query.password;
 
   if (
     username === process.env.ADMIN_USERNAME &&
-    password === process.env.ADMIN_PASSWORD
+    bcrypt.compareSync("password", password)
   ) {
     res.sendStatus(200);
   } else {
