@@ -31,6 +31,7 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^3.10.0",
     "react-image-fade-in": "^1.1.1",
+    "react-inner-image-zoom": "^1.1.1",
     "react-redux": "^7.2.0",
     "react-responsive": "^8.1.0",
     "react-router-dom": "^5.2.0",
