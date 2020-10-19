@@ -15,6 +15,8 @@ import ConfirmationPopUp from "./ConfirmationPopUp";
 import { useWindowResize } from "beautiful-react-hooks";
 import { Facebook, Twitter, Pinterest } from "react-sharingbuttons";
 import "react-sharingbuttons/dist/main.css";
+import InnerImageZoom from "react-inner-image-zoom";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,6 +49,7 @@ const MainImageWrapper = styled.div`
   justify-content: center;
   overflow: hidden;
   margin-bottom: 25px;
+  width: 60%;
 `;
 
 const MainImage = styled.img`
@@ -312,7 +315,10 @@ const ItemPage = () => {
           <PreviewWrapper>
             <MainImageWrapper>
               {mainImage ? (
-                <MainImage src={mainImage.imageLink}></MainImage>
+                <InnerImageZoom
+                  src={mainImage.imageLink}
+                  zoomSrc={mainImage.imageLink}
+                />
               ) : (
                 <MainImage src={placeHolderImageLink}></MainImage>
               )}
