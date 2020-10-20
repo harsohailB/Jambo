@@ -31,7 +31,7 @@ const Title = styled.h1`
 const ItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-around;
   margin-left: 150px;
   margin-right: 150px;
   flex-grow: 5;
@@ -43,7 +43,7 @@ const ItemsWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 80%;
+    width: 100%;
     &:after {
       content: "";
       flex-basis: 150px;
