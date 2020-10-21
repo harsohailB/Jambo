@@ -31,11 +31,13 @@ const Title = styled.h1`
 const ItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
-  margin-left: 150px;
-  margin-right: 150px;
+  justify-content: flex-start;
+  padding-left: 100px;
+  padding-right: 0px;
+  margin-left: auto;
+  margin-right: auto;
   flex-grow: 5;
-  max-width: 1450px;
+  max-width: 14000px;
 
   &:after {
     content: "";
@@ -43,10 +45,19 @@ const ItemsWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 80%;
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 50px;
+    margin-right: auto;
+    justify-content: flex-start;
     &:after {
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-left: auto;
+      margin-right: auto;
       content: "";
-      flex-basis: 150px;
+      flex: auto;
     }
   }
 `;
