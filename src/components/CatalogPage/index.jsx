@@ -32,12 +32,12 @@ const ItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  padding-left: 100px;
-  padding-right: 0px;
-  margin-left: auto;
-  margin-right: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: 100px;
+  margin-right: 50px;
   flex-grow: 5;
-  max-width: 14000px;
+  max-width: 1450px;
 
   &:after {
     content: "";
@@ -47,7 +47,7 @@ const ItemsWrapper = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     padding-left: 0px;
-    padding-right: 0px;
+    padding-right: 50px;
     margin-left: 50px;
     margin-right: auto;
     justify-content: flex-start;
@@ -58,6 +58,7 @@ const ItemsWrapper = styled.div`
       margin-right: auto;
       content: "";
       flex: auto;
+      flex-basis: 125px;
     }
   }
 `;
