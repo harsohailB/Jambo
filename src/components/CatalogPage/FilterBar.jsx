@@ -9,10 +9,10 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 80%;
   max-width: 1500px;
-  width: 75%;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -27,7 +27,6 @@ const FilterWrapper = styled.div`
 const Filter = styled.div`
   display: flex;
 `;
-
 
 const FilterText = styled.label`
   font-size: 14px;
@@ -51,27 +50,27 @@ const InventoryCount = styled.p`
 `;
 
 const Button = styled(Link)`
-    font-family: Righteous,sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    padding: 10px 18px;
-    display: inline-block;
-    width: auto;
-    text-decoration: none;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    padding: 8px 15px;
-    background-color: #557b97;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    white-space: normal;
-    font-size: 14px;
-    margin: 5px;
-    padding: 15px;
+  font-family: Righteous, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  padding: 10px 18px;
+  display: inline-block;
+  width: auto;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 8px 15px;
+  background-color: #557b97;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: normal;
+  font-size: 14px;
+  margin: 5px;
+  padding: 15px;
 `;
 
 const FilterBar = ({
