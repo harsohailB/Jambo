@@ -30,8 +30,8 @@ const Title = styled.h1`
 
 const ItemsWrapper = styled.div`
   display: grid;
-  grid: auto / repeat(5, 20%);
-  grid-gap: 20px 20px;
+  grid: auto / repeat(5, 19.2%);
+  gap: 1%;
   justify-items: center;
   width: 80%;
   max-width: 1500px;
