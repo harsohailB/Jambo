@@ -29,37 +29,27 @@ const Title = styled.h1`
 `;
 
 const ItemsWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  padding-left: 50px;
-  padding-right: 50px;
-  margin-left: 100px;
-  margin-right: 50px;
-  flex-grow: 5;
-  max-width: 1450px;
+  display: grid;
+  grid: auto / repeat(5, 19.2%);
+  gap: 1%;
+  justify-items: center;
+  width: 80%;
+  max-width: 1500px;
 
-  &:after {
-    content: "";
-    flex: auto;
+  @media (max-width: 1500px) {
+    grid: auto / repeat(4, 25%);
   }
 
-  @media (max-width: 768px) {
-    width: 100%;
-    padding-left: 0px;
-    padding-right: 50px;
-    margin-left: 50px;
-    margin-right: auto;
-    justify-content: flex-start;
-    &:after {
-      padding-left: 0px;
-      padding-right: 0px;
-      margin-left: auto;
-      margin-right: auto;
-      content: "";
-      flex: auto;
-      flex-basis: 125px;
-    }
+  @media (max-width: 1300px) {
+    grid: auto / repeat(3, 33%);
+  }
+
+  @media (max-width: 1100px) {
+    grid: auto / repeat(3, 33%);
+  }
+
+  @media (max-width: 900px) {
+    grid: auto / repeat(2, 50%);
   }
 `;
 
