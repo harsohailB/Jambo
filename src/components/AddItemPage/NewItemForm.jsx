@@ -109,11 +109,11 @@ const NewItemForm = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [newItem, setNewItem] = useState({
-    name: "<Name>",
-    price: "<Price>",
+    name: "",
+    price: "",
     colors: "",
     sizes: "",
-    description: "<Description>",
+    description: "",
     tags: "",
     featured: false,
     thumbnailImage: {

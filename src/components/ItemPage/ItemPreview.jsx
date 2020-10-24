@@ -309,8 +309,8 @@ const ItemPreview = ({ item, setItem }) => {
       </PreviewWrapper>
 
       <InfoWrapper>
-        <Name>{item.name}</Name>
-        <Price>${item.price}</Price>
+        <Name>{item.name.length ? item.name : "<Name>"}</Name>
+        <Price>${item.price.length ? item.price : "<Price>"}</Price>
 
         <DropdownWrapper>
           <Dropdown value={selectedColor} onChange={updateSelectedColor}>
@@ -325,7 +325,9 @@ const ItemPreview = ({ item, setItem }) => {
           ADD TO CART
         </Button>
 
-        <Description>{item.description}</Description>
+        <Description>
+          {item.description.length ? item.description : "<Description>"}
+        </Description>
         {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
         {user && (
           <Button onClick={() => setConfirmationPopUp(true)}>
