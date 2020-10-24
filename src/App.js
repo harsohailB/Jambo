@@ -10,7 +10,6 @@ import ContactPage from "./components/ContactPage";
 import ErrorPage from "./components/ErrorPage";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import ShoppingCartPage from "./components/ShoppingCartPage";
-import SearchPage from "./components/SearchPage";
 import ItemPage from "./components/ItemPage";
 import LoginPage from "./components/LoginPage";
 import AddItemPage from "./components/AddItemPage";
@@ -58,7 +57,6 @@ const App = () => {
           <Route exact path="/story" component={StoryPage}></Route>
           <Route exact path="/contact" component={ContactPage}></Route>
           <Route exact path="/cart" component={ShoppingCartPage}></Route>
-          {/* <Route path="/search/:query" component={SearchPage}></Route> */}
           <Route exact path="/login" component={LoginPage}></Route>
           <Route exact path="/add-item" component={AddItemPage}></Route>
           <Route exact path="/edit-item/:id" component={EditItemPage}></Route>

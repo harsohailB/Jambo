@@ -1,6 +1,9 @@
 import React from "react";
-import welcomeImage from "../../assets/kids-running.jpg";
 import styled from "styled-components";
+
+import welcomeImage from "../../assets/homePage/kids-running.jpg";
+
+import ButtonStyles from "../styled/ButtonStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,27 +51,8 @@ const Subtitle = styled.p`
   color: white;
 `;
 
-const Button = styled.a`
-  font-family: Righteous, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  padding: 10px 18px;
-  display: inline-block;
-  width: auto;
-  text-decoration: none;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  padding: 8px 15px;
-  background-color: #557b97;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: normal;
-  font-size: 14px;
-  margin: 5px;
+const ExternalLinkButton = styled.a`
+  ${ButtonStyles}
 `;
 
 const WelcomeBanner = () => {
@@ -83,7 +67,7 @@ const WelcomeBanner = () => {
           All proceeds will go towards enriching the lives of children in rural
           Kenya
         </Subtitle>
-        <Button href={donationPageLink}>Donate</Button>
+        <ExternalLinkButton href={donationPageLink}>Donate</ExternalLinkButton>
       </ContentWrapper>
       <Image src={welcomeImage}></Image>
     </Wrapper>

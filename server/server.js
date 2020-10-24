@@ -3,7 +3,7 @@ const jsonServer = require("json-server");
 const { readSync } = require("fs");
 const { RSA_NO_PADDING } = require("constants");
 const server = jsonServer.create();
-const dbPath = "./src/assets/catalog/inventoryData.json";
+const dbPath = "./src/assets/inventoryData.json";
 const router = jsonServer.router(dbPath);
 const middlewares = jsonServer.defaults();
 require("dotenv").config();

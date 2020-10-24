@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Title from "../styled/Title";
 import EditItemForm from "./EditItemForm";
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
