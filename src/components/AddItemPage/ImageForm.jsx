@@ -74,15 +74,12 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   };
 
   const handleDeleteImageInput = (image) => {
-    let tempImages = [];
-    newItem.images.forEach((existingImage) => {
-      if (existingImage.id !== image.id) {
-        tempImages.push(existingImage);
-      }
-    });
     setNewItem({
       ...newItem,
-      images: tempImages,
+      images: newItem.images.filter(
+        (existingImage) => existingImage.id !== image.id
+      ),
+      thumbnailImage: { imageLink: placeHolderImageLink },
     });
   };
 
