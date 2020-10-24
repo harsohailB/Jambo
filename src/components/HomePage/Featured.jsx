@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
 import Item from "../CatalogPage/Item";
 import Button from "../styled/Button";
 import { getItems } from "../../actions/items";
@@ -39,29 +40,13 @@ const Featured = () => {
 
   useEffect(() => {
     getItems().then((fetchedItems) => {
-      console.log(fetchedItems);
-      let items = [];
-      fetchedItems.forEach((item) => {
-        if (item.featured) {
-          items.push(item);
-        }
-      });
-      setFeaturedItems(items);
-      console.log(featuredItems);
+      setFeaturedItems(fetchedItems.filter((item) => item.featured));
     });
   }, []);
 
   const renderFeaturedItems = () => {
-    console.log("renderFeaturedItems -> featuredItems", featuredItems);
-    return featuredItems.map((item) => (
-      <Item
-        key={item.id}
-        id={item.id}
-        imageLink={item.thumbnailImage.imageLink}
-        name={item.name}
-        price={item.price}
-      ></Item>
-    ));
+    console.log(featuredItems);
+    return featuredItems.map((item) => <Item item={item}></Item>);
   };
 
   return (

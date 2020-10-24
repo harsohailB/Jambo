@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Title from "../styled/Title";
 import { Helmet } from "react-helmet";
+import { FaTrash } from "react-icons/fa";
+
+import Title from "../styled/Title";
 import { getEmails, deleteEmail } from "../../actions/emails";
 import Button from "../styled/Button";
-import { FaTrash } from "react-icons/fa";
 
 const Wrapper = styled.div`
   display: flex;

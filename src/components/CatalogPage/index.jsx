@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
-import Form from "../styled/Form";
-import Input from "../styled/Input";
-import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,7 +59,6 @@ const CatalogPage = () => {
 
   useEffect(() => {
     getItems().then((fetchedItems) => {
-      console.log("CatalogPage -> fetchedItems", fetchedItems);
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {
@@ -80,15 +78,7 @@ const CatalogPage = () => {
       filteredItems = displayedItems;
     }
 
-    return filteredItems.map((item) => (
-      <Item
-        key={item.id}
-        id={item.id}
-        imageLink={item.thumbnailImage.imageLink}
-        name={item.name}
-        price={item.price}
-      ></Item>
-    ));
+    return filteredItems.map((item) => <Item item={item}></Item>);
   };
 
   return (
@@ -112,6 +102,7 @@ const CatalogPage = () => {
         }
         setDisplayedItems={setDisplayedItems}
       />
+
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
   );

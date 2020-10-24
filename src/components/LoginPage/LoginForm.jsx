@@ -1,10 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
+
 import { loginUser } from "../../actions/users";
 import Title from "../styled/Title";
-import { Helmet } from "react-helmet";
+import ButtonStyles from "../styled/ButtonStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,26 +37,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  font-family: Righteous, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  padding: 10px 18px;
-  display: inline-block;
-  width: auto;
-  text-decoration: none;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  padding: 8px 15px;
-  background-color: #557b97;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: normal;
-  font-size: 14px;
-  margin: 5px;
+  ${ButtonStyles}
 `;
 
 const Error = styled.label`
@@ -66,7 +49,7 @@ const Error = styled.label`
 
 const LoginForm = () => {
   const history = useHistory();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,7 +58,7 @@ const LoginForm = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispath(await loginUser(username, password));
+      dispatch(await loginUser(username, password));
       history.push("/");
     } catch (error) {
       setHasErrors(true);

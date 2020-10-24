@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import schoolKids from "../../assets/school-kids.jpg";
+import schoolKids from "../../assets/homePage/school-kids.jpg";
 
 const Wrapper = styled.div`
   display: flex;

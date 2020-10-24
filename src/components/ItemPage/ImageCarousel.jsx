@@ -15,7 +15,7 @@ const SmallImage = styled.img`
   }
 `;
 
-const ImageCarousel = ({ item, images, setMainImage }) => {
+const ImageCarousel = ({ images, setMainImage }) => {
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 100, itemsToShow: 2 },

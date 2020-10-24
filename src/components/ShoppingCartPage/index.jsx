@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
+
+import currency from "currency.js";
+import { loadStripe } from "@stripe/stripe-js";
+
+import { createCheckoutSession } from "../../actions/payments";
 import Title from "../styled/Title";
 import Button from "../styled/Button";
 import ItemPreview from "./ItemPreview";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import currency from "currency.js";
-import { loadStripe } from "@stripe/stripe-js";
-import { createCheckoutSession } from "../../actions/payments";
-import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -82,7 +84,7 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     calculateSubtotal();
-  }, [subTotal, shoppingCartItems]);
+  }, [shoppingCartItems]);
 
   const renderItems = () => {
     return shoppingCartItems.map((item) => (
@@ -102,16 +104,14 @@ const ShoppingCartPage = () => {
   };
 
   const createLineItems = () => {
-    let line_items = [];
-    shoppingCartItems.forEach((item) => {
-      line_items.push({
+    return shoppingCartItems.map((item) => {
+      return {
         name: item.name + " (" + item.color + "/" + item.size + ")",
         amount: Math.round(item.price * 100),
         currency: "cad",
         quantity: item.quantity,
-      });
+      };
     });
-    return line_items;
   };
 
   const handleCheckoutClick = async () => {
@@ -120,9 +120,6 @@ const ShoppingCartPage = () => {
     const { error } = await stripe.redirectToCheckout({
       sessionId,
     });
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
   };
 
   const renderCart = () => {
@@ -137,8 +134,10 @@ const ShoppingCartPage = () => {
           </TableRow>
           {renderItems()}
         </TableWrapper>
+
         <Price>Subtotal ${subTotal}</Price>
         <Subtitle>Taxes and shipping calculated at checkout</Subtitle>
+
         <CheckoutButtonsWrapper>
           <Button to="/catalog">CONTINUE SHOPPING</Button>
           <Button onClick={handleCheckoutClick}>CHECK OUT</Button>

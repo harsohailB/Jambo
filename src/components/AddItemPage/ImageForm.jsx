@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
@@ -59,7 +59,6 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   const [id, setId] = useState(0);
   const placeHolderImageLink =
     "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
-  const [imageURL, setImageURL] = useState("");
 
   const renderColourOptions = () => {
     return getArrayOfColours().map((color) => <option>{color}</option>);
@@ -75,15 +74,12 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   };
 
   const handleDeleteImageInput = (image) => {
-    let tempImages = [];
-    newItem.images.forEach((existingImage) => {
-      if (existingImage.id !== image.id) {
-        tempImages.push(existingImage);
-      }
-    });
     setNewItem({
       ...newItem,
-      images: tempImages,
+      images: newItem.images.filter(
+        (existingImage) => existingImage.id !== image.id
+      ),
+      thumbnailImage: { imageLink: placeHolderImageLink },
     });
   };
 
@@ -104,8 +100,6 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   };
 
   const handleURLChange = (evt, image) => {
-    setImageURL(evt.target.value.length === 0);
-
     const newImageLink =
       evt.target.value.length === 0 ? placeHolderImageLink : evt.target.value;
 

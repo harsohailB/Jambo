@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
+
+import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
 
 const TableRow = styled.tr`
   width: 100%;
@@ -76,32 +77,6 @@ const QuantityInput = styled.input`
   font-weight: 200;
 `;
 
-const Button = styled.button`
-  background-color: transparent;
-  color: #25282b;
-  padding: 4px 5px;
-  font-size: 0.75em;
-  line-height: 1;
-  font-family: Righteous, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: normal;
-  font-size: 12px;
-  text-decoration: none;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  border: 1px solid;
-  border-radius: 2px;
-  color: #3d4246;
-
-  &:hover {
-    color: black;
-  }
-`;
-
 const Icon = styled(Link)`
   margin: 10px;
   color: #3d4246;
@@ -116,7 +91,6 @@ const Icon = styled(Link)`
 `;
 
 const ItemPreview = (props) => {
-  const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const dispatch = useDispatch();
   const [item, setItem] = useState(props.item);
 
@@ -147,13 +121,7 @@ const ItemPreview = (props) => {
   };
 
   const getSelectedImageLink = () => {
-    var imageLink;
-    item.images.forEach((image) => {
-      if (item.color === image.color) {
-        imageLink = image.imageLink;
-      }
-    });
-    return imageLink;
+    return item.images.find((image) => item.color === image.color).imageLink;
   };
 
   return (

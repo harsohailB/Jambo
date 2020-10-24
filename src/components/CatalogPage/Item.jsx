@@ -7,7 +7,7 @@ const Wrapper = styled(Link)`
   flex-direction: column;
   cursor: pointer;
   text-decoration: none;
-  padding : 0 20px;
+  padding: 0 20px;
 
   & :hover {
     opacity: 80%;
@@ -45,18 +45,12 @@ const Price = styled.h3`
   margin: 0;
 `;
 
-const Item = (props) => {
-  const placeHolderImageLink =
-    "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
+const Item = ({ item }) => {
   return (
-    <Wrapper to={"/catalog/" + props.id}>
-      {props.imageLink !== "" ? (
-        <Image src={props.imageLink}></Image>
-      ) : (
-        <Image src={placeHolderImageLink}></Image>
-      )}
-      <Name>{props.name}</Name>
-      <Price>${props.price}</Price>
+    <Wrapper to={"/catalog/" + item.id}>
+      <Image src={item.thumbnailImage.imageLink}></Image>
+      <Name>{item.name}</Name>
+      <Price>${item.price}</Price>
     </Wrapper>
   );
 };

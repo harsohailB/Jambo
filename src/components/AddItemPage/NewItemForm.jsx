@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
-import ImageForm from "./ImageForm";
+import { useSelector } from "react-redux";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import styled from "styled-components";
+
+import ImageForm from "./ImageForm";
 import { uploadItem } from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
+import ButtonStyles from "../styled/ButtonStyles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,26 +48,7 @@ const Error = styled.label`
 `;
 
 const Button = styled.button`
-  font-family: Righteous, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  padding: 10px 18px;
-  display: inline-block;
-  width: auto;
-  text-decoration: none;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  padding: 8px 15px;
-  background-color: #557b97;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: normal;
-  font-size: 14px;
-  margin: 5px;
+  ${ButtonStyles}
 `;
 
 const Label = styled.label`
