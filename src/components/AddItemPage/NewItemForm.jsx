@@ -9,11 +9,15 @@ import ItemPreview from "../ItemPage/ItemPreview";
 
 const Wrapper = styled.div`
   display: flex;
-  width: 80%;
+  width: 100%;
   margin-top: 2%;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
+
+  @media (max-width: 1600px) {
+    flex-direction: column;
+  }
 `;
 
 const Form = styled.form`
@@ -21,6 +25,26 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   text-align: center;
+`;
+
+const FormWrapper = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+`;
+
+const ItemPreviewWrapper = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+
+  @media (max-width: 1600px) {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
@@ -229,85 +253,90 @@ const NewItemForm = () => {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleFormSubmit}>
-        <Label>Item Name</Label>
-        <Input
-          hasError={false}
-          label="Name"
-          onChange={handleNameChange}
-          value={newItem.name}
-          placeholder="Bean"
-          autocomplete="item-name"
-        />
-        <Label>Item Price</Label>
-        <Input
-          hasError={false}
-          label="Price"
-          onChange={handlePriceChange}
-          value={newItem.price}
-          placeholder="xx.xx"
-          autocomplete="item-price"
-        />
-        <Label>List of Colours (seperated by /)</Label>
-        <Input
-          hasError={false}
-          label="List of colours"
-          onChange={handleListofColoursChange}
-          value={newItem.colors}
-          placeholder="Red/Green/Blue"
-          autocomplete="list-of-colours"
-        />
-        <Label>List of Sizes (seperated by /)</Label>
-        <Input
-          hasError={false}
-          label="List of sizes"
-          onChange={handleListofSizesChange}
-          value={newItem.sizes}
-          placeholder="S/M/L"
-          autocomplete="list-of-sizes"
-        />
-        <Label>Description</Label>
-        <Input
-          hasError={false}
-          label="description"
-          onChange={handleDescriptionChange}
-          value={newItem.description}
-          placeholder="The item is ..."
-          autocomplete="description"
-        />
-        <Label>Tags (case sensitive)</Label>
-        <Input
-          hasError={false}
-          label="tags"
-          onChange={handleTagsChange}
-          value={newItem.tags}
-          placeholder="Accessories/Embroidery/Hats"
-          autocomplete="tags"
-        />
-        <FeatureItemOption onClick={handleFeatureClick}>
-          <Icon>
-            {newItem.featured ? (
-              <FaCheckCircle size={24} />
-            ) : (
-              <FaRegCircle size={24} />
-            )}
-          </Icon>
-          Featured Item
-        </FeatureItemOption>
-        <Label>Add images here:</Label>
-        <Label>
-          (Note: First Picture will be thumbnail and DON'T put spaces in
-          filenames)
-        </Label>
-        <ImageForm
-          getArrayOfColours={getArrayOfColours}
-          newItem={newItem}
-          setNewItem={setNewItem}
-        />
-        {hasErrors && <Error>Please enter valid details!</Error>}
-        <Button>CREATE ITEM</Button>
-      </Form>
-      <ItemPreview item={newItem} />
+      <FormWrapper>
+        <Form onSubmit={handleFormSubmit}>
+          <Label>Item Name</Label>
+          <Input
+            hasError={false}
+            label="Name"
+            onChange={handleNameChange}
+            value={newItem.name}
+            placeholder="Bean"
+            autocomplete="item-name"
+          />
+          <Label>Item Price</Label>
+          <Input
+            hasError={false}
+            label="Price"
+            onChange={handlePriceChange}
+            value={newItem.price}
+            placeholder="xx.xx"
+            autocomplete="item-price"
+          />
+          <Label>List of Colours (seperated by /)</Label>
+          <Input
+            hasError={false}
+            label="List of colours"
+            onChange={handleListofColoursChange}
+            value={newItem.colors}
+            placeholder="Red/Green/Blue"
+            autocomplete="list-of-colours"
+          />
+          <Label>List of Sizes (seperated by /)</Label>
+          <Input
+            hasError={false}
+            label="List of sizes"
+            onChange={handleListofSizesChange}
+            value={newItem.sizes}
+            placeholder="S/M/L"
+            autocomplete="list-of-sizes"
+          />
+          <Label>Description</Label>
+          <Input
+            hasError={false}
+            label="description"
+            onChange={handleDescriptionChange}
+            value={newItem.description}
+            placeholder="The item is ..."
+            autocomplete="description"
+          />
+          <Label>Tags (case sensitive)</Label>
+          <Input
+            hasError={false}
+            label="tags"
+            onChange={handleTagsChange}
+            value={newItem.tags}
+            placeholder="Accessories/Embroidery/Hats"
+            autocomplete="tags"
+          />
+          <FeatureItemOption onClick={handleFeatureClick}>
+            <Icon>
+              {newItem.featured ? (
+                <FaCheckCircle size={24} />
+              ) : (
+                <FaRegCircle size={24} />
+              )}
+            </Icon>
+            Featured Item
+          </FeatureItemOption>
+          <Label>Add images here:</Label>
+          <Label>
+            (Note: First Picture will be thumbnail and DON'T put spaces in
+            filenames)
+          </Label>
+          <ImageForm
+            getArrayOfColours={getArrayOfColours}
+            newItem={newItem}
+            setNewItem={setNewItem}
+          />
+          {hasErrors && <Error>Please enter valid details!</Error>}
+          <Button>CREATE ITEM</Button>
+        </Form>
+      </FormWrapper>
+
+      <ItemPreviewWrapper>
+        <ItemPreview item={newItem} />
+      </ItemPreviewWrapper>
     </Wrapper>
   );
 };
