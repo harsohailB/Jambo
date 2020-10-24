@@ -11,7 +11,11 @@ const Wrapper = styled.div`
   margin-left: 5%;
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
+    margin-top: 5%;
+  }
+
+  @media (max-width: 1300px) {
     flex-direction: column;
   }
 `;

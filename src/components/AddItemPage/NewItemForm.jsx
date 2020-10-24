@@ -12,11 +12,11 @@ const Wrapper = styled.div`
   width: 80%;
   margin-left: 10%;
   margin-top: 2%;
+  align-items: center;
+  justify-content: space-around;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
 `;
 
