@@ -105,19 +105,22 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
 
   const handleURLChange = (evt, image) => {
     setImageURL(evt.target.value.length === 0);
+
+    const newImageLink =
+      evt.target.value.length === 0 ? placeHolderImageLink : evt.target.value;
+
     setNewItem({
       ...newItem,
+      thumbnailImage: {
+        imageLink: newImageLink,
+      },
       images: newItem.images.map((img) => {
         if (image.id === img.id) {
           img = {
             ...img,
-            imageLink:
-              evt.target.value.length === 0
-                ? placeHolderImageLink
-                : evt.target.value,
+            imageLink: newImageLink,
           };
         }
-
         return img;
       }),
     });

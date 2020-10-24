@@ -5,19 +5,15 @@ import styled from "styled-components";
 import ImageForm from "./ImageForm";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { uploadItem } from "../../actions/items";
-import ItemPreview from "./ItemPreview";
+import ItemPreview from "../ItemPage/ItemPreview";
 
 const Wrapper = styled.div`
   display: flex;
   width: 80%;
-  margin-left: 10%;
   margin-top: 2%;
   align-items: center;
-  justify-content: space-around;
-
-  @media (max-width: 1000px) {
-    flex-direction: column;
-  }
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const Form = styled.form`
@@ -113,14 +109,17 @@ const NewItemForm = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [newItem, setNewItem] = useState({
-    name: "",
-    price: "",
+    name: "<Name>",
+    price: "<Price>",
     colors: "",
     sizes: "",
-    description: "",
+    description: "<Description>",
     tags: "",
     featured: false,
-    thumbnailImage: null,
+    thumbnailImage: {
+      imageLink:
+        "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
+    },
     images: [],
   });
   const [hasErrors, setHasErrors] = useState(false);
