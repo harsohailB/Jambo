@@ -69,7 +69,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     newItem.images.push({
       id: id,
       color: "None",
-      imageLink: "",
+      imageLink: placeHolderImageLink,
     });
     setId(id + 1);
   };
@@ -88,30 +88,49 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   };
 
   const handleDropdownChange = (evt, image) => {
-    image = {
-      ...image,
-      color: evt.target.value,
-    };
-    newItem.images.pop();
-    newItem.images.push(image);
+    setNewItem({
+      ...newItem,
+      images: newItem.images.map((img) => {
+        if (image.id === img.id) {
+          img = {
+            ...img,
+            color: evt.target.value,
+          };
+        }
+
+        return img;
+      }),
+    });
   };
 
   const handleURLChange = (evt, image) => {
-    setImageURL(evt.target.value);
-    image = {
-      ...image,
-      imageLink: evt.target.value,
-    };
-    newItem.images.pop();
-    newItem.images.push(image);
+    setImageURL(evt.target.value.length === 0);
+
+    const newImageLink =
+      evt.target.value.length === 0 ? placeHolderImageLink : evt.target.value;
+
+    setNewItem({
+      ...newItem,
+      thumbnailImage: {
+        imageLink: newImageLink,
+      },
+      images: newItem.images.map((img) => {
+        if (image.id === img.id) {
+          img = {
+            ...img,
+            imageLink: newImageLink,
+          };
+        }
+        return img;
+      }),
+    });
   };
 
   const renderImageInputs = () => {
+    console.log(newItem.images);
     return newItem.images.map((image) => (
       <UploadWrapper id={image.id}>
-        <PreviewImage
-          src={image.imageLink == "" ? placeHolderImageLink : image.imageLink}
-        />
+        <PreviewImage src={image.imageLink} onError={placeHolderImageLink} />
         <Input
           placeholder="Image URL"
           onChange={(evt) => handleURLChange(evt, image)}
