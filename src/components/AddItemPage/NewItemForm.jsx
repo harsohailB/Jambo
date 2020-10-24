@@ -5,6 +5,20 @@ import styled from "styled-components";
 import ImageForm from "./ImageForm";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { uploadItem } from "../../actions/items";
+import ItemPreview from "./ItemPreview";
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 2%;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 
 const Form = styled.form`
   display: flex;
@@ -107,13 +121,7 @@ const NewItemForm = () => {
     tags: "",
     featured: false,
     thumbnailImage: null,
-    images: [
-      {
-        id: 0,
-        color: "None",
-        imageLink: "",
-      },
-    ],
+    images: [],
   });
   const [hasErrors, setHasErrors] = useState(false);
 
@@ -221,84 +229,87 @@ const NewItemForm = () => {
   };
 
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <Label>Item Name</Label>
-      <Input
-        hasError={false}
-        label="Name"
-        onChange={handleNameChange}
-        value={newItem.name}
-        placeholder="Bean"
-        autocomplete="item-name"
-      />
-      <Label>Item Price</Label>
-      <Input
-        hasError={false}
-        label="Price"
-        onChange={handlePriceChange}
-        value={newItem.price}
-        placeholder="xx.xx"
-        autocomplete="item-price"
-      />
-      <Label>List of Colours (seperated by /)</Label>
-      <Input
-        hasError={false}
-        label="List of colours"
-        onChange={handleListofColoursChange}
-        value={newItem.colors}
-        placeholder="Red/Green/Blue"
-        autocomplete="list-of-colours"
-      />
-      <Label>List of Sizes (seperated by /)</Label>
-      <Input
-        hasError={false}
-        label="List of sizes"
-        onChange={handleListofSizesChange}
-        value={newItem.sizes}
-        placeholder="S/M/L"
-        autocomplete="list-of-sizes"
-      />
-      <Label>Description</Label>
-      <Input
-        hasError={false}
-        label="description"
-        onChange={handleDescriptionChange}
-        value={newItem.description}
-        placeholder="The item is ..."
-        autocomplete="description"
-      />
-      <Label>Tags (case sensitive)</Label>
-      <Input
-        hasError={false}
-        label="tags"
-        onChange={handleTagsChange}
-        value={newItem.tags}
-        placeholder="Accessories/Embroidery/Hats"
-        autocomplete="tags"
-      />
-      <FeatureItemOption onClick={handleFeatureClick}>
-        <Icon>
-          {newItem.featured ? (
-            <FaCheckCircle size={24} />
-          ) : (
-            <FaRegCircle size={24} />
-          )}
-        </Icon>
-        Featured Item
-      </FeatureItemOption>
-      <Label>Add images here:</Label>
-      <Label>
-        (Note: First Picture will be thumbnail and DON'T put spaces in
-        filenames)
-      </Label>
-      <ImageForm
-        getArrayOfColours={getArrayOfColours}
-        newItem={newItem}
-        setNewItem={setNewItem}
-      />
-      {hasErrors && <Error>Please enter valid details!</Error>}
-      <Button>CREATE ITEM</Button>
-    </Form>
+    <Wrapper>
+      <Form onSubmit={handleFormSubmit}>
+        <Label>Item Name</Label>
+        <Input
+          hasError={false}
+          label="Name"
+          onChange={handleNameChange}
+          value={newItem.name}
+          placeholder="Bean"
+          autocomplete="item-name"
+        />
+        <Label>Item Price</Label>
+        <Input
+          hasError={false}
+          label="Price"
+          onChange={handlePriceChange}
+          value={newItem.price}
+          placeholder="xx.xx"
+          autocomplete="item-price"
+        />
+        <Label>List of Colours (seperated by /)</Label>
+        <Input
+          hasError={false}
+          label="List of colours"
+          onChange={handleListofColoursChange}
+          value={newItem.colors}
+          placeholder="Red/Green/Blue"
+          autocomplete="list-of-colours"
+        />
+        <Label>List of Sizes (seperated by /)</Label>
+        <Input
+          hasError={false}
+          label="List of sizes"
+          onChange={handleListofSizesChange}
+          value={newItem.sizes}
+          placeholder="S/M/L"
+          autocomplete="list-of-sizes"
+        />
+        <Label>Description</Label>
+        <Input
+          hasError={false}
+          label="description"
+          onChange={handleDescriptionChange}
+          value={newItem.description}
+          placeholder="The item is ..."
+          autocomplete="description"
+        />
+        <Label>Tags (case sensitive)</Label>
+        <Input
+          hasError={false}
+          label="tags"
+          onChange={handleTagsChange}
+          value={newItem.tags}
+          placeholder="Accessories/Embroidery/Hats"
+          autocomplete="tags"
+        />
+        <FeatureItemOption onClick={handleFeatureClick}>
+          <Icon>
+            {newItem.featured ? (
+              <FaCheckCircle size={24} />
+            ) : (
+              <FaRegCircle size={24} />
+            )}
+          </Icon>
+          Featured Item
+        </FeatureItemOption>
+        <Label>Add images here:</Label>
+        <Label>
+          (Note: First Picture will be thumbnail and DON'T put spaces in
+          filenames)
+        </Label>
+        <ImageForm
+          getArrayOfColours={getArrayOfColours}
+          newItem={newItem}
+          setNewItem={setNewItem}
+        />
+        {hasErrors && <Error>Please enter valid details!</Error>}
+        <Button>CREATE ITEM</Button>
+      </Form>
+      <ItemPreview item={newItem} />
+    </Wrapper>
   );
 };
 
