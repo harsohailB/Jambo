@@ -310,7 +310,7 @@ const ItemPreview = ({ item, setItem }) => {
 
       <InfoWrapper>
         <Name>{item.name.length ? item.name : "<Name>"}</Name>
-        <Price>${item.price.length ? item.price : "<Price>"}</Price>
+        <Price>${item.price !== "" ? item.price : "<Price>"}</Price>
 
         <DropdownWrapper>
           <Dropdown value={selectedColor} onChange={updateSelectedColor}>
