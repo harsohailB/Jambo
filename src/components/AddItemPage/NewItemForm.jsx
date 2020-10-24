@@ -33,6 +33,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
+  padding-left: 10%;
 `;
 
 const ItemPreviewWrapper = styled.div`
