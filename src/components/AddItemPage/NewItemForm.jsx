@@ -148,7 +148,8 @@ const NewItemForm = () => {
       newItem.price === "" ||
       newItem.colors === "" ||
       newItem.sizes === "" ||
-      newItem.description === ""
+      newItem.description === "" ||
+      newItem.images.length === 0
     ) {
       setHasErrors(true);
       return true;
