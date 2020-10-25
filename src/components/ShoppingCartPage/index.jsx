@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import { useDispatch } from "react-redux";
 
 import currency from "currency.js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -11,6 +12,9 @@ import { createCheckoutSession } from "../../actions/payments";
 import Title from "../styled/Title";
 import Button from "../styled/Button";
 import ItemPreview from "./ItemPreview";
+
+import { getItems } from "../../actions/items";
+import { PRUNE_CART } from "../../actions/types";
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,6 +80,7 @@ const CheckoutButtonsWrapper = styled.div`
 `;
 
 const ShoppingCartPage = () => {
+  const dispatch = useDispatch();
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const [subTotal, setSubTotal] = useState(0);
   const STRIPE_PUBLISHABLE_KEY =
@@ -83,6 +88,14 @@ const ShoppingCartPage = () => {
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
   useEffect(() => {
+    // Prunes items from cart that have been removed from store
+    getItems().then((items) => {
+      dispatch({
+        type: PRUNE_CART,
+        items,
+      });
+    });
+
     calculateSubtotal();
   }, [shoppingCartItems]);
 

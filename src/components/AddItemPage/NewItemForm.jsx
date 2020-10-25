@@ -156,15 +156,12 @@ const NewItemForm = () => {
     }
 
     // Check image inputs
-    let result = false;
-    newItem.images.forEach((image) => {
-      if (image.file === null || image.imageName === "") {
-        console.log("IN");
-        setHasErrors(true);
-        result = true;
-      }
-    });
-    return result;
+    if (newItem.images.filter((image) => image.color !== "None").length === 0) {
+      setHasErrors(true);
+      return true;
+    }
+
+    return false;
   };
 
   const handleFormSubmit = (e) => {
