@@ -8,8 +8,7 @@ This project is to migrate Jambo Apparel's (NPO) e-commerce store from the depen
 
 ## Technologies Used
 
-<img src="https://www.pngkit.com/png/full/222-2224803_react-redux-react-js-and-redux.png" width="200">\
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/1280px-Stripe_Logo%2C_revised_2016.svg.png" width="200">
+<img src="./src/assets/Jambo Architecture Diagram.png" width="700">\
 
 ## Table of Contents
 
