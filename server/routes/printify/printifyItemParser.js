@@ -33,7 +33,7 @@ const printifyItemParser = (printifyItem) => {
     variant: printifyItem.variants[0].id,
     name: printifyItem.title,
     description: printifyItem.description,
-    price: printifyItem.variants[0].price,
+    price: printifyItem.variants[0].price / 100,
     featured: false,
     tags: printifyItem.tags,
     thumbnailImage: {

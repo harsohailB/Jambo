@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 
 import FilterBar from "./FilterBar";
 import Item from "./Item";
-import { getAllItems } from "../../fauna/items";
+import { getItems } from "../../actions/items";
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ const CatalogPage = () => {
   const [displayedItems, setDisplayedItems] = useState([]);
 
   useEffect(() => {
-    getAllItems().then((fetchedItems) => {
+    getItems().then((fetchedItems) => {
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import ItemPreview from "./ItemPreview";
 
 import Title from "../styled/Title";
-import { getItemById } from "../../fauna/items";
+import { getItemById } from "../../actions/items";
 
 const ItemPage = () => {
   const location = useLocation();

@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 
 export const getItems = async () => {
-  let response = await axios.get(`${config.endpoint}/items`);
+  let response = await axios.get(`${config.endpoint}/fauna/items`);
 
   if (response.status !== 200) {
     throw "getItems failed with error code " + response.status;
@@ -13,7 +13,7 @@ export const getItems = async () => {
 
 export const getItemById = async (id) => {
   try {
-    var response = await axios.get(`${config.endpoint}/items/${id}`);
+    var response = await axios.get(`${config.endpoint}/fauna/items/${id}`);
   } catch (error) {
     console.log(error);
     response = { status: 404 };
@@ -38,53 +38,6 @@ export const uploadItem = async (user, newItem) => {
   if (response.status !== 200) {
     throw (
       "uploadItem failed with error code " +
-      response.status +
-      ": " +
-      response.data.message
-    );
-  }
-
-  return response.data;
-};
-
-const uploadImage = async (user, image, folderName) => {
-  const data = new FormData();
-  data.append("file", image.file);
-
-  const response = await axios.post(
-    `${config.endpoint}/upload?username=` +
-      user.username +
-      "&password=" +
-      user.password +
-      "&folderName=" +
-      folderName,
-    data
-  );
-
-  if (response.status !== 200) {
-    throw (
-      "uploadImage failed with error code " +
-      response.status +
-      ": " +
-      response.data.message
-    );
-  }
-
-  return response.data;
-};
-
-const createFolderForNewItem = async (user, folderName) => {
-  const response = await axios.post(
-    `${config.endpoint}/create-folder?username=` +
-      user.username +
-      "&password=" +
-      user.password,
-    { folderName }
-  );
-
-  if (response.status !== 200) {
-    throw (
-      "createFolderForNewItem failed with error code " +
       response.status +
       ": " +
       response.data.message

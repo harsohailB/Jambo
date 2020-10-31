@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import parse from "html-react-parser";
 
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
@@ -201,8 +202,8 @@ const ItemPreview = ({ item, setItem }) => {
   const url = window.location.href;
 
   const [mainImage, setMainImage] = useState(item.mainImage);
-  const [selectedColor, setSelectedColor] = useState(item.colors.split("/")[0]);
-  const [selectedSize, setSelectedSize] = useState(item.sizes.split("/")[0]);
+  const [selectedColor, setSelectedColor] = useState(item.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(item.sizes[0]);
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
 
   const renderSmallImages = () => {
@@ -216,13 +217,11 @@ const ItemPreview = ({ item, setItem }) => {
   };
 
   const renderItemColors = () => {
-    const itemColors = item.colors.split("/");
-    return itemColors.map((color) => <option>{color}</option>);
+    return item.colors.map((color) => <option>{color}</option>);
   };
 
   const renderItemSizes = () => {
-    const itemSizes = item.sizes.split("/");
-    return itemSizes.map((size) => <option>{size}</option>);
+    return item.sizes.map((size) => <option>{size}</option>);
   };
 
   const updateSelectedColor = (evt) => {
@@ -326,7 +325,7 @@ const ItemPreview = ({ item, setItem }) => {
         </Button>
 
         <Description>
-          {item.description.length ? item.description : "<Description>"}
+          {item.description.length ? parse(item.description) : "<Description>"}
         </Description>
         {user && <Button onClick={handleEditItem}>EDIT ITEM</Button>}
         {user && (

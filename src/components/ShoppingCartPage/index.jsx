@@ -97,7 +97,7 @@ const ShoppingCartPage = () => {
     });
 
     calculateSubtotal();
-  }, [shoppingCartItems]);
+  }, []);
 
   const renderItems = () => {
     return shoppingCartItems.map((item) => (
