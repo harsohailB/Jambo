@@ -11,6 +11,7 @@ type Item {
   isPrintifyItem: Boolean!
   printifyID: String
   id: Int! @unique
+  variant: Int
   name: String!
   description: String!
   price: Float!
