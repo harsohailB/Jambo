@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import ItemPreview from "./ItemPreview";
 
 import Title from "../styled/Title";
-import { getItemById } from "../../actions/items";
+import { getItemById } from "../../fauna/items";
 
 const ItemPage = () => {
   const location = useLocation();
@@ -14,7 +14,7 @@ const ItemPage = () => {
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    const itemId = location.pathname.split("/").reverse()[0];
+    const itemId = parseInt(location.pathname.split("/").reverse()[0]);
     getItemById(itemId)
       .then((fetchedItem) => {
         setItem(fetchedItem);

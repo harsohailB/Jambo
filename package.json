@@ -18,6 +18,7 @@
     "d3": "^5.16.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "faunadb": "^3.0.1",
     "framer-motion": "^2.9.1",
     "fs": "0.0.1-security",
     "json-server": "^0.16.1",
@@ -46,8 +47,8 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"node server/server.js\"",
-    "server": "node server.js",
+    "start": "concurrently \"react-scripts start\" \"nodemon server/bin/www\"",
+    "server": "nodemon server/bin/www",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -66,5 +67,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

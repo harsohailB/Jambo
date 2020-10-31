@@ -1,0 +1,30 @@
+type Email {
+  email: String! @unique
+}
+
+type Image {
+  color: String!
+  imageLink: String!
+}
+
+type Item {
+  isPrintifyItem: Boolean!
+  printifyID: String
+  id: Int! @unique
+  name: String!
+  description: String!
+  price: Float!
+  featured: Boolean!
+  tags: [String!]!
+  thumbnailImage: Image!
+  colors: [String!]!
+  sizes: [String!]!
+  images: [Image!]!
+}
+
+type Query {
+  allEmails: [Email!]
+  getEmail(email: String!): Email!
+  allItems: [Item!]
+  getItemByID(id: Int!): Item!
+}
