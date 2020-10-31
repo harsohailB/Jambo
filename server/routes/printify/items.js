@@ -7,14 +7,17 @@ var axios = require("axios");
 require("dotenv").config();
 
 const { ensureAuthenticated } = require("../auth");
+const printifyItemParser = require("./printifyItemParser");
 
 /* GET an all items from Printify */
 router.get("/items", ensureAuthenticated, async function (req, res, next) {
+  const itemsPage = req.query.page ? req.query.page : 1;
   const url =
     printifyConfig.endpoint +
     "/shops/" +
     process.env.PRINTIFY_SHOP_ID +
-    "/products.json";
+    "/products.json?page=" +
+    itemsPage;
 
   const response = await axios
     .get(url, {
@@ -22,11 +25,12 @@ router.get("/items", ensureAuthenticated, async function (req, res, next) {
         Authorization: "Bearer " + process.env.PRINTIFY_AUTH_KEY,
       },
     })
+    .then((response) => {
+      res.json(response.data.data.map((item) => printifyItemParser(item)));
+    })
     .catch((err) => {
       res.json({ message: err.message, status: err.requestResult.statusCode });
     });
-
-  res.json(response.data);
 });
 
 /* GET an item from Printify */
@@ -45,11 +49,13 @@ router.get("/items/:id", ensureAuthenticated, async function (req, res, next) {
         Authorization: "Bearer " + process.env.PRINTIFY_AUTH_KEY,
       },
     })
+    .then((response) => {
+      res.json(printifyItemParser(response.data));
+    })
     .catch((err) => {
+      console.log(err);
       res.json({ message: err.message, status: err.requestResult.statusCode });
     });
-
-  res.json(response.data);
 });
 
 module.exports = router;

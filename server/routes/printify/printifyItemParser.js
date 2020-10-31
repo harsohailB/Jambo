@@ -15,10 +15,19 @@ const createImages = (printifyItem) => {
   });
 };
 
+const getOptions = (printifyItem, opt) => {
+  return printifyItem.options
+    .find((option) => option.type === opt)
+    .values.map((value) => value.title);
+};
+
 const printifyItemParser = (printifyItem) => {
-  // parse item and return a fanua item
+  const itemHasColors = printifyItem.options.find(
+    (option) => option.type === "color"
+  );
+
   return {
-    isPrintfulItem: true,
+    isPrintifyItem: true,
     printifyID: printifyItem.id,
     id: 1,
     variant: printifyItem.variants[0].id,
@@ -34,12 +43,10 @@ const printifyItemParser = (printifyItem) => {
       ),
       imageLink: printifyItem.images[0].src,
     },
-    colors: printifyItem.options
-      .find((option) => option.type === "color")
-      .values.map((value) => value.title),
-    sizes: printifyItem.options
-      .find((option) => option.type === "size")
-      .values.map((value) => value.title),
+    colors: itemHasColors
+      ? getOptions(printifyItem, "color")
+      : getOptions(printifyItem, "surface"),
+    sizes: getOptions(printifyItem, "size"),
     images: createImages(printifyItem),
   };
 };

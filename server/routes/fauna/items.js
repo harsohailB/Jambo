@@ -79,7 +79,6 @@ router.post(
 );
 
 /* PUT an item to FaunaDB */
-// TODO change data: req.body to item format
 router.put(
   "/items/:id",
   itemValidationRules(),
