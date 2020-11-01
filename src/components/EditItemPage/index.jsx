@@ -18,10 +18,12 @@ const Wrapper = styled.div`
 `;
 
 const EditItemPage = () => {
+  const location = useLocation();
+  const itemId = location.pathname.split("/").reverse()[0];
   const defaultNewItem = {
     isPrintifyItem: false,
     printifyID: "",
-    id: 1,
+    id: itemId,
     name: "",
     price: "",
     colors: [],
@@ -36,12 +38,10 @@ const EditItemPage = () => {
     images: [],
   };
   const user = useSelector((state) => state.user);
-  const location = useLocation();
   const [item, setItem] = useState(defaultNewItem);
 
   useEffect(() => {
     try {
-      const itemId = location.pathname.split("/").reverse()[0];
       getItemById(itemId).then((fetchedItem) => {
         setItem(fetchedItem);
       });
