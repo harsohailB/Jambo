@@ -9,7 +9,7 @@ const success_url = "http://localhost:3000/success";
 const cancel_url = "http://localhost:3000/cart";
 
 /* POST - Generate a stripe session id for a customer */
-router.get("/session_id", async function (req, res, next) {
+router.post("/session_id", async function (req, res, next) {
   let session = await stripe.checkout.sessions
     .create({
       shipping_address_collection: {
