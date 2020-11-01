@@ -5,7 +5,7 @@ import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import styled from "styled-components";
 
 import ImageForm from "./ImageForm";
-import { uploadItem } from "../../actions/items";
+import { updateItemById, uploadItem } from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
@@ -121,28 +121,11 @@ const TopOptionsWrapper = styled.div`
   align-items: center;
 `;
 
-const NewItemForm = () => {
-  const defaultNewItem = {
-    isPrintifyItem: false,
-    printifyID: "",
-    id: 1,
-    name: "",
-    price: "",
-    colors: [],
-    sizes: [],
-    description: "",
-    tags: [],
-    featured: false,
-    thumbnailImage: {
-      imageLink:
-        "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
-    },
-    images: [],
-  };
+const NewItemForm = (props) => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [isPrintifyItem, setIsPrintifyItem] = useState(false);
-  const [newItem, setNewItem] = useState(defaultNewItem);
+  const [newItem, setNewItem] = useState(props.item);
   const [hasErrors, setHasErrors] = useState(false);
 
   useEffect(() => {
@@ -158,7 +141,11 @@ const NewItemForm = () => {
           setHasErrors(true);
         });
     }
-  }, [newItem.printifyID]);
+  }, [newItem]);
+
+  useEffect(() => {
+    setNewItem(props.item);
+  }, [props.item]);
 
   const getArrayOfColours = () => {
     const arrOfColours = newItem.colors;
@@ -203,7 +190,11 @@ const NewItemForm = () => {
     console.log("newItem", tempNewItem);
     if (!checkForErrors()) {
       try {
-        uploadItem(user, tempNewItem);
+        if (props.edit) {
+          updateItemById(user, tempNewItem);
+        } else {
+          uploadItem(user, tempNewItem);
+        }
         history.push("/catalog");
       } catch (error) {
         setHasErrors(true);
@@ -271,99 +262,26 @@ const NewItemForm = () => {
 
   const handleOptionClick = (isPrintifyOption) => {
     setIsPrintifyItem(isPrintifyOption);
-    setNewItem(defaultNewItem);
+    setNewItem(props.item);
   };
 
   return (
     <Wrapper>
       <FormWrapper>
-        <TopOptionsWrapper>
-          <Button onClick={() => handleOptionClick(false)}>Custom Item</Button>
-          <Button onClick={() => handleOptionClick(true)}>Printify Item</Button>
-        </TopOptionsWrapper>
+        {!props.edit && (
+          <TopOptionsWrapper>
+            <Button onClick={() => handleOptionClick(false)}>
+              Custom Item
+            </Button>
+            <Button onClick={() => handleOptionClick(true)}>
+              Printify Item
+            </Button>
+          </TopOptionsWrapper>
+        )}
 
-        {!isPrintifyItem ? (
-          <Form onSubmit={handleFormSubmit}>
-            <Label>Item Name</Label>
-            <Input
-              hasError={false}
-              label="Name"
-              onChange={handleNameChange}
-              value={newItem.name}
-              placeholder="Bean"
-              autocomplete="item-name"
-            />
-            <Label>Item Price</Label>
-            <Input
-              hasError={false}
-              label="Price"
-              onChange={handlePriceChange}
-              value={newItem.price}
-              placeholder="xx.xx"
-              autocomplete="item-price"
-            />
-            <Label>List of Colours (seperated by /)</Label>
-            <Input
-              hasError={false}
-              label="List of colours"
-              onChange={handleListofColoursChange}
-              value={newItem.colors.join("/")}
-              placeholder="Red/Green/Blue"
-              autocomplete="list-of-colours"
-            />
-            <Label>List of Sizes (seperated by /)</Label>
-            <Input
-              hasError={false}
-              label="List of sizes"
-              onChange={handleListofSizesChange}
-              value={newItem.sizes.join("/")}
-              placeholder="S/M/L"
-              autocomplete="list-of-sizes"
-            />
-            <Label>Description</Label>
-            <Input
-              hasError={false}
-              label="description"
-              onChange={handleDescriptionChange}
-              value={newItem.description}
-              placeholder="The item is ..."
-              autocomplete="description"
-            />
-            <Label>Tags (case sensitive)</Label>
-            <Input
-              hasError={false}
-              label="tags"
-              onChange={handleTagsChange}
-              value={newItem.tags.join("/")}
-              placeholder="Accessories/Embroidery/Hats"
-              autocomplete="tags"
-            />
-            <FeatureItemOption onClick={handleFeatureClick}>
-              <Icon>
-                {newItem.featured ? (
-                  <FaCheckCircle size={24} />
-                ) : (
-                  <FaRegCircle size={24} />
-                )}
-              </Icon>
-              Featured Item
-            </FeatureItemOption>
-            <Label>Add images here:</Label>
-            <Label>
-              (Note: First Picture will be thumbnail and DON'T put spaces in
-              filenames)
-            </Label>
-            <ImageForm
-              getArrayOfColours={getArrayOfColours}
-              newItem={newItem}
-              setNewItem={setNewItem}
-            />
-            {hasErrors && <Error>Please enter valid details!</Error>}
-            <Button>CREATE ITEM</Button>
-          </Form>
-        ) : (
-          <Form onSubmit={handleFormSubmit}>
-            <Label>Printify ID</Label>
+        <Form onSubmit={handleFormSubmit}>
+          {isPrintifyItem && <Label>Printify ID</Label>}
+          {isPrintifyItem && (
             <Input
               hasError={false}
               label="printifyID"
@@ -372,10 +290,85 @@ const NewItemForm = () => {
               placeholder="PrintifyID"
               autocomplete="id"
             />
-            {hasErrors && <Error>Please enter valid details!</Error>}
-            <Button>CREATE ITEM</Button>
-          </Form>
-        )}
+          )}
+
+          <Label>Item Name</Label>
+          <Input
+            hasError={false}
+            label="Name"
+            onChange={handleNameChange}
+            value={newItem.name}
+            placeholder="Bean"
+            autocomplete="item-name"
+          />
+          <Label>Item Price</Label>
+          <Input
+            hasError={false}
+            label="Price"
+            onChange={handlePriceChange}
+            value={newItem.price}
+            placeholder="xx.xx"
+            autocomplete="item-price"
+          />
+          <Label>List of Colours (seperated by /)</Label>
+          <Input
+            hasError={false}
+            label="List of colours"
+            onChange={handleListofColoursChange}
+            value={newItem.colors.join("/")}
+            placeholder="Red/Green/Blue"
+            autocomplete="list-of-colours"
+          />
+          <Label>List of Sizes (seperated by /)</Label>
+          <Input
+            hasError={false}
+            label="List of sizes"
+            onChange={handleListofSizesChange}
+            value={newItem.sizes.join("/")}
+            placeholder="S/M/L"
+            autocomplete="list-of-sizes"
+          />
+          <Label>Description</Label>
+          <Input
+            hasError={false}
+            label="description"
+            onChange={handleDescriptionChange}
+            value={newItem.description}
+            placeholder="The item is ..."
+            autocomplete="description"
+          />
+          <Label>Tags (case sensitive)</Label>
+          <Input
+            hasError={false}
+            label="tags"
+            onChange={handleTagsChange}
+            value={newItem.tags.join("/")}
+            placeholder="Accessories/Embroidery/Hats"
+            autocomplete="tags"
+          />
+          <FeatureItemOption onClick={handleFeatureClick}>
+            <Icon>
+              {newItem.featured ? (
+                <FaCheckCircle size={24} />
+              ) : (
+                <FaRegCircle size={24} />
+              )}
+            </Icon>
+            Featured Item
+          </FeatureItemOption>
+          <Label>Add images here:</Label>
+          <Label>
+            (Note: First Picture will be thumbnail and DON'T put spaces in
+            filenames)
+          </Label>
+          <ImageForm
+            getArrayOfColours={getArrayOfColours}
+            newItem={newItem}
+            setNewItem={setNewItem}
+          />
+          {hasErrors && <Error>Please enter valid details!</Error>}
+          <Button>{props.edit ? "UPDATE ITEM" : "CREATE ITEM"}</Button>
+        </Form>
       </FormWrapper>
 
       <ItemPreviewWrapper>

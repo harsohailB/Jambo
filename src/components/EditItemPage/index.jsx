@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Title from "../styled/Title";
-import EditItemForm from "./EditItemForm";
 import { Helmet } from "react-helmet";
+import { useLocation } from "react-router-dom";
+
+import Title from "../styled/Title";
+import { getItemById } from "../../actions/items";
+import NewItemForm from "../AddItemPage/NewItemForm";
+import Button from "../styled/Button";
+import { getPrintifyItemById } from "../../actions/printifyItems";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,14 +18,68 @@ const Wrapper = styled.div`
 `;
 
 const EditItemPage = () => {
+  const defaultNewItem = {
+    isPrintifyItem: false,
+    printifyID: "",
+    id: 1,
+    name: "",
+    price: "",
+    colors: [],
+    sizes: [],
+    description: "",
+    tags: [],
+    featured: false,
+    thumbnailImage: {
+      imageLink:
+        "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
+    },
+    images: [],
+  };
   const user = useSelector((state) => state.user);
+  const location = useLocation();
+  const [item, setItem] = useState(defaultNewItem);
+
+  useEffect(() => {
+    try {
+      const itemId = location.pathname.split("/").reverse()[0];
+      getItemById(itemId).then((fetchedItem) => {
+        setItem(fetchedItem);
+      });
+    } catch (e) {
+      console.log("EditItemPage UseEffect ERROR");
+      console.log(e);
+    }
+  }, [location]);
+
+  const handleSyncWithPrintifyClick = () => {
+    getPrintifyItemById(user, item.printifyID).then((fetchedPrintifyItem) => {
+      setItem(fetchedPrintifyItem);
+    });
+  };
 
   return (
     <Wrapper>
       <Helmet>
         <title>Edit Item - JAMBO</title>
       </Helmet>
-      {user ? <EditItemForm /> : <Title>You're not supposed to be here!</Title>}
+
+      <Title>
+        {item.isPrintifyItem
+          ? "This is a Printify Item"
+          : "This is a Custom Item"}
+      </Title>
+
+      {item.isPrintifyItem && (
+        <Button onClick={handleSyncWithPrintifyClick}>
+          Sync with Printify Catalog
+        </Button>
+      )}
+
+      {user ? (
+        <NewItemForm item={item} edit={true} />
+      ) : (
+        <Title>You're not supposed to be here!</Title>
+      )}
     </Wrapper>
   );
 };

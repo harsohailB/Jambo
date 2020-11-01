@@ -77,7 +77,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     setNewItem({
       ...newItem,
       images: newItem.images.filter(
-        (existingImage) => existingImage.id !== image.id
+        (existingImage) => existingImage.imageLink !== image.imageLink
       ),
       thumbnailImage: { imageLink: placeHolderImageLink },
     });
@@ -121,15 +121,18 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   };
 
   const renderImageInputs = () => {
-    console.log(newItem.images);
     return newItem.images.map((image) => (
       <UploadWrapper id={image.id}>
         <PreviewImage src={image.imageLink} onError={placeHolderImageLink} />
         <Input
           placeholder="Image URL"
+          value={image.imageLink}
           onChange={(evt) => handleURLChange(evt, image)}
         ></Input>
-        <Dropdown onChange={(evt) => handleDropdownChange(evt, image)}>
+        <Dropdown
+          value={image.color}
+          onChange={(evt) => handleDropdownChange(evt, image)}
+        >
           {renderColourOptions()}
         </Dropdown>
         <Icon onClick={() => handleDeleteImageInput(image)}>
