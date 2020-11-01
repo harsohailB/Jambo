@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
@@ -8,6 +8,7 @@ import ImageForm from "./ImageForm";
 import { uploadItem } from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
+import { getPrintifyItemById } from "../../actions/printifyItems";
 
 const Wrapper = styled.div`
   display: flex;
@@ -113,27 +114,54 @@ const FeatureItemOption = styled.span`
   color: #3d4246;
 `;
 
+const TopOptionsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const NewItemForm = () => {
-  const user = useSelector((state) => state.user);
-  const history = useHistory();
-  const [newItem, setNewItem] = useState({
+  const defaultNewItem = {
+    isPrintifyItem: false,
+    printifyID: "",
+    id: 1,
     name: "",
     price: "",
-    colors: "",
-    sizes: "",
+    colors: [],
+    sizes: [],
     description: "",
-    tags: "",
+    tags: [],
     featured: false,
     thumbnailImage: {
       imageLink:
         "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
     },
     images: [],
-  });
+  };
+  const user = useSelector((state) => state.user);
+  const history = useHistory();
+  const [isPrintifyItem, setIsPrintifyItem] = useState(false);
+  const [newItem, setNewItem] = useState(defaultNewItem);
   const [hasErrors, setHasErrors] = useState(false);
 
+  useEffect(() => {
+    if (isPrintifyItem && newItem.printifyID.length) {
+      getPrintifyItemById(user, newItem.printifyID)
+        .then((fetchedPrintifyItem) => {
+          console.log(fetchedPrintifyItem);
+          setNewItem(fetchedPrintifyItem);
+          setHasErrors(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setHasErrors(true);
+        });
+    }
+  }, [newItem.printifyID]);
+
   const getArrayOfColours = () => {
-    const arrOfColours = newItem.colors.split("/");
+    const arrOfColours = newItem.colors;
     var resultArr = ["None"];
     arrOfColours.forEach((color) => {
       resultArr.push(color);
@@ -149,7 +177,8 @@ const NewItemForm = () => {
       newItem.colors === "" ||
       newItem.sizes === "" ||
       newItem.description === "" ||
-      newItem.images.length === 0
+      newItem.images.length === 0 ||
+      (newItem.isPrintifyItem && newItem.printifyID.length === 0)
     ) {
       setHasErrors(true);
       return true;
@@ -169,9 +198,9 @@ const NewItemForm = () => {
     let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
-      tags: newItem.tags.split("/"),
+      tags: newItem.tags,
     };
-    console.log("handleFormSubmit -> tempNewItem", tempNewItem);
+    console.log("newItem", tempNewItem);
     if (!checkForErrors()) {
       try {
         uploadItem(user, tempNewItem);
@@ -201,14 +230,14 @@ const NewItemForm = () => {
   const handleListofColoursChange = (evt) => {
     setNewItem({
       ...newItem,
-      colors: evt.target.value,
+      colors: evt.target.value.split("/"),
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setNewItem({
       ...newItem,
-      sizes: evt.target.value,
+      sizes: evt.target.value.split("/"),
     });
   };
 
@@ -222,7 +251,14 @@ const NewItemForm = () => {
   const handleTagsChange = (evt) => {
     setNewItem({
       ...newItem,
-      tags: evt.target.value,
+      tags: evt.target.value.split("/"),
+    });
+  };
+
+  const handlePrintifyIDChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      printifyID: evt.target.value,
     });
   };
 
@@ -233,87 +269,113 @@ const NewItemForm = () => {
     });
   };
 
+  const handleOptionClick = (isPrintifyOption) => {
+    setIsPrintifyItem(isPrintifyOption);
+    setNewItem(defaultNewItem);
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
-        <Form onSubmit={handleFormSubmit}>
-          <Label>Item Name</Label>
-          <Input
-            hasError={false}
-            label="Name"
-            onChange={handleNameChange}
-            value={newItem.name}
-            placeholder="Bean"
-            autocomplete="item-name"
-          />
-          <Label>Item Price</Label>
-          <Input
-            hasError={false}
-            label="Price"
-            onChange={handlePriceChange}
-            value={newItem.price}
-            placeholder="xx.xx"
-            autocomplete="item-price"
-          />
-          <Label>List of Colours (seperated by /)</Label>
-          <Input
-            hasError={false}
-            label="List of colours"
-            onChange={handleListofColoursChange}
-            value={newItem.colors}
-            placeholder="Red/Green/Blue"
-            autocomplete="list-of-colours"
-          />
-          <Label>List of Sizes (seperated by /)</Label>
-          <Input
-            hasError={false}
-            label="List of sizes"
-            onChange={handleListofSizesChange}
-            value={newItem.sizes}
-            placeholder="S/M/L"
-            autocomplete="list-of-sizes"
-          />
-          <Label>Description</Label>
-          <Input
-            hasError={false}
-            label="description"
-            onChange={handleDescriptionChange}
-            value={newItem.description}
-            placeholder="The item is ..."
-            autocomplete="description"
-          />
-          <Label>Tags (case sensitive)</Label>
-          <Input
-            hasError={false}
-            label="tags"
-            onChange={handleTagsChange}
-            value={newItem.tags}
-            placeholder="Accessories/Embroidery/Hats"
-            autocomplete="tags"
-          />
-          <FeatureItemOption onClick={handleFeatureClick}>
-            <Icon>
-              {newItem.featured ? (
-                <FaCheckCircle size={24} />
-              ) : (
-                <FaRegCircle size={24} />
-              )}
-            </Icon>
-            Featured Item
-          </FeatureItemOption>
-          <Label>Add images here:</Label>
-          <Label>
-            (Note: First Picture will be thumbnail and DON'T put spaces in
-            filenames)
-          </Label>
-          <ImageForm
-            getArrayOfColours={getArrayOfColours}
-            newItem={newItem}
-            setNewItem={setNewItem}
-          />
-          {hasErrors && <Error>Please enter valid details!</Error>}
-          <Button>CREATE ITEM</Button>
-        </Form>
+        <TopOptionsWrapper>
+          <Button onClick={() => handleOptionClick(false)}>Custom Item</Button>
+          <Button onClick={() => handleOptionClick(true)}>Printify Item</Button>
+        </TopOptionsWrapper>
+
+        {!isPrintifyItem ? (
+          <Form onSubmit={handleFormSubmit}>
+            <Label>Item Name</Label>
+            <Input
+              hasError={false}
+              label="Name"
+              onChange={handleNameChange}
+              value={newItem.name}
+              placeholder="Bean"
+              autocomplete="item-name"
+            />
+            <Label>Item Price</Label>
+            <Input
+              hasError={false}
+              label="Price"
+              onChange={handlePriceChange}
+              value={newItem.price}
+              placeholder="xx.xx"
+              autocomplete="item-price"
+            />
+            <Label>List of Colours (seperated by /)</Label>
+            <Input
+              hasError={false}
+              label="List of colours"
+              onChange={handleListofColoursChange}
+              value={newItem.colors.join("/")}
+              placeholder="Red/Green/Blue"
+              autocomplete="list-of-colours"
+            />
+            <Label>List of Sizes (seperated by /)</Label>
+            <Input
+              hasError={false}
+              label="List of sizes"
+              onChange={handleListofSizesChange}
+              value={newItem.sizes.join("/")}
+              placeholder="S/M/L"
+              autocomplete="list-of-sizes"
+            />
+            <Label>Description</Label>
+            <Input
+              hasError={false}
+              label="description"
+              onChange={handleDescriptionChange}
+              value={newItem.description}
+              placeholder="The item is ..."
+              autocomplete="description"
+            />
+            <Label>Tags (case sensitive)</Label>
+            <Input
+              hasError={false}
+              label="tags"
+              onChange={handleTagsChange}
+              value={newItem.tags.join("/")}
+              placeholder="Accessories/Embroidery/Hats"
+              autocomplete="tags"
+            />
+            <FeatureItemOption onClick={handleFeatureClick}>
+              <Icon>
+                {newItem.featured ? (
+                  <FaCheckCircle size={24} />
+                ) : (
+                  <FaRegCircle size={24} />
+                )}
+              </Icon>
+              Featured Item
+            </FeatureItemOption>
+            <Label>Add images here:</Label>
+            <Label>
+              (Note: First Picture will be thumbnail and DON'T put spaces in
+              filenames)
+            </Label>
+            <ImageForm
+              getArrayOfColours={getArrayOfColours}
+              newItem={newItem}
+              setNewItem={setNewItem}
+            />
+            {hasErrors && <Error>Please enter valid details!</Error>}
+            <Button>CREATE ITEM</Button>
+          </Form>
+        ) : (
+          <Form onSubmit={handleFormSubmit}>
+            <Label>Printify ID</Label>
+            <Input
+              hasError={false}
+              label="printifyID"
+              onChange={handlePrintifyIDChange}
+              value={newItem.printifyID}
+              placeholder="PrintifyID"
+              autocomplete="id"
+            />
+            {hasErrors && <Error>Please enter valid details!</Error>}
+            <Button>CREATE ITEM</Button>
+          </Form>
+        )}
       </FormWrapper>
 
       <ItemPreviewWrapper>

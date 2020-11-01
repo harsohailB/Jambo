@@ -25,7 +25,13 @@ const ItemPage = () => {
   }, [location]);
 
   return (
-    <div>{item ? <ItemPreview item={item} /> : <Title>Loading...</Title>}</div>
+    <div>
+      {item ? (
+        <ItemPreview item={item} setItem={setItem} />
+      ) : (
+        <Title>Loading...</Title>
+      )}
+    </div>
   );
 };
 

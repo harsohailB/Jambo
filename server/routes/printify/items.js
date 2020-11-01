@@ -26,7 +26,7 @@ router.get("/items", ensureAuthenticated, async function (req, res, next) {
       },
     })
     .then((response) => {
-      res.json(response.data.data.map((item) => printifyItemParser(item)));
+      res.json(response.data.data.map((item) => item));
     })
     .catch((err) => {
       res.json({ message: err.message, status: err.requestResult.statusCode });
@@ -54,7 +54,7 @@ router.get("/items/:id", ensureAuthenticated, async function (req, res, next) {
     })
     .catch((err) => {
       console.log(err);
-      res.json({ message: err.message, status: err.requestResult.statusCode });
+      res.json({ message: err.message, status: 404 });
     });
 });
 

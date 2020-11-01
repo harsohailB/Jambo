@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import { getItemById, updateItemById } from "../../actions/items";
+import { getItemById, updateItemById, uploadItem } from "../../actions/items";
+import { getPrintifyItemById } from "../../actions/printifyItems";
 import ButtonStyles from "../styled/ButtonStyles";
 
 const Form = styled.form`
@@ -52,10 +53,27 @@ const Label = styled.label`
 `;
 
 const EditItemForm = () => {
+  const defaultNewItem = {
+    isPrintifyItem: false,
+    printifyID: "",
+    id: 1,
+    name: "",
+    price: "",
+    colors: [],
+    sizes: [],
+    description: "",
+    tags: [],
+    featured: false,
+    thumbnailImage: {
+      imageLink:
+        "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
+    },
+    images: [],
+  };
   const location = useLocation();
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState(defaultNewItem);
   const [hasErrors, setHasErrors] = useState(false);
 
   useEffect(() => {
@@ -114,56 +132,79 @@ const EditItemForm = () => {
     });
   };
 
+  const handleSyncItemClick = () => {
+    try {
+      getPrintifyItemById(item.printifyID).then((fetchedPrintifyItem) => {
+        uploadItem(user, fetchedPrintifyItem);
+      });
+    } catch (e) {
+      console.log("Sync Item ERROR");
+      console.log(e);
+    }
+  };
+
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <Label>Item Name</Label>
-      <Input
-        hasError={false}
-        label="Name"
-        onChange={handleNameChange}
-        value={item.name}
-        placeholder="Bean"
-        autocomplete="item-name"
-      />
-      <Label>Item Price</Label>
-      <Input
-        hasError={false}
-        label="Price"
-        onChange={handlePriceChange}
-        value={item.price}
-        placeholder="xx.xx"
-        autocomplete="item-price"
-      />
-      <Label>List of Colours (seperated by /)</Label>
-      <Input
-        hasError={false}
-        label="List of colours"
-        onChange={handleListofColoursChange}
-        value={item.colors}
-        placeholder="Red,Green,Blue"
-        autocomplete="list-of-colours"
-      />
-      <Label>List of Sizes (seperated by /)</Label>
-      <Input
-        hasError={false}
-        label="List of sizes"
-        onChange={handleListofSizesChange}
-        value={item.sizes}
-        placeholder="S,M,L"
-        autocomplete="list-of-sizes"
-      />
-      <Label>Description</Label>
-      <Input
-        hasError={false}
-        label="description"
-        onChange={handleDescriptionChange}
-        value={item.description}
-        placeholder="The item is ..."
-        autocomplete="description"
-      />
-      {hasErrors && <Error>Please enter valid details!</Error>}
-      <Button>SAVE CHANGES</Button>
-    </Form>
+    <div>
+      {item.isPrintifyItem ? (
+        <div>
+          <Button onClick={handleSyncItemClick}>
+            Sync item with Printify Catalog
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <Form onSubmit={handleFormSubmit}>
+            <Label>Item Name</Label>
+            <Input
+              hasError={false}
+              label="Name"
+              onChange={handleNameChange}
+              value={item.name}
+              placeholder="Bean"
+              autocomplete="item-name"
+            />
+            <Label>Item Price</Label>
+            <Input
+              hasError={false}
+              label="Price"
+              onChange={handlePriceChange}
+              value={item.price}
+              placeholder="xx.xx"
+              autocomplete="item-price"
+            />
+            <Label>List of Colours (seperated by /)</Label>
+            <Input
+              hasError={false}
+              label="List of colours"
+              onChange={handleListofColoursChange}
+              value={item.colors.join("/")}
+              placeholder="Red/Green/Blue"
+              autocomplete="list-of-colours"
+            />
+            <Label>List of Sizes (seperated by /)</Label>
+            <Input
+              hasError={false}
+              label="List of sizes"
+              onChange={handleListofSizesChange}
+              value={item.sizes.join("/")}
+              placeholder="S/M/L"
+              autocomplete="list-of-sizes"
+            />
+            <Label>Description</Label>
+            <Input
+              hasError={false}
+              label="description"
+              onChange={handleDescriptionChange}
+              value={item.description}
+              placeholder="The item is ..."
+              autocomplete="description"
+            />
+            {hasErrors && <Error>Please enter valid details!</Error>}
+            <Button>SAVE CHANGES</Button>
+          </Form>
+        </div>
+      )}
+    </div>
   );
 };
 

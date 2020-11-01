@@ -20,6 +20,7 @@ const AddItemPage = () => {
       <Helmet>
         <title>Add Item - JAMBO</title>
       </Helmet>
+
       {user ? <NewItemForm /> : <Title>You're not supposed to be here!</Title>}
     </Wrapper>
   );

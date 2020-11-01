@@ -28,7 +28,7 @@ export const getItemById = async (id) => {
 
 export const uploadItem = async (user, newItem) => {
   const response = await axios.post(
-    `${config.endpoint}/items?username=` +
+    `${config.endpoint}/fauna/items?username=` +
       user.username +
       "&password=" +
       user.password,
@@ -51,7 +51,7 @@ export const deleteItemById = async (user, id) => {
   const params = "?username=" + user.username + "&password=" + user.password;
 
   const response = await axios.delete(
-    `${config.endpoint}/items/${id + params}`
+    `${config.endpoint}/fauna/items/${id + params}`
   );
 
   if (response.status !== 200) {
@@ -64,7 +64,7 @@ export const deleteItemById = async (user, id) => {
 export const updateItemById = async (user, updatedItem) => {
   const params = "?username=" + user.username + "&password=" + user.password;
   const response = await axios.put(
-    `${config.endpoint}/items/${updatedItem.id + params}`,
+    `${config.endpoint}/fauna/items/${updatedItem.id + params}`,
     updatedItem
   );
 
