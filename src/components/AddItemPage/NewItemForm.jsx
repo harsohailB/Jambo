@@ -5,7 +5,12 @@ import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import styled from "styled-components";
 
 import ImageForm from "./ImageForm";
-import { getItemById, updateItemById, uploadItem } from "../../actions/items";
+import {
+  getItemById,
+  getItems,
+  updateItemById,
+  uploadItem,
+} from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
@@ -191,7 +196,17 @@ const NewItemForm = (props) => {
         if (props.edit) {
           updateItemById(user, tempNewItem);
         } else {
-          uploadItem(user, tempNewItem);
+          getItems().then((fetchedItems) => {
+            tempNewItem = {
+              ...tempNewItem,
+              id:
+                Math.max.apply(
+                  Math,
+                  fetchedItems.map((item) => item.id)
+                ) + 1,
+            };
+            uploadItem(user, tempNewItem);
+          });
         }
         history.push("/catalog");
       } catch (error) {
