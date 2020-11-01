@@ -51,12 +51,6 @@ const EditItemPage = () => {
     }
   }, [location]);
 
-  const handleSyncWithPrintifyClick = () => {
-    getPrintifyItemById(user, item.printifyID).then((fetchedPrintifyItem) => {
-      setItem(fetchedPrintifyItem);
-    });
-  };
-
   return (
     <Wrapper>
       <Helmet>
@@ -68,12 +62,6 @@ const EditItemPage = () => {
           ? "This is a Printify Item"
           : "This is a Custom Item"}
       </Title>
-
-      {item.isPrintifyItem && (
-        <Button onClick={handleSyncWithPrintifyClick}>
-          Sync with Printify Catalog
-        </Button>
-      )}
 
       {user ? (
         <NewItemForm item={item} edit={true} />

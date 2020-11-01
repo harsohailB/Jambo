@@ -5,7 +5,7 @@ import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import styled from "styled-components";
 
 import ImageForm from "./ImageForm";
-import { updateItemById, uploadItem } from "../../actions/items";
+import { getItemById, updateItemById, uploadItem } from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
@@ -124,16 +124,18 @@ const TopOptionsWrapper = styled.div`
 const NewItemForm = (props) => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  const [isPrintifyItem, setIsPrintifyItem] = useState(false);
+  const [isPrintifyItem, setIsPrintifyItem] = useState(
+    props.item.isPrintifyItem
+  );
   const [newItem, setNewItem] = useState(props.item);
   const [hasErrors, setHasErrors] = useState(false);
 
   useEffect(() => {
-    if (isPrintifyItem && newItem.printifyID.length) {
-      getPrintifyItemById(user, newItem.printifyID)
-        .then((fetchedPrintifyItem) => {
-          console.log(fetchedPrintifyItem);
-          setNewItem(fetchedPrintifyItem);
+    if (props.edit) {
+      getItemById(props.item.id)
+        .then((fetchedItem) => {
+          console.log(props.item);
+          setNewItem(fetchedItem);
           setHasErrors(false);
         })
         .catch((err) => {
@@ -141,11 +143,7 @@ const NewItemForm = (props) => {
           setHasErrors(true);
         });
     }
-  }, [newItem]);
-
-  useEffect(() => {
-    setNewItem(props.item);
-  }, [props.item]);
+  }, []);
 
   const getArrayOfColours = () => {
     const arrOfColours = newItem.colors;
@@ -251,6 +249,15 @@ const NewItemForm = (props) => {
       ...newItem,
       printifyID: evt.target.value,
     });
+    getPrintifyItemById(user, evt.target.value)
+      .then((fetchedPrintifyItem) => {
+        setNewItem(fetchedPrintifyItem);
+        setHasErrors(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setHasErrors(true);
+      });
   };
 
   const handleFeatureClick = () => {
@@ -265,6 +272,14 @@ const NewItemForm = (props) => {
     setNewItem(props.item);
   };
 
+  const handleSyncWithPrintifyClick = () => {
+    getPrintifyItemById(user, newItem.printifyID).then(
+      (fetchedPrintifyItem) => {
+        setNewItem(fetchedPrintifyItem);
+      }
+    );
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
@@ -277,6 +292,12 @@ const NewItemForm = (props) => {
               Printify Item
             </Button>
           </TopOptionsWrapper>
+        )}
+
+        {props.edit && newItem.isPrintifyItem && (
+          <Button onClick={handleSyncWithPrintifyClick}>
+            Sync with Printify Catalog
+          </Button>
         )}
 
         <Form onSubmit={handleFormSubmit}>
