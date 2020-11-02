@@ -87,7 +87,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     setNewItem({
       ...newItem,
       images: newItem.images.map((img) => {
-        if (image.id === img.id) {
+        if (image.imageLink === img.imageLink) {
           img = {
             ...img,
             color: evt.target.value,
