@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import styled from "styled-components";
 
 import ImageForm from "./ImageForm";
-import { uploadItem } from "../../actions/items";
+import {
+  getItemById,
+  getItems,
+  updateItemById,
+  uploadItem,
+} from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
+import { getPrintifyItemById } from "../../actions/printifyItems";
 
 const Wrapper = styled.div`
   display: flex;
@@ -113,27 +119,40 @@ const FeatureItemOption = styled.span`
   color: #3d4246;
 `;
 
-const NewItemForm = () => {
+const TopOptionsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NewItemForm = (props) => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  const [newItem, setNewItem] = useState({
-    name: "",
-    price: "",
-    colors: "",
-    sizes: "",
-    description: "",
-    tags: "",
-    featured: false,
-    thumbnailImage: {
-      imageLink:
-        "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
-    },
-    images: [],
-  });
+  const [isPrintifyItem, setIsPrintifyItem] = useState(
+    props.item.isPrintifyItem
+  );
+  const [newItem, setNewItem] = useState(props.item);
   const [hasErrors, setHasErrors] = useState(false);
 
+  useEffect(() => {
+    if (props.edit) {
+      console.log(newItem);
+      getItemById(props.item.id)
+        .then((fetchedItem) => {
+          console.log(props.item);
+          setNewItem(fetchedItem);
+          setHasErrors(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setHasErrors(true);
+        });
+    }
+  }, []);
+
   const getArrayOfColours = () => {
-    const arrOfColours = newItem.colors.split("/");
+    const arrOfColours = newItem.colors;
     var resultArr = ["None"];
     arrOfColours.forEach((color) => {
       resultArr.push(color);
@@ -149,7 +168,8 @@ const NewItemForm = () => {
       newItem.colors === "" ||
       newItem.sizes === "" ||
       newItem.description === "" ||
-      newItem.images.length === 0
+      newItem.images.length === 0 ||
+      (newItem.isPrintifyItem && newItem.printifyID.length === 0)
     ) {
       setHasErrors(true);
       return true;
@@ -169,12 +189,27 @@ const NewItemForm = () => {
     let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
-      tags: newItem.tags.split("/"),
+      tags: newItem.tags,
     };
-    console.log("handleFormSubmit -> tempNewItem", tempNewItem);
+    console.log("newItem", tempNewItem);
     if (!checkForErrors()) {
       try {
-        uploadItem(user, tempNewItem);
+        if (props.edit) {
+          console.log(tempNewItem);
+          updateItemById(user, tempNewItem);
+        } else {
+          getItems().then((fetchedItems) => {
+            tempNewItem = {
+              ...tempNewItem,
+              id:
+                Math.max.apply(
+                  Math,
+                  fetchedItems.map((item) => item.id)
+                ) + 1,
+            };
+            uploadItem(user, tempNewItem);
+          });
+        }
         history.push("/catalog");
       } catch (error) {
         setHasErrors(true);
@@ -201,14 +236,14 @@ const NewItemForm = () => {
   const handleListofColoursChange = (evt) => {
     setNewItem({
       ...newItem,
-      colors: evt.target.value,
+      colors: evt.target.value.split("/"),
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setNewItem({
       ...newItem,
-      sizes: evt.target.value,
+      sizes: evt.target.value.split("/"),
     });
   };
 
@@ -222,8 +257,24 @@ const NewItemForm = () => {
   const handleTagsChange = (evt) => {
     setNewItem({
       ...newItem,
-      tags: evt.target.value,
+      tags: evt.target.value.split("/"),
     });
+  };
+
+  const handlePrintifyIDChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      printifyID: evt.target.value,
+    });
+    getPrintifyItemById(user, evt.target.value)
+      .then((fetchedPrintifyItem) => {
+        setNewItem(fetchedPrintifyItem);
+        setHasErrors(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setHasErrors(true);
+      });
   };
 
   const handleFeatureClick = () => {
@@ -233,10 +284,55 @@ const NewItemForm = () => {
     });
   };
 
+  const handleOptionClick = (isPrintifyOption) => {
+    setIsPrintifyItem(isPrintifyOption);
+    setNewItem(props.item);
+  };
+
+  const handleSyncWithPrintifyClick = () => {
+    getPrintifyItemById(user, newItem.printifyID).then(
+      (fetchedPrintifyItem) => {
+        setNewItem({
+          ...fetchedPrintifyItem,
+          id: newItem.id,
+        });
+      }
+    );
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
+        {!props.edit && (
+          <TopOptionsWrapper>
+            <Button onClick={() => handleOptionClick(false)}>
+              Custom Item
+            </Button>
+            <Button onClick={() => handleOptionClick(true)}>
+              Printify Item
+            </Button>
+          </TopOptionsWrapper>
+        )}
+
+        {props.edit && newItem.isPrintifyItem && (
+          <Button onClick={handleSyncWithPrintifyClick}>
+            Sync with Printify Catalog
+          </Button>
+        )}
+
         <Form onSubmit={handleFormSubmit}>
+          {isPrintifyItem && <Label>Printify ID</Label>}
+          {isPrintifyItem && (
+            <Input
+              hasError={false}
+              label="printifyID"
+              onChange={handlePrintifyIDChange}
+              value={newItem.printifyID}
+              placeholder="PrintifyID"
+              autocomplete="id"
+            />
+          )}
+
           <Label>Item Name</Label>
           <Input
             hasError={false}
@@ -260,7 +356,7 @@ const NewItemForm = () => {
             hasError={false}
             label="List of colours"
             onChange={handleListofColoursChange}
-            value={newItem.colors}
+            value={newItem.colors.join("/")}
             placeholder="Red/Green/Blue"
             autocomplete="list-of-colours"
           />
@@ -269,7 +365,7 @@ const NewItemForm = () => {
             hasError={false}
             label="List of sizes"
             onChange={handleListofSizesChange}
-            value={newItem.sizes}
+            value={newItem.sizes.join("/")}
             placeholder="S/M/L"
             autocomplete="list-of-sizes"
           />
@@ -287,7 +383,7 @@ const NewItemForm = () => {
             hasError={false}
             label="tags"
             onChange={handleTagsChange}
-            value={newItem.tags}
+            value={newItem.tags.join("/")}
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
           />
@@ -312,7 +408,7 @@ const NewItemForm = () => {
             setNewItem={setNewItem}
           />
           {hasErrors && <Error>Please enter valid details!</Error>}
-          <Button>CREATE ITEM</Button>
+          <Button>{props.edit ? "UPDATE ITEM" : "CREATE ITEM"}</Button>
         </Form>
       </FormWrapper>
 

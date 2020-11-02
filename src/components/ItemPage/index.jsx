@@ -14,7 +14,7 @@ const ItemPage = () => {
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    const itemId = location.pathname.split("/").reverse()[0];
+    const itemId = parseInt(location.pathname.split("/").reverse()[0]);
     getItemById(itemId)
       .then((fetchedItem) => {
         setItem(fetchedItem);
@@ -25,7 +25,13 @@ const ItemPage = () => {
   }, [location]);
 
   return (
-    <div>{item ? <ItemPreview item={item} /> : <Title>Loading...</Title>}</div>
+    <div>
+      {item ? (
+        <ItemPreview item={item} setItem={setItem} />
+      ) : (
+        <Title>Loading...</Title>
+      )}
+    </div>
   );
 };
 

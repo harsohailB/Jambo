@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
+import { sortCatalog } from "./sortingAlgorithms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -63,7 +64,7 @@ const CatalogPage = () => {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
-        setDisplayedItems(fetchedItems);
+        setDisplayedItems(sortCatalog(fetchedItems, "Alphabetically, A-Z"));
       }
     });
   }, [location]);
