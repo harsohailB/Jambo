@@ -20,7 +20,7 @@ module.exports = config;
 //   },
 // };
 
-config.endpoint =
-  config.api.protocol + "://" + config.api.host + ":" + config.api.port;
+// config.endpoint =
+//   config.api.protocol + "://" + config.api.host + ":" + config.api.port;
 
-module.exports = config;
+// module.exports = config;
