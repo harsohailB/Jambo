@@ -137,6 +137,7 @@ const NewItemForm = (props) => {
 
   useEffect(() => {
     if (props.edit) {
+      console.log(newItem);
       getItemById(props.item.id)
         .then((fetchedItem) => {
           console.log(props.item);
@@ -194,6 +195,7 @@ const NewItemForm = (props) => {
     if (!checkForErrors()) {
       try {
         if (props.edit) {
+          console.log(tempNewItem);
           updateItemById(user, tempNewItem);
         } else {
           getItems().then((fetchedItems) => {
@@ -290,7 +292,10 @@ const NewItemForm = (props) => {
   const handleSyncWithPrintifyClick = () => {
     getPrintifyItemById(user, newItem.printifyID).then(
       (fetchedPrintifyItem) => {
-        setNewItem(fetchedPrintifyItem);
+        setNewItem({
+          ...fetchedPrintifyItem,
+          id: newItem.id,
+        });
       }
     );
   };
