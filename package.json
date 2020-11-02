@@ -48,7 +48,7 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "start": "nodemon server/bin/www",
+    "start": "react-scripts start",
     "dev": "concurrently \"react-scripts start\" \"nodemon server/bin/www\"",
     "server": "nodemon server/bin/www",
     "build": "react-scripts build",
