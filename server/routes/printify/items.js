@@ -26,7 +26,7 @@ router.get("/items", ensureAuthenticated, async function (req, res, next) {
       },
     })
     .then((response) => {
-      res.json(response.data.data.map((item) => item));
+      res.json(response.data.data.map((item) => printifyItemParser(item)));
     })
     .catch((err) => {
       res.json({ message: err.message, status: err.requestResult.statusCode });

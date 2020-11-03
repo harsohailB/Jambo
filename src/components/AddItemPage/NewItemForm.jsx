@@ -14,6 +14,7 @@ import {
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
+import PrintifyDropdown from "./PrintifyDropdown";
 
 const Wrapper = styled.div`
   display: flex;
@@ -321,6 +322,11 @@ const NewItemForm = (props) => {
         )}
 
         <Form onSubmit={handleFormSubmit}>
+          {isPrintifyItem && <Label>Select an item from Printify:</Label>}
+          {isPrintifyItem && (
+            <PrintifyDropdown newItem={newItem} setNewItem={setNewItem} />
+          )}
+
           {isPrintifyItem && <Label>Printify ID</Label>}
           {isPrintifyItem && (
             <Input
