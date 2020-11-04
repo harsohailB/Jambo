@@ -1,6 +1,5 @@
 const dotenv = require("dotenv");
 
-console.log(process.env);
 var config;
 
 if (process.env.NODE_ENV === "development") {
@@ -11,6 +10,9 @@ if (process.env.NODE_ENV === "development") {
       port: 9000,
     },
   };
+
+  config.endpoint =
+    config.api.protocol + "://" + config.api.host + ":" + config.api.port;
 } else {
   config = {
     api: {
@@ -18,11 +20,8 @@ if (process.env.NODE_ENV === "development") {
       host: "jambo-express-backend.herokuapp.com",
     },
   };
+
+  config.endpoint = config.api.protocol + "://" + config.api.host;
 }
-
-console.log(config);
-
-config.endpoint =
-  config.api.protocol + "://" + config.api.host + ":" + config.api.port;
 
 module.exports = config;
