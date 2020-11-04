@@ -1,26 +1,28 @@
-// TODO comment in the production code and comment out the development code when deployed
-// Production
-let config = {
-  api: {
-    protocol: "https",
-    host: "jambo-express-backend.herokuapp.com",
-  },
-};
+const dotenv = require("dotenv");
 
-config.endpoint = config.api.protocol + "://" + config.api.host;
+console.log(process.env);
+var config;
+
+if (process.env.NODE_ENV === "development") {
+  config = {
+    api: {
+      protocol: "http",
+      host: "localhost",
+      port: 9000,
+    },
+  };
+} else {
+  config = {
+    api: {
+      protocol: "https",
+      host: "jambo-express-backend.herokuapp.com",
+    },
+  };
+}
+
+console.log(config);
+
+config.endpoint =
+  config.api.protocol + "://" + config.api.host + ":" + config.api.port;
 
 module.exports = config;
-
-// Local Development
-// let config = {
-//   api: {
-//     protocol: "http",
-//     host: "localhost",
-//     port: 9000,
-//   },
-// };
-
-// config.endpoint =
-//   config.api.protocol + "://" + config.api.host + ":" + config.api.port;
-
-// module.exports = config;
