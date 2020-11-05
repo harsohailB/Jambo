@@ -131,6 +131,7 @@ const ShoppingCartPage = () => {
   }, []);
 
   useEffect(() => {
+    setShippingCalculated(false);
     calculateShipping();
     calculateSubtotal();
   }, [shoppingCartItems, shipping]);
@@ -255,7 +256,7 @@ const ShoppingCartPage = () => {
         )}
         <Title>
           Total CAD $
-          {parseFloat(currency(subTotal) + currency(shipping)).toFixed(2)}
+          {parseFloat(currency(subTotal).add(currency(shipping))).toFixed(2)}
         </Title>
 
         <CheckoutButtonsWrapper>
