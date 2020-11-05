@@ -73,7 +73,7 @@ const Price = styled.h3`
   font-size: 18px;
   font-weight: 200;
   color: black;
-  margin-bottom: 40px;
+  margin-bottom: 0px;
 `;
 
 const CheckoutButtonsWrapper = styled.div`
@@ -92,6 +92,7 @@ const Dropdown = styled.select`
   line-height: 1.5;
   border: 0 solid transparent;
   width: 200px;
+  margin-bottom: 20px;
 `;
 
 const Label = styled.label`
@@ -110,7 +111,9 @@ const ShoppingCartPage = () => {
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const [shippingCalculated, setShippingCalculated] = useState(false);
   const [shipping, setShipping] = useState(0);
-  const [countryCode, setCountryCode] = useState("CA");
+  const [countryCode, setCountryCode] = useState("");
+  const emptyCountryCode = !countryCode.length;
+  const isCalculatingShipping = countryCode.length && !shippingCalculated;
 
   const [subTotal, setSubTotal] = useState(0);
   const STRIPE_PUBLISHABLE_KEY =
@@ -134,7 +137,7 @@ const ShoppingCartPage = () => {
     setShippingCalculated(false);
     calculateShipping();
     calculateSubtotal();
-  }, [shoppingCartItems, shipping]);
+  }, [shoppingCartItems, countryCode]);
 
   const renderItems = () => {
     return shoppingCartItems.map((item) => (
@@ -172,10 +175,12 @@ const ShoppingCartPage = () => {
   };
 
   const calculateShipping = () => {
-    getShipping(generateShippingObject()).then((response) => {
-      setShipping(response.standard / 100);
-      setShippingCalculated(true);
-    });
+    if (countryCode !== "") {
+      getShipping(generateShippingObject()).then((response) => {
+        setShipping(response.standard / 100);
+        setShippingCalculated(true);
+      });
+    }
   };
 
   const createLineItems = () => {
@@ -235,30 +240,35 @@ const ShoppingCartPage = () => {
           </TableRow>
           {renderItems()}
         </TableWrapper>
-
-        <Price>Subtotal CAD ${subTotal}</Price>
-
         <div>
           <Label>Shipping Country Code:</Label>
           <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
+            <option value="" disabled selected>
+              Select your country
+            </option>
             {renderCountryCodeOptions()}
           </Dropdown>
         </div>
+        <Price>Subtotal CAD ${subTotal}</Price>
 
-        {shippingCalculated ? (
+        {shippingCalculated && (
           <Subtitle>
-            Shipping was calculated to be CAD{" "}
-            <strong>${parseFloat(shipping).toFixed(2)}</strong> for{" "}
-            {countryCode}
+            <strong>Shipping</strong> CAD ${parseFloat(shipping).toFixed(2)}
           </Subtitle>
-        ) : (
-          <Subtitle>Calculating shipping...</Subtitle>
         )}
-        <Title>
+        {countryCode.length && !shippingCalculated ? (
+          <Subtitle>Calculating shipping...</Subtitle>
+        ) : (
+          <hr></hr>
+        )}
+        {!countryCode.length && (
+          <Subtitle>Please choosing a country to ship to</Subtitle>
+        )}
+
+        <Title style={{ marginTop: "0" }}>
           Total CAD $
           {parseFloat(currency(subTotal).add(currency(shipping))).toFixed(2)}
         </Title>
-
         <CheckoutButtonsWrapper>
           <Button to="/catalog">CONTINUE SHOPPING</Button>
           <Button onClick={handleCheckoutClick} locked={!shippingCalculated}>
