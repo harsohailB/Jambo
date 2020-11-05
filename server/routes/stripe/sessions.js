@@ -13,7 +13,7 @@ router.post("/session_id", async function (req, res, next) {
   let session = await stripe.checkout.sessions
     .create({
       shipping_address_collection: {
-        allowed_countries: ["CA"],
+        allowed_countries: [req.query.country],
       },
       payment_method_types: ["card"],
       line_items: req.body.line_items,

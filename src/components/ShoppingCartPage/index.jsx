@@ -15,6 +15,8 @@ import ItemPreview from "./ItemPreview";
 
 import { getItems } from "../../actions/items";
 import { PRUNE_CART } from "../../actions/types";
+import { countriesList } from "./countriesList";
+import { getShipping } from "../../actions/shipping";
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,17 +73,45 @@ const Price = styled.h3`
   font-size: 18px;
   font-weight: 200;
   color: black;
-  margin: 0;
+  margin-bottom: 40px;
 `;
 
 const CheckoutButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
+`;
+
+const Dropdown = styled.select`
+  padding: 10px 28px 10px 18px;
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
+  line-height: 1.5;
+  border: 0 solid transparent;
+  width: 200px;
+`;
+
+const Label = styled.label`
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  text-align: left;
+  color: black;
+  line-height: 1.5;
+  max-width: 50%;
 `;
 
 const ShoppingCartPage = () => {
   const dispatch = useDispatch();
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
+  const [shippingCalculated, setShippingCalculated] = useState(false);
+  const [shipping, setShipping] = useState(0);
+  const [countryCode, setCountryCode] = useState("CA");
+
   const [subTotal, setSubTotal] = useState(0);
   const STRIPE_PUBLISHABLE_KEY =
     "pk_test_51H5gw9Aka2oZYulluoHic76Ouk1kd7afjcPSiqEEcXYMnzHA7CZKZtG4piWrmNudkdLE5idB8bS7Za0oaNcbhA9C00CsLqQBdo";
@@ -96,8 +126,14 @@ const ShoppingCartPage = () => {
       });
     });
 
+    calculateShipping();
     calculateSubtotal();
-  }, [shoppingCartItems]);
+  }, []);
+
+  useEffect(() => {
+    calculateShipping();
+    calculateSubtotal();
+  }, [shoppingCartItems, shipping]);
 
   const renderItems = () => {
     return shoppingCartItems.map((item) => (
@@ -116,8 +152,33 @@ const ShoppingCartPage = () => {
     setSubTotal(sum.toFixed(2));
   };
 
+  const generateShippingObject = () => {
+    let printifyitems = shoppingCartItems.filter((item) => item.isPrintifyItem);
+    return {
+      line_items: printifyitems.map((item) => {
+        if (item.isPrintifyItem) {
+          return {
+            product_id: item.printifyID,
+            variant_id: item.variant,
+            quantity: item.quantity,
+          };
+        }
+      }),
+      address_to: {
+        country: countryCode,
+      },
+    };
+  };
+
+  const calculateShipping = () => {
+    getShipping(generateShippingObject()).then((response) => {
+      setShipping(response.standard / 100);
+      setShippingCalculated(true);
+    });
+  };
+
   const createLineItems = () => {
-    return shoppingCartItems.map((item) => {
+    let line_items = shoppingCartItems.map((item) => {
       return {
         name: item.name + " (" + item.color + "/" + item.size + ")",
         amount: Math.round(item.price * 100),
@@ -125,14 +186,40 @@ const ShoppingCartPage = () => {
         quantity: item.quantity,
       };
     });
+
+    return line_items.concat({
+      name: "Shipping to " + countryCode,
+      amount: Math.round(shipping * 100),
+      currency: "cad",
+      quantity: 1,
+    });
   };
 
   const handleCheckoutClick = async () => {
-    const sessionId = await createCheckoutSession(createLineItems());
-    const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout({
-      sessionId,
-    });
+    if (shippingCalculated) {
+      const sessionId = await createCheckoutSession(
+        createLineItems(),
+        countryCode
+      );
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        sessionId,
+      });
+    }
+  };
+
+  const renderCountryCodeOptions = () => {
+    return countriesList.map((country) => (
+      <option value={country.code}>
+        {country.name + " - " + country.code}
+      </option>
+    ));
+  };
+
+  const handleCountryCodeChange = (evt) => {
+    setShippingCalculated(false);
+    setCountryCode(evt.target.value);
+    calculateShipping();
   };
 
   const renderCart = () => {
@@ -148,12 +235,34 @@ const ShoppingCartPage = () => {
           {renderItems()}
         </TableWrapper>
 
-        <Price>Subtotal ${subTotal}</Price>
-        <Subtitle>Taxes and shipping calculated at checkout</Subtitle>
+        <Price>Subtotal CAD ${subTotal}</Price>
+
+        <div>
+          <Label>Shipping Country Code:</Label>
+          <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
+            {renderCountryCodeOptions()}
+          </Dropdown>
+        </div>
+
+        {shippingCalculated ? (
+          <Subtitle>
+            Shipping was calculated to be CAD{" "}
+            <strong>${parseFloat(shipping).toFixed(2)}</strong> for{" "}
+            {countryCode}
+          </Subtitle>
+        ) : (
+          <Subtitle>Calculating shipping...</Subtitle>
+        )}
+        <Title>
+          Total CAD $
+          {parseFloat(currency(subTotal) + currency(shipping)).toFixed(2)}
+        </Title>
 
         <CheckoutButtonsWrapper>
           <Button to="/catalog">CONTINUE SHOPPING</Button>
-          <Button onClick={handleCheckoutClick}>CHECK OUT</Button>
+          <Button onClick={handleCheckoutClick} locked={!shippingCalculated}>
+            CHECK OUT
+          </Button>
         </CheckoutButtonsWrapper>
       </ItemsWrapper>
     );
