@@ -18,6 +18,8 @@ import { PRUNE_CART } from "../../actions/types";
 import { countriesList } from "./countriesList";
 import { getShipping } from "../../actions/shipping";
 
+var fx = require("money");
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -93,6 +95,8 @@ const Dropdown = styled.select`
   border: 0 solid transparent;
   width: 200px;
   margin-bottom: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
 `;
 
 const Label = styled.label`
@@ -106,14 +110,29 @@ const Label = styled.label`
   max-width: 50%;
 `;
 
+const Heading = styled.div`
+  width: 100%;
+  text-align: left;
+  font-family: Righteous, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+  margin-top: 20px;
+`;
+
+const RowWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
 const ShoppingCartPage = () => {
   const dispatch = useDispatch();
   const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const [shippingCalculated, setShippingCalculated] = useState(false);
   const [shipping, setShipping] = useState(0);
   const [countryCode, setCountryCode] = useState("");
-  const emptyCountryCode = !countryCode.length;
-  const isCalculatingShipping = countryCode.length && !shippingCalculated;
 
   const [subTotal, setSubTotal] = useState(0);
   const STRIPE_PUBLISHABLE_KEY =
@@ -231,6 +250,7 @@ const ShoppingCartPage = () => {
   const renderCart = () => {
     return (
       <ItemsWrapper>
+        <Heading>Products</Heading>
         <TableWrapper>
           <TableRow>
             <TableHeading>Product</TableHeading>
@@ -240,35 +260,38 @@ const ShoppingCartPage = () => {
           </TableRow>
           {renderItems()}
         </TableWrapper>
-        <div>
-          <Label>Shipping Country Code:</Label>
+
+        <Price>Subtotal CAD ${subTotal}</Price>
+
+        <Heading>Shipping</Heading>
+
+        <RowWrapper>
           <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
             <option value="" disabled selected>
               Select your country
             </option>
             {renderCountryCodeOptions()}
           </Dropdown>
-        </div>
-        <Price>Subtotal CAD ${subTotal}</Price>
+          {shippingCalculated && (
+            <Price style={{ margin: 0 }}>
+              CAD ${parseFloat(shipping).toFixed(2)}
+            </Price>
+          )}
+          {countryCode.length && !shippingCalculated ? (
+            <Subtitle style={{ margin: 0 }}>Calculating shipping...</Subtitle>
+          ) : (
+            <div></div>
+          )}
+        </RowWrapper>
 
-        {shippingCalculated && (
-          <Subtitle>
-            <strong>Shipping</strong> CAD ${parseFloat(shipping).toFixed(2)}
-          </Subtitle>
-        )}
-        {countryCode.length && !shippingCalculated ? (
-          <Subtitle>Calculating shipping...</Subtitle>
+        {shippingCalculated ? (
+          <Title style={{ marginTop: "0" }}>
+            Total CAD $
+            {parseFloat(currency(subTotal).add(currency(shipping))).toFixed(2)}
+          </Title>
         ) : (
-          <hr></hr>
+          <Price>Please choose your shipping country</Price>
         )}
-        {!countryCode.length && (
-          <Subtitle>Please choosing a country to ship to</Subtitle>
-        )}
-
-        <Title style={{ marginTop: "0" }}>
-          Total CAD $
-          {parseFloat(currency(subTotal).add(currency(shipping))).toFixed(2)}
-        </Title>
         <CheckoutButtonsWrapper>
           <Button to="/catalog">CONTINUE SHOPPING</Button>
           <Button onClick={handleCheckoutClick} locked={!shippingCalculated}>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Title = styled.h1`
-  margin-top: 10px;
+  margin-top: 50px;
   font-family: Righteous, sans-serif;
   font-style: normal;
   font-weight: 400;
