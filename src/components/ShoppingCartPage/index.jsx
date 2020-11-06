@@ -191,10 +191,24 @@ const ShoppingCartPage = () => {
     };
   };
 
+  const calculateCustomShipping = () => {
+    let customItemShipping = 0;
+
+    shoppingCartItems.forEach((item) => {
+      if (!item.isPrintifyItem) {
+        customItemShipping += parseFloat(item.shipping * item.quantity);
+      }
+    });
+
+    return customItemShipping;
+  };
+
   const calculateShipping = () => {
     if (countryCode !== "") {
-      getShipping(generateShippingObject()).then((response) => {
-        setShipping(response.standard / 100);
+      getShipping(generateShippingObject()).then((shippingData) => {
+        const printifyShipping = shippingData.standard / 100;
+        const customItemShipping = calculateCustomShipping();
+        setShipping(printifyShipping + customItemShipping);
         setShippingCalculated(true);
       });
     }

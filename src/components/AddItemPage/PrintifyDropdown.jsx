@@ -17,8 +17,6 @@ const Dropdown = styled.select`
   line-height: 1.5;
   border: 0 solid transparent;
   width: 100%;
-  margin-top: 20px;
-  margin-right: 20px;
 
   @media (max-width: 768px) {
     margin-bottom: 10px;

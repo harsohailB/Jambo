@@ -301,6 +301,13 @@ const NewItemForm = (props) => {
     );
   };
 
+  const handleShippingChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      shipping: evt.target.value,
+    });
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
@@ -393,6 +400,20 @@ const NewItemForm = (props) => {
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
           />
+
+          {!isPrintifyItem && (
+            <Label>Shipping: (increases linearly with quantity)</Label>
+          )}
+          {!isPrintifyItem && (
+            <Input
+              hasError={false}
+              label="shipping"
+              onChange={handleShippingChange}
+              value={newItem.shipping}
+              placeholder="2.00"
+              autocomplete="shipping"
+            />
+          )}
           <FeatureItemOption onClick={handleFeatureClick}>
             <Icon>
               {newItem.featured ? (
