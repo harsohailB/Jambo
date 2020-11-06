@@ -18,8 +18,6 @@ import { PRUNE_CART } from "../../actions/types";
 import { countriesList } from "./countriesList";
 import { getShipping } from "../../actions/shipping";
 
-var fx = require("money");
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
