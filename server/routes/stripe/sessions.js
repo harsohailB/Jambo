@@ -5,8 +5,8 @@ require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const success_url = "http://localhost:3000/success";
-const cancel_url = "http://localhost:3000/cart";
+const success_url = "https://jamboapparel.ca/success";
+const cancel_url = "https://jamboapparel.ca/cart";
 
 /* POST - Generate a stripe session id for a customer */
 router.post("/session_id", async function (req, res, next) {
