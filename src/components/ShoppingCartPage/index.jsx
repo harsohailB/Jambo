@@ -262,7 +262,8 @@ const ShoppingCartPage = () => {
   const renderCart = () => {
     return (
       <ItemsWrapper>
-        <Heading>Products</Heading>
+        <Heading style={{ marginBottom: "20px" }}>Products</Heading>
+
         <TableWrapper>
           <TableRow>
             <TableHeading>Product</TableHeading>
