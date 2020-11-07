@@ -281,25 +281,6 @@ const ShoppingCartPage = () => {
 
         <Heading>Shipping</Heading>
 
-        {/* <RowWrapper>
-          <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
-            <option value="" disabled selected>
-              Select your country
-            </option>
-            {renderCountryCodeOptions()}
-          </Dropdown>
-          {shippingCalculated && (
-            <Price style={{ margin: 0 }}>
-              CAD ${parseFloat(shipping).toFixed(2)}
-            </Price>
-          )}
-          {countryCode.length && !shippingCalculated ? (
-            <Subtitle style={{ margin: 0 }}>Calculating shipping...</Subtitle>
-          ) : (
-            <div></div>
-          )}
-        </RowWrapper> */}
-
         <RowWrapper>
           <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
             <option value="" disabled selected>
