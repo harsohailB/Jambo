@@ -31,10 +31,10 @@ const ItemsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70%;
+  width: 45%;
 
-  @media (max-width: 768px) {
-    width: 95%;
+  @media (max-width: 1000px) {
+    width: 90%;
   }
 `;
 
@@ -123,6 +123,7 @@ const RowWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const ShoppingCartPage = () => {
@@ -266,19 +267,21 @@ const ShoppingCartPage = () => {
 
         <TableWrapper>
           <TableRow>
-            <TableHeading>Product</TableHeading>
+            <TableHeading></TableHeading>
             <TableHeading>Price</TableHeading>
             <TableHeading>Quantity</TableHeading>
-            <TableHeading>Total</TableHeading>
+            <TableHeading style={{ textAlign: "right" }}>Total</TableHeading>
           </TableRow>
           {renderItems()}
         </TableWrapper>
 
-        <Price>Subtotal CAD ${subTotal}</Price>
+        <Price style={{ width: "100%", "text-align": "right" }}>
+          Subtotal CAD ${subTotal}
+        </Price>
 
         <Heading>Shipping</Heading>
 
-        <RowWrapper>
+        {/* <RowWrapper>
           <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
             <option value="" disabled selected>
               Select your country
@@ -294,6 +297,25 @@ const ShoppingCartPage = () => {
             <Subtitle style={{ margin: 0 }}>Calculating shipping...</Subtitle>
           ) : (
             <div></div>
+          )}
+        </RowWrapper> */}
+
+        <RowWrapper>
+          <Dropdown value={countryCode} onChange={handleCountryCodeChange}>
+            <option value="" disabled selected>
+              Select your country
+            </option>
+            {renderCountryCodeOptions()}
+          </Dropdown>
+          {shippingCalculated && (
+            <Price style={{ margin: 0 }}>
+              Shipping CAD ${parseFloat(shipping).toFixed(2)}
+            </Price>
+          )}
+          {countryCode.length && !shippingCalculated ? (
+            <Subtitle style={{ margin: 0 }}>Calculating shipping...</Subtitle>
+          ) : (
+            <div style={{ display: "none" }}></div>
           )}
         </RowWrapper>
 
