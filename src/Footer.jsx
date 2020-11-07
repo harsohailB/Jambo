@@ -9,6 +9,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
+
+  @media (max-width: 900px) {
+    margin-top: 100px;
+  }
 `;
 
 const PageReference = styled(Link)`
@@ -39,7 +43,9 @@ const Footer = () => {
   return (
     <Wrapper>
       <Image src={paymentMethods}></Image>
-      <Credits>© 2020, JAMBO Website by Harsohail Brar & Ryan Holt & Gary Wu</Credits>
+      <Credits>
+        © 2020, JAMBO Website by Harsohail Brar & Ryan Holt & Gary Wu
+      </Credits>
     </Wrapper>
   );
 };

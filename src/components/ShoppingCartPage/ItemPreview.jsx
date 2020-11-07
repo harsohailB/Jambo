@@ -154,7 +154,7 @@ const ItemPreview = (props) => {
           </Icon>
         </QuantityWrapper>
       </td>
-      <td>
+      <td align="right">
         <Price>${calculateTotal()}</Price>
       </td>
     </TableRow>

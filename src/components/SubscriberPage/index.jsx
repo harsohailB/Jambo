@@ -62,8 +62,8 @@ const SubscriberPage = () => {
 
   const handleEmailDelete = (email) => {
     try {
-      deleteEmail(user, email);
-      setEmails(emails.filter((obj) => obj.id !== email.id));
+      deleteEmail(user, email.email);
+      setEmails(emails.filter((obj) => obj.email !== email.email));
     } catch (err) {
       console.log(err);
     }

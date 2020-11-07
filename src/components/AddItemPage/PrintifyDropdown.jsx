@@ -1,4 +1,3 @@
-import { attributesToProps } from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -18,6 +17,7 @@ const Dropdown = styled.select`
   line-height: 1.5;
   border: 0 solid transparent;
   width: 100%;
+
   @media (max-width: 768px) {
     margin-bottom: 10px;
     font-size: 22px;
@@ -56,7 +56,7 @@ const PrintifyPreview = (props) => {
   return (
     <Dropdown onChange={handleDropdownChange}>
       <option value="" disabled selected>
-        Select your option
+        Please select your option
       </option>
       {renderOptions()}
     </Dropdown>
