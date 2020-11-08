@@ -12,8 +12,8 @@ Jambo Apparel's (NPO) proprietary e-commerce store to sell merchandise without i
 
 ## Table of Contents
 
-- [Technologies Used](#Technologies-Used)
 - [Description](#Description)
+- [Technologies Used](#Technologies-Used)
 - [Installation](#Installation)
 - [Deployment](#Deployment)
 - [Usage](#Usage)
@@ -40,15 +40,15 @@ npm run dev
 
 Front-end deployment is automatic using Vercel
 
-* Pushing to `master` deploys the web app onto the Vercel domain
+- Pushing to `master` deploys the web app onto the Vercel domain
 
 To deploy the ExpressJS server onto Heroku, do the following:
 
-* Connect to Heroku instance:
+- Connect to Heroku instance:
 
 `heroku git:remote -a {heroku instance name}`
 
-* Push server code to Heroku git:
+- Push server code to Heroku git:
 
 `git subtree push --prefix server heroku master`
 
