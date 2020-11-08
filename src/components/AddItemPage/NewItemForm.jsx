@@ -401,10 +401,10 @@ const NewItemForm = (props) => {
             autocomplete="tags"
           />
 
-          {!isPrintifyItem && (
+          {!newItem.isPrintifyItem && (
             <Label>Shipping: (increases linearly with quantity)</Label>
           )}
-          {!isPrintifyItem && (
+          {!newItem.isPrintifyItem && (
             <Input
               hasError={false}
               label="shipping"
