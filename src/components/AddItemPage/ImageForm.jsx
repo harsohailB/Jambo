@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown";
-import { FaPlusCircle, FaTrash } from "react-icons/fa";
+import { FaPlusCircle, FaTrash, FaImage } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Tooltip } from "@material-ui/core";
 
 const Wrapper = styled.div`
   display: flex;
@@ -120,6 +121,23 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     });
   };
 
+  const handleMakeThumbnailClick = (image) => {
+    let newThumbnail = newItem.images.find(
+      (existingImage) => existingImage.imageLink === image.imageLink
+    );
+    let newItemImagesArray = newItem.images.filter(
+      (existingImage) => existingImage.imageLink !== image.imageLink
+    );
+
+    newItemImagesArray.unshift(newThumbnail);
+
+    setNewItem({
+      ...newItem,
+      thumbnailImage: newThumbnail,
+      images: newItemImagesArray,
+    });
+  };
+
   const renderImageInputs = () => {
     return newItem.images.map((image) => (
       <UploadWrapper id={image.id}>
@@ -138,6 +156,11 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
         <Icon onClick={() => handleDeleteImageInput(image)}>
           <FaTrash size={18} />
         </Icon>
+        <Tooltip title="Make Thumbnail" placement="right">
+          <Icon onClick={() => handleMakeThumbnailClick(image)}>
+            <FaImage size={18} />
+          </Icon>
+        </Tooltip>
       </UploadWrapper>
     ));
   };
