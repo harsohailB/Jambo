@@ -32,7 +32,7 @@ const printifyItemParser = (printifyItem) => {
     id: 1,
     variant: printifyItem.variants[0].id,
     name: printifyItem.title,
-    description: printifyItem.description,
+    description: printifyItem.description.split(".: ").join("<li>"),
     price: printifyItem.variants[0].price / 100,
     featured: false,
     tags: printifyItem.tags,
