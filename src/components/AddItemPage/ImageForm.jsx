@@ -133,6 +133,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
 
     setNewItem({
       ...newItem,
+      thumbnailImage: newThumbnail,
       images: newItemImagesArray,
     });
   };
