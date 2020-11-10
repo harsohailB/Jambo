@@ -204,14 +204,20 @@ const ShoppingCartPage = () => {
     return customItemShipping;
   };
 
-  const calculateShipping = () => {
+  const calculateShipping = async () => {
     if (countryCode !== "") {
-      getShipping(generateShippingObject()).then((shippingData) => {
-        const printifyShipping = shippingData.standard / 100;
-        const customItemShipping = calculateCustomShipping();
-        setShipping(printifyShipping + customItemShipping);
-        setShippingCalculated(true);
-      });
+      const shippingObject = generateShippingObject();
+      let customItemShipping = calculateCustomShipping();
+      var printifyShipping = 0;
+
+      if (shippingObject.line_items.length) {
+        await getShipping(shippingObject).then((shippingData) => {
+          printifyShipping = shippingData.standard / 100;
+        });
+      }
+
+      setShipping(printifyShipping + customItemShipping);
+      setShippingCalculated(true);
     }
   };
 
