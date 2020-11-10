@@ -1,16 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
-import ImageForm from "./ImageForm";
+import { useSelector } from "react-redux";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
-import { uploadItem } from "../../actions/items";
+import styled from "styled-components";
+
+import ImageForm from "./ImageForm";
+import {
+  getItemById,
+  getItems,
+  updateItemById,
+  uploadItem,
+} from "../../actions/items";
+import ItemPreview from "../ItemPage/ItemPreview";
+import ButtonStyles from "../styled/ButtonStyles";
+import { getPrintifyItemById } from "../../actions/printifyItems";
+import PrintifyDropdown from "./PrintifyDropdown";
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 2%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  @media (max-width: 1600px) {
+    flex-direction: column;
+  }
+`;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+`;
+
+const FormWrapper = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding-left: 10%;
+`;
+
+const ItemPreviewWrapper = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+
+  @media (max-width: 1600px) {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
@@ -36,26 +80,7 @@ const Error = styled.label`
 `;
 
 const Button = styled.button`
-  font-family: Righteous, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  padding: 10px 18px;
-  display: inline-block;
-  width: auto;
-  text-decoration: none;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  padding: 8px 15px;
-  background-color: #557b97;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: normal;
-  font-size: 14px;
-  margin: 5px;
+  ${ButtonStyles}
 `;
 
 const Label = styled.label`
@@ -95,30 +120,40 @@ const FeatureItemOption = styled.span`
   color: #3d4246;
 `;
 
-const NewItemForm = () => {
+const TopOptionsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NewItemForm = (props) => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
-  const [newItem, setNewItem] = useState({
-    name: "",
-    price: "",
-    colors: "",
-    sizes: "",
-    description: "",
-    tags: "",
-    featured: false,
-    thumbnailImage: null,
-    images: [
-      {
-        id: 0,
-        color: "None",
-        imageLink: "",
-      },
-    ],
-  });
+  const [isPrintifyItem, setIsPrintifyItem] = useState(
+    props.item.isPrintifyItem
+  );
+  const [newItem, setNewItem] = useState(props.item);
   const [hasErrors, setHasErrors] = useState(false);
 
+  useEffect(() => {
+    if (props.edit) {
+      console.log(newItem);
+      getItemById(props.item.id)
+        .then((fetchedItem) => {
+          console.log(props.item);
+          setNewItem(fetchedItem);
+          setHasErrors(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setHasErrors(true);
+        });
+    }
+  }, []);
+
   const getArrayOfColours = () => {
-    const arrOfColours = newItem.colors.split("/");
+    const arrOfColours = newItem.colors;
     var resultArr = ["None"];
     arrOfColours.forEach((color) => {
       resultArr.push(color);
@@ -133,22 +168,21 @@ const NewItemForm = () => {
       newItem.price === "" ||
       newItem.colors === "" ||
       newItem.sizes === "" ||
-      newItem.description === ""
+      newItem.description === "" ||
+      newItem.images.length === 0 ||
+      (newItem.isPrintifyItem && newItem.printifyID.length === 0)
     ) {
       setHasErrors(true);
       return true;
     }
 
     // Check image inputs
-    let result = false;
-    newItem.images.forEach((image) => {
-      if (image.file === null || image.imageName === "") {
-        console.log("IN");
-        setHasErrors(true);
-        result = true;
-      }
-    });
-    return result;
+    if (newItem.images.filter((image) => image.color !== "None").length === 0) {
+      setHasErrors(true);
+      return true;
+    }
+
+    return false;
   };
 
   const handleFormSubmit = (e) => {
@@ -156,12 +190,27 @@ const NewItemForm = () => {
     let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
-      tags: newItem.tags.split("/"),
+      tags: newItem.tags,
     };
-    console.log("handleFormSubmit -> tempNewItem", tempNewItem);
+    console.log("newItem", tempNewItem);
     if (!checkForErrors()) {
       try {
-        uploadItem(user, tempNewItem);
+        if (props.edit) {
+          console.log(tempNewItem);
+          updateItemById(user, tempNewItem);
+        } else {
+          getItems().then((fetchedItems) => {
+            tempNewItem = {
+              ...tempNewItem,
+              id:
+                Math.max.apply(
+                  Math,
+                  fetchedItems.map((item) => item.id)
+                ) + 1,
+            };
+            uploadItem(user, tempNewItem);
+          });
+        }
         history.push("/catalog");
       } catch (error) {
         setHasErrors(true);
@@ -188,14 +237,14 @@ const NewItemForm = () => {
   const handleListofColoursChange = (evt) => {
     setNewItem({
       ...newItem,
-      colors: evt.target.value,
+      colors: evt.target.value.split("/"),
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setNewItem({
       ...newItem,
-      sizes: evt.target.value,
+      sizes: evt.target.value.split("/"),
     });
   };
 
@@ -209,8 +258,24 @@ const NewItemForm = () => {
   const handleTagsChange = (evt) => {
     setNewItem({
       ...newItem,
-      tags: evt.target.value,
+      tags: evt.target.value.split("/"),
     });
+  };
+
+  const handlePrintifyIDChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      printifyID: evt.target.value,
+    });
+    getPrintifyItemById(user, evt.target.value)
+      .then((fetchedPrintifyItem) => {
+        setNewItem(fetchedPrintifyItem);
+        setHasErrors(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setHasErrors(true);
+      });
   };
 
   const handleFeatureClick = () => {
@@ -220,85 +285,164 @@ const NewItemForm = () => {
     });
   };
 
+  const handleOptionClick = (isPrintifyOption) => {
+    setIsPrintifyItem(isPrintifyOption);
+    setNewItem(props.item);
+  };
+
+  const handleSyncWithPrintifyClick = () => {
+    getPrintifyItemById(user, newItem.printifyID).then(
+      (fetchedPrintifyItem) => {
+        setNewItem({
+          ...fetchedPrintifyItem,
+          id: newItem.id,
+        });
+      }
+    );
+  };
+
+  const handleShippingChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      shipping: evt.target.value,
+    });
+  };
+
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <Label>Item Name</Label>
-      <Input
-        hasError={false}
-        label="Name"
-        onChange={handleNameChange}
-        value={newItem.name}
-        placeholder="Bean"
-        autocomplete="item-name"
-      />
-      <Label>Item Price</Label>
-      <Input
-        hasError={false}
-        label="Price"
-        onChange={handlePriceChange}
-        value={newItem.price}
-        placeholder="xx.xx"
-        autocomplete="item-price"
-      />
-      <Label>List of Colours (seperated by /)</Label>
-      <Input
-        hasError={false}
-        label="List of colours"
-        onChange={handleListofColoursChange}
-        value={newItem.colors}
-        placeholder="Red/Green/Blue"
-        autocomplete="list-of-colours"
-      />
-      <Label>List of Sizes (seperated by /)</Label>
-      <Input
-        hasError={false}
-        label="List of sizes"
-        onChange={handleListofSizesChange}
-        value={newItem.sizes}
-        placeholder="S/M/L"
-        autocomplete="list-of-sizes"
-      />
-      <Label>Description</Label>
-      <Input
-        hasError={false}
-        label="description"
-        onChange={handleDescriptionChange}
-        value={newItem.description}
-        placeholder="The item is ..."
-        autocomplete="description"
-      />
-      <Label>Tags (case sensitive)</Label>
-      <Input
-        hasError={false}
-        label="tags"
-        onChange={handleTagsChange}
-        value={newItem.tags}
-        placeholder="Accessories/Embroidery/Hats"
-        autocomplete="tags"
-      />
-      <FeatureItemOption onClick={handleFeatureClick}>
-        <Icon>
-          {newItem.featured ? (
-            <FaCheckCircle size={24} />
-          ) : (
-            <FaRegCircle size={24} />
+    <Wrapper>
+      <FormWrapper>
+        {!props.edit && (
+          <TopOptionsWrapper>
+            <Button onClick={() => handleOptionClick(false)}>
+              Custom Item
+            </Button>
+            <Button onClick={() => handleOptionClick(true)}>
+              Printify Item
+            </Button>
+          </TopOptionsWrapper>
+        )}
+
+        {props.edit && newItem.isPrintifyItem && (
+          <Button onClick={handleSyncWithPrintifyClick}>
+            Sync with Printify Catalog
+          </Button>
+        )}
+
+        <Form onSubmit={handleFormSubmit}>
+          {isPrintifyItem && <Label>Select an item from Printify:</Label>}
+          {isPrintifyItem && (
+            <PrintifyDropdown newItem={newItem} setNewItem={setNewItem} />
           )}
-        </Icon>
-        Featured Item
-      </FeatureItemOption>
-      <Label>Add images here:</Label>
-      <Label>
-        (Note: First Picture will be thumbnail and DON'T put spaces in
-        filenames)
-      </Label>
-      <ImageForm
-        getArrayOfColours={getArrayOfColours}
-        newItem={newItem}
-        setNewItem={setNewItem}
-      />
-      {hasErrors && <Error>Please enter valid details!</Error>}
-      <Button>CREATE ITEM</Button>
-    </Form>
+
+          {isPrintifyItem && <Label>Printify ID</Label>}
+          {isPrintifyItem && (
+            <Input
+              hasError={false}
+              label="printifyID"
+              onChange={handlePrintifyIDChange}
+              value={newItem.printifyID}
+              placeholder="PrintifyID"
+              autocomplete="id"
+            />
+          )}
+
+          <Label>Item Name</Label>
+          <Input
+            hasError={false}
+            label="Name"
+            onChange={handleNameChange}
+            value={newItem.name}
+            placeholder="Bean"
+            autocomplete="item-name"
+          />
+          <Label>Item Price</Label>
+          <Input
+            hasError={false}
+            label="Price"
+            onChange={handlePriceChange}
+            value={newItem.price}
+            placeholder="xx.xx"
+            autocomplete="item-price"
+          />
+          <Label>List of Colours (seperated by /)</Label>
+          <Input
+            hasError={false}
+            label="List of colours"
+            onChange={handleListofColoursChange}
+            value={newItem.colors.join("/")}
+            placeholder="Red/Green/Blue"
+            autocomplete="list-of-colours"
+          />
+          <Label>List of Sizes (seperated by /)</Label>
+          <Input
+            hasError={false}
+            label="List of sizes"
+            onChange={handleListofSizesChange}
+            value={newItem.sizes.join("/")}
+            placeholder="S/M/L"
+            autocomplete="list-of-sizes"
+          />
+          <Label>Description</Label>
+          <Input
+            hasError={false}
+            label="description"
+            onChange={handleDescriptionChange}
+            value={newItem.description}
+            placeholder="The item is ..."
+            autocomplete="description"
+          />
+          <Label>Tags (case sensitive)</Label>
+          <Input
+            hasError={false}
+            label="tags"
+            onChange={handleTagsChange}
+            value={newItem.tags.join("/")}
+            placeholder="Accessories/Embroidery/Hats"
+            autocomplete="tags"
+          />
+
+          {!newItem.isPrintifyItem && (
+            <Label>Shipping: (increases linearly with quantity)</Label>
+          )}
+          {!newItem.isPrintifyItem && (
+            <Input
+              hasError={false}
+              label="shipping"
+              onChange={handleShippingChange}
+              value={newItem.shipping}
+              placeholder="2.00"
+              autocomplete="shipping"
+            />
+          )}
+          <FeatureItemOption onClick={handleFeatureClick}>
+            <Icon>
+              {newItem.featured ? (
+                <FaCheckCircle size={24} />
+              ) : (
+                <FaRegCircle size={24} />
+              )}
+            </Icon>
+            Featured Item
+          </FeatureItemOption>
+          <Label>Add images here:</Label>
+          <Label>
+            (Note: First Picture will be thumbnail and DON'T put spaces in
+            filenames)
+          </Label>
+          <ImageForm
+            getArrayOfColours={getArrayOfColours}
+            newItem={newItem}
+            setNewItem={setNewItem}
+          />
+          {hasErrors && <Error>Please enter valid details!</Error>}
+          <Button>{props.edit ? "UPDATE ITEM" : "CREATE ITEM"}</Button>
+        </Form>
+      </FormWrapper>
+
+      <ItemPreviewWrapper>
+        <ItemPreview item={newItem} />
+      </ItemPreviewWrapper>
+    </Wrapper>
   );
 };
 

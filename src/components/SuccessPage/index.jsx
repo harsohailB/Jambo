@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import Title from "../styled/Title";
 import { Helmet } from "react-helmet";
+
+import Title from "../styled/Title";
 import { CLEAR_CART } from "../../actions/types";
 import successSVG from "../../assets/svgs/success.svg";
 
@@ -31,9 +31,7 @@ const Image = styled.img`
 `;
 
 const SuccessPage = () => {
-  const shoppingCartItems = useSelector((state) => state.shoppingCart);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     dispatch({

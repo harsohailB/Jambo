@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
-import Form from "../styled/Form";
-import Input from "../styled/Input";
-import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { sortCatalog } from "./sortingAlgorithms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,25 +29,27 @@ const Title = styled.h1`
 `;
 
 const ItemsWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  margin-left: 150px;
-  margin-right: 150px;
-  flex-grow: 5;
-  max-width: 1450px;
+  display: grid;
+  grid: auto / repeat(5, 19.2%);
+  gap: 1%;
+  justify-items: center;
+  width: 80%;
+  max-width: 1500px;
 
-  &:after {
-    content: "";
-    flex-basis: 250px;
+  @media (max-width: 1500px) {
+    grid: auto / repeat(4, 25%);
   }
 
-  @media (max-width: 768px) {
-    width: 80%;
-    &:after {
-      content: "";
-      flex-basis: 150px;
-    }
+  @media (max-width: 1300px) {
+    grid: auto / repeat(3, 33%);
+  }
+
+  @media (max-width: 1100px) {
+    grid: auto / repeat(3, 33%);
+  }
+
+  @media (max-width: 900px) {
+    grid: auto / repeat(2, 50%);
   }
 `;
 
@@ -58,12 +60,11 @@ const CatalogPage = () => {
 
   useEffect(() => {
     getItems().then((fetchedItems) => {
-      console.log("CatalogPage -> fetchedItems", fetchedItems);
       if (fetchedItems.length > 1000000) {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
-        setDisplayedItems(fetchedItems);
+        setDisplayedItems(sortCatalog(fetchedItems, "Alphabetically, A-Z"));
       }
     });
   }, [location]);
@@ -78,15 +79,7 @@ const CatalogPage = () => {
       filteredItems = displayedItems;
     }
 
-    return filteredItems.map((item) => (
-      <Item
-        key={item.id}
-        id={item.id}
-        imageLink={item.thumbnailImage.imageLink}
-        name={item.name}
-        price={item.price}
-      ></Item>
-    ));
+    return filteredItems.map((item) => <Item item={item}></Item>);
   };
 
   return (
@@ -110,6 +103,7 @@ const CatalogPage = () => {
         }
         setDisplayedItems={setDisplayedItems}
       />
+
       <ItemsWrapper>{renderItems()}</ItemsWrapper>
     </Wrapper>
   );

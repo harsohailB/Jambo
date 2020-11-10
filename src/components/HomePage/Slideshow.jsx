@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaCircle } from "react-icons/fa";
-import { AnimateOnChange, animations } from "react-animation";
+import { AnimateOnChange } from "react-animation";
 
-import elephantTree from "../../assets/homepageSlideshow/elephantTree.jpg";
-import cheetah from "../../assets/homepageSlideshow/cheetah.jpg";
-import deers from "../../assets/homepageSlideshow/deers.jpg";
+import elephantTree from "../../assets/homePage/elephantTree.jpg";
+import cheetah from "../../assets/homePage/cheetah.jpg";
+import deers from "../../assets/homePage/deers.jpg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,13 +67,8 @@ const Dot = styled.div`
 const Slideshow = () => {
   const slideshowImages = [elephantTree, cheetah, deers];
   const slideshowTitles = ["ASANTE SANA", "THANK YOU", "ILI KUENDELEA"];
-  const [index, setIndex] = useState(0);
   const [slideshowImage, setSlideshowImage] = useState(slideshowImages[0]);
   const [slideshowTitle, setSlideshowTitle] = useState(slideshowTitles[0]);
-
-  const handleSlideShowTitle = (index) => {
-    setSlideshowTitle(slideshowTitles[index]);
-  };
 
   const handleSlideshowChange = (index) => {
     setTimeout(() => setSlideshowImage(slideshowImages[index]), 100);
@@ -90,6 +85,7 @@ const Slideshow = () => {
         >
           <Title>{slideshowTitle}</Title>
         </AnimateOnChange>
+
         <DotsWrapper>
           <Dot onClick={() => handleSlideshowChange(0)}>
             <FaCircle />
@@ -102,6 +98,7 @@ const Slideshow = () => {
           </Dot>
         </DotsWrapper>
       </ContentWrapper>
+
       <AnimateOnChange animationIn="fadeIn" animationOut="fadeOut">
         <Image src={slideshowImage}></Image>
       </AnimateOnChange>

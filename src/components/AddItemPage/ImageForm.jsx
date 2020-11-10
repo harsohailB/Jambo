@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown";
-import { FaPlusCircle, FaTrash } from "react-icons/fa";
+import { FaPlusCircle, FaTrash, FaImage } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Tooltip } from "@material-ui/core";
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,7 +60,6 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
   const [id, setId] = useState(0);
   const placeHolderImageLink =
     "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
-  const [imageURL, setImageURL] = useState("");
 
   const renderColourOptions = () => {
     return getArrayOfColours().map((color) => <option>{color}</option>);
@@ -69,59 +69,98 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     newItem.images.push({
       id: id,
       color: "None",
-      imageLink: "",
+      imageLink: placeHolderImageLink,
     });
     setId(id + 1);
   };
 
   const handleDeleteImageInput = (image) => {
-    let tempImages = [];
-    newItem.images.forEach((existingImage) => {
-      if (existingImage.id !== image.id) {
-        tempImages.push(existingImage);
-      }
-    });
     setNewItem({
       ...newItem,
-      images: tempImages,
+      images: newItem.images.filter(
+        (existingImage) => existingImage.imageLink !== image.imageLink
+      ),
+      thumbnailImage: { imageLink: placeHolderImageLink },
     });
   };
 
   const handleDropdownChange = (evt, image) => {
-    image = {
-      ...image,
-      color: evt.target.value,
-    };
-    newItem.images.pop();
-    newItem.images.push(image);
+    setNewItem({
+      ...newItem,
+      images: newItem.images.map((img) => {
+        if (image.imageLink === img.imageLink) {
+          img = {
+            ...img,
+            color: evt.target.value,
+          };
+        }
+
+        return img;
+      }),
+    });
   };
 
   const handleURLChange = (evt, image) => {
-    setImageURL(evt.target.value);
-    image = {
-      ...image,
-      imageLink: evt.target.value,
-    };
-    newItem.images.pop();
-    newItem.images.push(image);
+    const newImageLink =
+      evt.target.value.length === 0 ? placeHolderImageLink : evt.target.value;
+
+    setNewItem({
+      ...newItem,
+      thumbnailImage: {
+        imageLink: newImageLink,
+      },
+      images: newItem.images.map((img) => {
+        if (image.id === img.id) {
+          img = {
+            ...img,
+            imageLink: newImageLink,
+          };
+        }
+        return img;
+      }),
+    });
+  };
+
+  const handleMakeThumbnailClick = (image) => {
+    let newThumbnail = newItem.images.find(
+      (existingImage) => existingImage.imageLink === image.imageLink
+    );
+    let newItemImagesArray = newItem.images.filter(
+      (existingImage) => existingImage.imageLink !== image.imageLink
+    );
+
+    newItemImagesArray.unshift(newThumbnail);
+
+    setNewItem({
+      ...newItem,
+      thumbnailImage: newThumbnail,
+      images: newItemImagesArray,
+    });
   };
 
   const renderImageInputs = () => {
     return newItem.images.map((image) => (
       <UploadWrapper id={image.id}>
-        <PreviewImage
-          src={image.imageLink == "" ? placeHolderImageLink : image.imageLink}
-        />
+        <PreviewImage src={image.imageLink} onError={placeHolderImageLink} />
         <Input
           placeholder="Image URL"
+          value={image.imageLink}
           onChange={(evt) => handleURLChange(evt, image)}
         ></Input>
-        <Dropdown onChange={(evt) => handleDropdownChange(evt, image)}>
+        <Dropdown
+          value={image.color}
+          onChange={(evt) => handleDropdownChange(evt, image)}
+        >
           {renderColourOptions()}
         </Dropdown>
         <Icon onClick={() => handleDeleteImageInput(image)}>
           <FaTrash size={18} />
         </Icon>
+        <Tooltip title="Make Thumbnail" placement="right">
+          <Icon onClick={() => handleMakeThumbnailClick(image)}>
+            <FaImage size={18} />
+          </Icon>
+        </Tooltip>
       </UploadWrapper>
     ));
   };

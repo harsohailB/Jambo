@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Title from "../styled/Title";
 import { Helmet } from "react-helmet";
 
-import contactImage from "../../assets/contact-page-image.webp";
+import contactImage from "../../assets/contactPage/contact-page-image.webp";
 
 const Wrapper = styled.div`
   display: flex;

@@ -4,18 +4,18 @@
 
 ## Description
 
-This project is to migrate Jambo Apparel's (NPO) e-commerce store from the dependency of Shopify to its own proprietary website supported by open source libraries. By doing this, the NPO can save money that is spent on deployment and direct it towards growth and donations for its objective.
+Jambo Apparel's (NPO) proprietary e-commerce store to sell merchandise without incurring the costs of major platform providers such as Shopify. By having this proprietary online store, the NPO was able save money that is spent on deployment and direct it towards growth and donations for its objective.
 
 ## Technologies Used
 
-<img src="https://www.pngkit.com/png/full/222-2224803_react-redux-react-js-and-redux.png" width="200">\
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/1280px-Stripe_Logo%2C_revised_2016.svg.png" width="200">
+<img src="./src/assets/Jambo Architecture Diagram.png" width="700">
 
 ## Table of Contents
 
-- [Technologies Used](#Technologies-Used)
 - [Description](#Description)
+- [Technologies Used](#Technologies-Used)
 - [Installation](#Installation)
+- [Deployment](#Deployment)
 - [Usage](#Usage)
 - [Contributing](#Contributing)
 - [Credits](#Credits)
@@ -30,20 +30,40 @@ In the project directory, do the following to run the project:
 npm i
 ```
 
-2. Start the front-end react website and the backend server
+2. Start the front-end ReactJS website and the ExpressJS server (Port 9000)
 
 ```
-npm start
+npm run dev
 ```
+
+## Deployment
+
+Front-end deployment is automatic using Vercel
+
+- Pushing to `master` deploys the web app onto the Vercel domain
+
+To deploy the ExpressJS server onto Heroku, do the following:
+
+- Connect to Heroku instance:
+
+`heroku git:remote -a {heroku instance name}`
+
+- Push server code to Heroku git:
+
+`git subtree push --prefix server heroku master`
 
 ## Usage
 
-TBD
+Just browse the site lol!
 
 ## Contributing
 
-TBD
+This is not an open-source project but if you find any issues or bugs with the web app, please let one of the developers know!
 
 ## Credits
 
-TBD
+[Harsohail Brar](https://github.com/harsohailB)
+
+[Ryan Holt](https://github.com/ryan-holt)
+
+[Gary Wu](https://github.com/garywu2)

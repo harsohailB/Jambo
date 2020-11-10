@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 import Dropdown from "../styled/Dropdown";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import Button from "../styled/Button";
+
 import { sortCatalog } from "./sortingAlgorithms";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 80%;
   max-width: 1500px;
-  width: 75%;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -27,7 +29,6 @@ const FilterWrapper = styled.div`
 const Filter = styled.div`
   display: flex;
 `;
-
 
 const FilterText = styled.label`
   font-size: 14px;
@@ -50,37 +51,7 @@ const InventoryCount = styled.p`
   white-space: nowrap;
 `;
 
-const Button = styled(Link)`
-    font-family: Righteous,sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    padding: 10px 18px;
-    display: inline-block;
-    width: auto;
-    text-decoration: none;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    padding: 8px 15px;
-    background-color: #557b97;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    white-space: normal;
-    font-size: 14px;
-    margin: 5px;
-    padding: 15px;
-`;
-
-const FilterBar = ({
-  items,
-  displayedItems,
-  setDisplayedItems,
-  productCount,
-}) => {
-  const user = useSelector((state) => state.user);
+const FilterBar = ({ items, displayedItems, setDisplayedItems }) => {
   const sortingOptions = [
     "Alphabetically, A-Z",
     "Alphabetically, Z-A",
@@ -88,6 +59,7 @@ const FilterBar = ({
     "Price, low to high",
     "Price, high to low",
   ];
+
   const filteringOptions = [
     "All Products",
     "Accessories",
@@ -117,24 +89,21 @@ const FilterBar = ({
     "Unisex",
     "Women's Clothing",
   ];
+  const user = useSelector((state) => state.user);
   const [selectedSortingOption, setSelectedSortingOption] = useState(
     sortingOptions[0]
   );
-  const [selectedFiteringOption, setSelectedFilteringOption] = useState(
+  const [selectedFilteringOption, setSelectedFilteringOption] = useState(
     filteringOptions[0]
   );
 
-  const renderSortingOptions = () => {
-    return sortingOptions.map((option) => <option>{option}</option>);
-  };
-
-  const renderFilteringOptions = () => {
-    return filteringOptions.map((option) => <option>{option}</option>);
+  const renderOptions = (optionsArray) => {
+    return optionsArray.map((option) => <option>{option}</option>);
   };
 
   const updateSelectedSortingOption = (evt) => {
     setSelectedSortingOption(evt.target.value);
-    updateCatalog(items, evt.target.value, selectedFiteringOption);
+    updateCatalog(items, evt.target.value, selectedFilteringOption);
   };
 
   const updateSelectedFilteringOption = (evt) => {
@@ -146,23 +115,13 @@ const FilterBar = ({
     // SORT
     let sortedItems = sortCatalog(items, sortingOption);
     // FILTER
-    let filteredItems = [];
     if (filteringOption !== "All Products") {
-      sortedItems.forEach((item) => {
-        if (item.tags.includes(filteringOption)) {
-          filteredItems.push(item);
-        }
-      });
+      setDisplayedItems(
+        sortedItems.filter((item) => item.tags.includes(filteringOption))
+      );
     } else {
-      filteredItems = sortedItems;
+      setDisplayedItems([...sortedItems]);
     }
-
-    let tempItems = [];
-    filteredItems.forEach((item) => {
-      tempItems.push(item);
-    });
-    // UPDATE
-    setDisplayedItems(tempItems);
   };
 
   return (
@@ -171,21 +130,23 @@ const FilterBar = ({
         <Filter>
           <FilterText>FILTER BY</FilterText>
           <Dropdown
-            value={selectedFiteringOption}
+            value={selectedFilteringOption}
             onChange={updateSelectedFilteringOption}
           >
-            {renderFilteringOptions()}
+            {renderOptions(filteringOptions)}
           </Dropdown>
         </Filter>
+
         <Filter>
           <FilterText>SORT BY</FilterText>
           <Dropdown
             value={selectedSortingOption}
             onChange={updateSelectedSortingOption}
           >
-            {renderSortingOptions()}
+            {renderOptions(sortingOptions)}
           </Dropdown>
         </Filter>
+
         {user && <Button to="/add-item">ADD ITEM</Button>}
       </FilterWrapper>
       <InventoryCount>{displayedItems.length} products</InventoryCount>

@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config";
 
 export const getItems = async () => {
-  let response = await axios.get(`${config.endpoint}/items`);
+  let response = await axios.get(`${config.endpoint}/fauna/items`);
 
   if (response.status !== 200) {
     throw "getItems failed with error code " + response.status;
@@ -13,7 +13,7 @@ export const getItems = async () => {
 
 export const getItemById = async (id) => {
   try {
-    var response = await axios.get(`${config.endpoint}/items/${id}`);
+    var response = await axios.get(`${config.endpoint}/fauna/items/${id}`);
   } catch (error) {
     console.log(error);
     response = { status: 404 };
@@ -28,7 +28,7 @@ export const getItemById = async (id) => {
 
 export const uploadItem = async (user, newItem) => {
   const response = await axios.post(
-    `${config.endpoint}/items?username=` +
+    `${config.endpoint}/fauna/items?username=` +
       user.username +
       "&password=" +
       user.password,
@@ -47,58 +47,11 @@ export const uploadItem = async (user, newItem) => {
   return response.data;
 };
 
-const uploadImage = async (user, image, folderName) => {
-  const data = new FormData();
-  data.append("file", image.file);
-
-  const response = await axios.post(
-    `${config.endpoint}/upload?username=` +
-      user.username +
-      "&password=" +
-      user.password +
-      "&folderName=" +
-      folderName,
-    data
-  );
-
-  if (response.status !== 200) {
-    throw (
-      "uploadImage failed with error code " +
-      response.status +
-      ": " +
-      response.data.message
-    );
-  }
-
-  return response.data;
-};
-
-const createFolderForNewItem = async (user, folderName) => {
-  const response = await axios.post(
-    `${config.endpoint}/create-folder?username=` +
-      user.username +
-      "&password=" +
-      user.password,
-    { folderName }
-  );
-
-  if (response.status !== 200) {
-    throw (
-      "createFolderForNewItem failed with error code " +
-      response.status +
-      ": " +
-      response.data.message
-    );
-  }
-
-  return response.data;
-};
-
 export const deleteItemById = async (user, id) => {
   const params = "?username=" + user.username + "&password=" + user.password;
 
   const response = await axios.delete(
-    `${config.endpoint}/items/${id + params}`
+    `${config.endpoint}/fauna/items/${id + params}`
   );
 
   if (response.status !== 200) {
@@ -111,7 +64,7 @@ export const deleteItemById = async (user, id) => {
 export const updateItemById = async (user, updatedItem) => {
   const params = "?username=" + user.username + "&password=" + user.password;
   const response = await axios.put(
-    `${config.endpoint}/items/${updatedItem.id + params}`,
+    `${config.endpoint}/fauna/items/${updatedItem.id + params}`,
     updatedItem
   );
 

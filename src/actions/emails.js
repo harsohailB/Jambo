@@ -27,7 +27,7 @@ export const deleteEmail = async (user, email) => {
   const params = "?username=" + user.username + "&password=" + user.password;
 
   const response = await axios.delete(
-    `${config.endpoint}/emails/${email.id}/${params}`
+    `${config.endpoint}/emails/${email}/${params}`
   );
 
   if (response.status !== 200) {

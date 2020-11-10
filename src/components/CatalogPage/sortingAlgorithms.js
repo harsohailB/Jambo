@@ -10,8 +10,9 @@ export const sortCatalog = (items, sortingOption) => {
       return sortPriceLowToHigh(items);
     case "Price, high to low":
       return sortPriceLowToHigh(items).reverse();
+    default:
+      return items;
   }
-  return items;
 };
 
 const sortAlphabetically = (items) => {

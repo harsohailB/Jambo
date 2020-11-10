@@ -4,8 +4,10 @@ import {
   FETCH_SC_ITEMS,
   QUANTITY_CHANGE,
   CLEAR_CART,
+  PRUNE_CART,
 } from "../actions/types";
 import ls from "local-storage";
+import { routerActions } from "connected-react-router";
 
 const isSameItem = (firstItem, secondItem) => {
   return (
@@ -66,6 +68,11 @@ const shoppingCartReducer = (state = [], action) => {
       break;
     case CLEAR_CART:
       newState = [];
+      break;
+    case PRUNE_CART:
+      newState = state.filter((item) => {
+        return action.items.some((actionItem) => actionItem.id === item.id);
+      });
       break;
     default:
       return state;
