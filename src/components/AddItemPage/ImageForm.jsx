@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../styled/Dropdown";
-import { FaPlusCircle, FaTrash, FaImage } from "react-icons/fa";
+import {
+  FaPlusCircle,
+  FaTrash,
+  FaImage,
+  FaArrowUp,
+  FaArrowDown,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Tooltip } from "@material-ui/core";
 
@@ -41,12 +47,13 @@ const Icon = styled(Link)`
   margin: 10px;
   color: #3d4246;
   cursor: pointer;
+  color: #cfcfcf;
+  transition: all 0.5s ease;
 
   & :hover {
+    transition: all 0.5s ease;
+    cursor: pointer;
     color: #131516;
-  }
-  & > svg {
-    transition: color 0.1s linear;
   }
 `;
 
@@ -121,20 +128,26 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
     });
   };
 
-  const handleMakeThumbnailClick = (image) => {
-    let newThumbnail = newItem.images.find(
-      (existingImage) => existingImage.imageLink === image.imageLink
-    );
-    let newItemImagesArray = newItem.images.filter(
-      (existingImage) => existingImage.imageLink !== image.imageLink
-    );
+  const handleMoveImage = (image, inUpDirection) => {
+    const currIndex = newItem.images.indexOf(image);
+    if (inUpDirection && currIndex === 0) return;
+    if (!inUpDirection && currIndex === newItem.images.length - 1) return;
 
-    newItemImagesArray.unshift(newThumbnail);
+    let imgArr = newItem.images;
+    let tempImg;
+    if (inUpDirection) {
+      tempImg = imgArr[currIndex - 1];
+      imgArr[currIndex - 1] = image;
+      imgArr[currIndex] = tempImg;
+    } else {
+      tempImg = imgArr[currIndex + 1];
+      imgArr[currIndex + 1] = image;
+      imgArr[currIndex] = tempImg;
+    }
 
     setNewItem({
       ...newItem,
-      thumbnailImage: newThumbnail,
-      images: newItemImagesArray,
+      images: imgArr,
     });
   };
 
@@ -156,11 +169,12 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
         <Icon onClick={() => handleDeleteImageInput(image)}>
           <FaTrash size={18} />
         </Icon>
-        <Tooltip title="Make Thumbnail" placement="right">
-          <Icon onClick={() => handleMakeThumbnailClick(image)}>
-            <FaImage size={18} />
-          </Icon>
-        </Tooltip>
+        <Icon onClick={() => handleMoveImage(image, true)}>
+          <FaArrowUp size={18} />
+        </Icon>
+        <Icon onClick={() => handleMoveImage(image, false)}>
+          <FaArrowDown size={18} />
+        </Icon>
       </UploadWrapper>
     ));
   };
