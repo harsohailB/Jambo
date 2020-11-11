@@ -264,13 +264,10 @@ const ShoppingCartPage = () => {
     shoppingCartItems.forEach((item) => {
       if (item.eligibleCountries.length !== 0) {
         intersectingCountries = intersectingCountries.filter((country) => {
-          return item.eligibleCountries.some(
-            (eligibleCountry) => eligibleCountry === country.code
-          );
+          return item.eligibleCountries
+            .split("/")
+            .some((eligibleCountry) => eligibleCountry === country.code);
         });
-        console.log(item.name);
-        console.log(item.eligibleCountries);
-        console.log(item.eligibleCountries.length);
       }
     });
 

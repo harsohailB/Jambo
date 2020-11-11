@@ -15,6 +15,7 @@ import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
 import PrintifyDropdown from "./PrintifyDropdown";
+import Dropdown from "../styled/Dropdown";
 
 const Wrapper = styled.div`
   display: flex;
@@ -137,6 +138,21 @@ const TopOptionsWrapper = styled.div`
 `;
 
 const NewItemForm = (props) => {
+  const eligibleCountriesOptions = [
+    {
+      value: "",
+      label: "All Countries",
+    },
+    {
+      value: "CA",
+      label: "Canada Only",
+    },
+    {
+      value: "CA/US",
+      label: "Canada and US",
+    },
+  ];
+
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [isPrintifyItem, setIsPrintifyItem] = useState(
@@ -321,17 +337,10 @@ const NewItemForm = (props) => {
   };
 
   const handleEligibleCountriesChange = (evt) => {
-    if (evt.target.value.length === 0) {
-      setNewItem({
-        ...newItem,
-        eligibleCountries: [],
-      });
-    } else {
-      setNewItem({
-        ...newItem,
-        eligibleCountries: evt.target.value.split("/"),
-      });
-    }
+    setNewItem({
+      ...newItem,
+      eligibleCountries: evt.target.value,
+    });
   };
 
   const handleIncrementChange = (evt) => {
@@ -344,6 +353,12 @@ const NewItemForm = (props) => {
       ...newItem,
       increment: evt.target.value,
     });
+  };
+
+  const renderEligibleCountriesOptions = () => {
+    return eligibleCountriesOptions.map((option) => (
+      <option value={option.value}>{option.label}</option>
+    ));
   };
 
   return (
@@ -438,17 +453,13 @@ const NewItemForm = (props) => {
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
           />
-          <Label>
-            Only ship to these countries: (leave empty for no restrictions)
-          </Label>
-          <Input
-            hasError={false}
-            label="eligibleCountries"
+          <Label>Shipping Countries:</Label>
+          <Dropdown
+            value={newItem.eligibleCountries}
             onChange={handleEligibleCountriesChange}
-            value={newItem.eligibleCountries.join("/")}
-            placeholder="CA/US/IN"
-            autocomplete="eligibleCountries"
-          />
+          >
+            {renderEligibleCountriesOptions()}
+          </Dropdown>
 
           {!newItem.isPrintifyItem && (
             <RowWrapper style={{ width: "100%" }}>
