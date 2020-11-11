@@ -14,7 +14,7 @@ import Button from "../styled/Button";
 import ItemPreview from "./ItemPreview";
 
 import { getItems } from "../../actions/items";
-import { PRUNE_CART } from "../../actions/types";
+import { PRUNE_CART, UPDATE_CART_ITEMS_INFO } from "../../actions/types";
 import { countriesList } from "./countriesList";
 import { getShipping } from "../../actions/shipping";
 
@@ -139,8 +139,13 @@ const ShoppingCartPage = () => {
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
   useEffect(() => {
-    // Prunes items from cart that have been removed from store
     getItems().then((items) => {
+      // Update cart item info if any info has changed
+      dispatch({
+        type: UPDATE_CART_ITEMS_INFO,
+        items,
+      });
+      // Prunes items from cart that have been removed from store
       dispatch({
         type: PRUNE_CART,
         items,
@@ -204,14 +209,20 @@ const ShoppingCartPage = () => {
     return customItemShipping;
   };
 
-  const calculateShipping = () => {
+  const calculateShipping = async () => {
     if (countryCode !== "") {
-      getShipping(generateShippingObject()).then((shippingData) => {
-        const printifyShipping = shippingData.standard / 100;
-        const customItemShipping = calculateCustomShipping();
-        setShipping(printifyShipping + customItemShipping);
-        setShippingCalculated(true);
-      });
+      const shippingObject = generateShippingObject();
+      let customItemShipping = calculateCustomShipping();
+      var printifyShipping = 0;
+
+      if (shippingObject.line_items.length) {
+        await getShipping(shippingObject).then((shippingData) => {
+          printifyShipping = shippingData.standard / 100;
+        });
+      }
+
+      setShipping(printifyShipping + customItemShipping);
+      setShippingCalculated(true);
     }
   };
 
