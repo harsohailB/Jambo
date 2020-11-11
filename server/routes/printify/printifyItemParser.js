@@ -4,7 +4,7 @@ const getColorByVariant = (printifyItem, variantID) => {
     .title.split(" / ")
     .map((title) => title.trim())
     .filter((title) =>
-      getOptions(printifyItemParser, "color").some((color) => title === color)
+      getOptions(printifyItem, "color").some((color) => title === color)
     );
 };
 
