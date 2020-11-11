@@ -108,6 +108,7 @@ const shoppingCartReducer = (state = [], action) => {
             name: updatedItem.name,
             price: updatedItem.price,
             shipping: updatedItem.shipping,
+            increment: updatedItem.increment,
             colors: updatedItem.colors,
             sizes: updatedItem.sizes,
           };

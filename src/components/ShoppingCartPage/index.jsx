@@ -202,7 +202,9 @@ const ShoppingCartPage = () => {
 
     shoppingCartItems.forEach((item) => {
       if (!item.isPrintifyItem) {
-        customItemShipping += parseFloat(item.shipping * item.quantity);
+        customItemShipping += parseFloat(
+          item.shipping * Math.ceil(item.quantity / item.increment)
+        );
       }
     });
 
