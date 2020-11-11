@@ -320,6 +320,20 @@ const NewItemForm = (props) => {
     });
   };
 
+  const handleEligibleCountriesChange = (evt) => {
+    if (evt.target.value.length === 0) {
+      setNewItem({
+        ...newItem,
+        eligibleCountries: [],
+      });
+    } else {
+      setNewItem({
+        ...newItem,
+        eligibleCountries: evt.target.value.split("/"),
+      });
+    }
+  };
+
   const handleIncrementChange = (evt) => {
     if (evt.target.value < 1) {
       evt.target.value = 1;
@@ -423,6 +437,17 @@ const NewItemForm = (props) => {
             value={newItem.tags.join("/")}
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
+          />
+          <Label>
+            Only ship to these countries: (leave empty for no restrictions)
+          </Label>
+          <Input
+            hasError={false}
+            label="eligibleCountries"
+            onChange={handleEligibleCountriesChange}
+            value={newItem.eligibleCountries.join("/")}
+            placeholder="CA/US/IN"
+            autocomplete="eligibleCountries"
           />
 
           {!newItem.isPrintifyItem && (

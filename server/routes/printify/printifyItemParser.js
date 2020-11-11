@@ -48,6 +48,9 @@ const printifyItemParser = (printifyItem) => {
       : getOptions(printifyItem, "surface"),
     sizes: getOptions(printifyItem, "size"),
     images: createImages(printifyItem),
+    shipping: "",
+    increment: 1,
+    eligibleCountries: [],
   };
 };
 
