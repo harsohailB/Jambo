@@ -57,6 +57,11 @@ const CatalogPage = () => {
   const location = useLocation();
   const [items, setItems] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
+  if (location.refresh) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  }
 
   useEffect(() => {
     getItems().then((fetchedItems) => {

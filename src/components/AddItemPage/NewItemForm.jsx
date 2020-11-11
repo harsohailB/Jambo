@@ -211,7 +211,10 @@ const NewItemForm = (props) => {
             uploadItem(user, tempNewItem);
           });
         }
-        history.push("/catalog");
+        history.push({
+          pathname: "/catalog",
+          refresh: true,
+        });
       } catch (error) {
         setHasErrors(true);
         console.log(error);
