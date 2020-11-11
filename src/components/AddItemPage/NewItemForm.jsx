@@ -79,12 +79,17 @@ const Input = styled.input`
   color: #3d4246;
   line-height: 1.5;
   padding: 10px 18px;
+
+  ${({ hasError }) =>
+    hasError &&
+    `
+    border: 2px solid red;
+  `}
 `;
 
-const Error = styled.label`
+const Error = styled.span`
   font-family: Righteous, sans-serif;
   font-style: normal;
-  font-weight: 400;
   color: red;
 `;
 
@@ -102,6 +107,15 @@ const Label = styled.label`
   line-height: 1.5;
   max-width: 50%;
   margin-left: 10px;
+
+  ${({ hasError }) =>
+    hasError &&
+    `
+    &: after{
+      content: "  -  Invalid";
+      color: red;
+    }
+  `}
 `;
 
 const Icon = styled.div`
@@ -143,7 +157,7 @@ const NewItemForm = (props) => {
     props.item.isPrintifyItem
   );
   const [newItem, setNewItem] = useState(props.item);
-  const [hasErrors, setHasErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     if (props.edit) {
@@ -152,11 +166,11 @@ const NewItemForm = (props) => {
         .then((fetchedItem) => {
           console.log(props.item);
           setNewItem(fetchedItem);
-          setHasErrors(false);
+          setErrors([]);
         })
         .catch((err) => {
           console.log(err);
-          setHasErrors(true);
+          setErrors(["useEffect"]);
         });
     }
   }, []);
@@ -171,27 +185,42 @@ const NewItemForm = (props) => {
   };
 
   const checkForErrors = () => {
+    let newErrors = [];
     // Check for text input fields
-    if (
-      newItem.name === "" ||
-      newItem.price === "" ||
-      newItem.colors === "" ||
-      newItem.sizes === "" ||
-      newItem.description === "" ||
-      newItem.images.length === 0 ||
-      (newItem.isPrintifyItem && newItem.printifyID.length === 0)
-    ) {
-      setHasErrors(true);
-      return true;
+    if (newItem.name.length === 0) {
+      newErrors.push("name");
+    }
+    if (newItem.price.length === 0) {
+      newErrors.push("price");
+    }
+    if (newItem.colors.length === 0) {
+      newErrors.push("colors");
+    }
+    if (newItem.sizes.length === 0) {
+      newErrors.push("sizes");
+    }
+    if (newItem.description.length === 0) {
+      newErrors.push("description");
+    }
+    if (newItem.images.length === 0) {
+      newErrors.push("images");
+    }
+    if (newItem.isPrintifyItem && newItem.printifyID.length === 0) {
+      newErrors.push("printifyID");
     }
 
     // Check image inputs
     if (newItem.images.filter((image) => image.color !== "None").length === 0) {
-      setHasErrors(true);
-      return true;
+      newErrors.push("imageColors");
     }
 
-    return false;
+    if (newErrors.length) {
+      setErrors(newErrors);
+    }
+
+    console.log(newErrors);
+
+    return newErrors;
   };
 
   const handleFormSubmit = (e) => {
@@ -202,7 +231,7 @@ const NewItemForm = (props) => {
       tags: newItem.tags,
     };
     console.log("newItem", tempNewItem);
-    if (!checkForErrors()) {
+    if (checkForErrors().length === 0) {
       try {
         if (props.edit) {
           console.log(tempNewItem);
@@ -225,7 +254,7 @@ const NewItemForm = (props) => {
           refresh: true,
         });
       } catch (error) {
-        setHasErrors(true);
+        setErrors(errors.concat(["form"]));
         console.log(error);
       }
     }
@@ -282,11 +311,11 @@ const NewItemForm = (props) => {
     getPrintifyItemById(user, evt.target.value)
       .then((fetchedPrintifyItem) => {
         setNewItem(fetchedPrintifyItem);
-        setHasErrors(false);
+        setErrors([]);
       })
       .catch((err) => {
         console.log(err);
-        setHasErrors(true);
+        setErrors(errors.concat(["printifyID"]));
       });
   };
 
@@ -370,45 +399,49 @@ const NewItemForm = (props) => {
             />
           )}
 
-          <Label>Item Name</Label>
+          <Label hasError={errors.includes("name")}>Item Name</Label>
           <Input
-            hasError={false}
             label="Name"
             onChange={handleNameChange}
             value={newItem.name}
             placeholder="Bean"
             autocomplete="item-name"
+            hasError={errors.includes("name")}
           />
-          <Label>Item Price</Label>
+          <Label hasError={errors.includes("price")}>Item Price</Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("price")}
             label="Price"
             onChange={handlePriceChange}
             value={newItem.price}
             placeholder="xx.xx"
             autocomplete="item-price"
           />
-          <Label>List of Colours (seperated by /)</Label>
+          <Label hasError={errors.includes("colors")}>
+            List of Colours (seperated by /)
+          </Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("colors")}
             label="List of colours"
             onChange={handleListofColoursChange}
             value={newItem.colors.join("/")}
             placeholder="Red/Green/Blue"
             autocomplete="list-of-colours"
           />
-          <Label>List of Sizes (seperated by /)</Label>
+          <Label hasError={errors.includes("sizes")}>
+            List of Sizes (seperated by /)
+          </Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("sizes")}
             label="List of sizes"
             onChange={handleListofSizesChange}
             value={newItem.sizes.join("/")}
             placeholder="S/M/L"
             autocomplete="list-of-sizes"
           />
-          <Label>Description</Label>
+          <Label hasError={errors.includes("description")}>Description</Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("description")}
             label="description"
             onChange={handleDescriptionChange}
             value={newItem.description}
@@ -466,17 +499,14 @@ const NewItemForm = (props) => {
             </Icon>
             Featured Item
           </FeatureItemOption>
-          <Label>Add images here:</Label>
-          <Label>
-            (Note: First Picture will be thumbnail and DON'T put spaces in
-            filenames)
-          </Label>
+          <Label hasError={errors.includes("images")}>Add images here:</Label>
           <ImageForm
             getArrayOfColours={getArrayOfColours}
             newItem={newItem}
             setNewItem={setNewItem}
+            hasError={errors.includes("imageColors")}
           />
-          {hasErrors && <Error>Please enter valid details!</Error>}
+          {errors.length !== 0 && <Error>Please enter valid details!</Error>}
           <Button>{props.edit ? "UPDATE ITEM" : "CREATE ITEM"}</Button>
         </Form>
       </FormWrapper>

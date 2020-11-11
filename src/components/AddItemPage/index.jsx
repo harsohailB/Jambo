@@ -23,7 +23,7 @@ const AddItemPage = () => {
     sizes: [],
     description: "",
     tags: [],
-    shipping: "",
+    shipping: "1",
     increment: 1,
     featured: false,
     thumbnailImage: {
