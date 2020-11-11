@@ -34,6 +34,7 @@ const PreviewWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 45%;
+  width: 45%;
   margin-left: 200px;
   @media (max-width: 768px) {
     max-width: 100%;
@@ -48,19 +49,10 @@ const MainImageWrapper = styled.div`
   justify-content: center;
   overflow: hidden;
   margin-bottom: 25px;
+  min-height: 500px;
   width: 60%;
-`;
-
-const MainImage = styled.img`
-  width: 45%;
-  height: 100%;
-  transition: all 0.3s ease;
-  &:hover {
-    transform: scale(3);
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  height: 60%;
+  object-fit: cover;
 `;
 
 const SmallImageWrapper = styled.div`
@@ -74,7 +66,8 @@ const SmallImageWrapper = styled.div`
 
 const SmallImage = styled.img`
   width: 110px;
-  height: 100%;
+  height: 110px;
+  object-fit: cover;
   cursor: pointer;
   margin: 10px;
   padding: 2px;
