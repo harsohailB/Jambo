@@ -81,10 +81,11 @@ const shoppingCartReducer = (state = [], action) => {
         return action.items.some((actionItem) => actionItem.id === item.id);
       });
       // Remove items that have selected color or size that does not exist anymore
-      newState = state.filter((item) => {
+      newState = newState.filter((item) => {
         const existingItem = action.items.find(
           (actionItem) => actionItem.id === item.id
         );
+        console.log(existingItem);
 
         if (
           existingItem.colors.some((color) => color === item.color) &&
