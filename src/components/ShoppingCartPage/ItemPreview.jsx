@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -94,10 +94,14 @@ const ItemPreview = (props) => {
   const dispatch = useDispatch();
   const [item, setItem] = useState(props.item);
 
+  useEffect(() => {
+    setItem(props.item);
+  }, [props.item]);
+
   const handleRemoveClick = () => {
     dispatch({ type: REMOVE_ITEM_FROM_SC, item: item });
     props.calculateSubtotal();
-    window.location.reload(false); // TODO state is updated correctly, but wrong item component until refreshed, hence the reload
+    window.location.reload(false);
   };
 
   const handleQuantityChange = (evt) => {
