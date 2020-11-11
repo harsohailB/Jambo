@@ -29,6 +29,15 @@ const Wrapper = styled.div`
   }
 `;
 
+const RowWrapper = styled.div`
+  display: flex;
+`;
+
+const ColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -311,6 +320,18 @@ const NewItemForm = (props) => {
     });
   };
 
+  const handleIncrementChange = (evt) => {
+    if (evt.target.value < 1) {
+      evt.target.value = 1;
+    } else if (evt.target.value > 100) {
+      evt.target.value = 100;
+    }
+    setNewItem({
+      ...newItem,
+      increment: evt.target.value,
+    });
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
@@ -405,18 +426,36 @@ const NewItemForm = (props) => {
           />
 
           {!newItem.isPrintifyItem && (
-            <Label>Shipping: (increases linearly with quantity)</Label>
+            <RowWrapper style={{ width: "100%" }}>
+              <ColumnWrapper>
+                <Label>Shipping:</Label>
+                <Input
+                  hasError={false}
+                  label="shipping"
+                  onChange={handleShippingChange}
+                  value={newItem.shipping}
+                  placeholder="2.00"
+                  autocomplete="shipping"
+                  style={{ width: "70%" }}
+                />
+              </ColumnWrapper>
+              <ColumnWrapper>
+                <Label>Increment:</Label>
+                <Input
+                  hasError={false}
+                  label="increment"
+                  onChange={handleIncrementChange}
+                  value={newItem.increment}
+                  type="number"
+                  pattern="[0-9]"
+                  min="1"
+                  autocomplete="increment"
+                  style={{ width: "70%" }}
+                />
+              </ColumnWrapper>
+            </RowWrapper>
           )}
-          {!newItem.isPrintifyItem && (
-            <Input
-              hasError={false}
-              label="shipping"
-              onChange={handleShippingChange}
-              value={newItem.shipping}
-              placeholder="2.00"
-              autocomplete="shipping"
-            />
-          )}
+
           <FeatureItemOption onClick={handleFeatureClick}>
             <Icon>
               {newItem.featured ? (

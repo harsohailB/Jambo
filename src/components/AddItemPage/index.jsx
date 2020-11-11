@@ -24,6 +24,7 @@ const AddItemPage = () => {
     description: "",
     tags: [],
     shipping: "",
+    increment: 1,
     featured: false,
     thumbnailImage: {
       imageLink:
