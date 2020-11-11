@@ -1,7 +1,11 @@
 const getColorByVariant = (printifyItem, variantID) => {
   return printifyItem.variants
     .find((variant) => variant.id === variantID)
-    .title.split(" / ")[0];
+    .title.split(" / ")
+    .map((title) => title.trim())
+    .filter((title) =>
+      getOptions(printifyItemParser, "color").some((color) => title === color)
+    );
 };
 
 const createImages = (printifyItem) => {
@@ -18,7 +22,7 @@ const createImages = (printifyItem) => {
 const getOptions = (printifyItem, opt) => {
   return printifyItem.options
     .find((option) => option.type === opt)
-    .values.map((value) => value.title);
+    .values.map((value) => value.title.trim());
 };
 
 const printifyItemParser = (printifyItem) => {
