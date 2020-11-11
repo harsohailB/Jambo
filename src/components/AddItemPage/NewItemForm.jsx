@@ -33,6 +33,11 @@ const RowWrapper = styled.div`
   display: flex;
 `;
 
+const ColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -418,8 +423,8 @@ const NewItemForm = (props) => {
           />
 
           {!newItem.isPrintifyItem && (
-            <RowWrapper>
-              <div>
+            <RowWrapper style={{ width: "100%" }}>
+              <ColumnWrapper>
                 <Label>Shipping:</Label>
                 <Input
                   hasError={false}
@@ -428,10 +433,10 @@ const NewItemForm = (props) => {
                   value={newItem.shipping}
                   placeholder="2.00"
                   autocomplete="shipping"
-                  style={{ width: "40%" }}
+                  style={{ width: "70%" }}
                 />
-              </div>
-              <div>
+              </ColumnWrapper>
+              <ColumnWrapper>
                 <Label>Increment:</Label>
                 <Input
                   hasError={false}
@@ -442,9 +447,9 @@ const NewItemForm = (props) => {
                   pattern="[0-9]"
                   min="1"
                   autocomplete="increment"
-                  style={{ width: "40%" }}
+                  style={{ width: "70%" }}
                 />
-              </div>
+              </ColumnWrapper>
             </RowWrapper>
           )}
 
