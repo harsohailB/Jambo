@@ -25,4 +25,4 @@ yarn-error.log*
 /.idea
 .env
 
-/server/node_modules
+server/node_modules
