@@ -260,7 +260,18 @@ const ShoppingCartPage = () => {
   };
 
   const renderCountryCodeOptions = () => {
-    return countriesList.map((country) => (
+    var intersectingCountries = countriesList;
+    shoppingCartItems.forEach((item) => {
+      if (item.eligibleCountries.length !== 0) {
+        intersectingCountries = intersectingCountries.filter((country) => {
+          return item.eligibleCountries
+            .split("/")
+            .some((eligibleCountry) => eligibleCountry === country.code);
+        });
+      }
+    });
+
+    return intersectingCountries.map((country) => (
       <option value={country.code}>
         {country.name + " - " + country.code}
       </option>
