@@ -134,8 +134,7 @@ const ShoppingCartPage = () => {
   const [countryCode, setCountryCode] = useState("");
 
   const [subTotal, setSubTotal] = useState(0);
-  const STRIPE_PUBLISHABLE_KEY =
-    "pk_test_51H5gw9Aka2oZYulluoHic76Ouk1kd7afjcPSiqEEcXYMnzHA7CZKZtG4piWrmNudkdLE5idB8bS7Za0oaNcbhA9C00CsLqQBdo";
+  const STRIPE_PUBLISHABLE_KEY = "pk_live_vy8q9jFyjBC8piCuMDc6msXg00qvJq3l7y";
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
   useEffect(() => {
