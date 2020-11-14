@@ -49,9 +49,8 @@ const MainImageWrapper = styled.div`
   justify-content: center;
   overflow: hidden;
   margin-bottom: 25px;
-  min-height: 500px;
-  width: 60%;
-  height: 60%;
+  width: 30vw;
+  height: 30vw;
   object-fit: cover;
 `;
 
@@ -280,6 +279,7 @@ const ItemPreview = ({ item, setItem }) => {
             <InnerImageZoom
               src={mainImage.imageLink}
               zoomSrc={mainImage.imageLink}
+              className="innerZoomImage"
             />
           ) : (
             <InnerImageZoom
