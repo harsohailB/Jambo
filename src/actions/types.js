@@ -9,3 +9,4 @@ export const GET_ITEM_BY_ID = "GET_ITEM_BY_ID";
 export const ADD_ITEM = "ADD_ITEM";
 export const CLEAR_CART = "CLEAR_CART";
 export const PRUNE_CART = "PRUNE_CART";
+export const UPDATE_CART_ITEMS_INFO = "UPDATE_CART_ITEMS_INFO";

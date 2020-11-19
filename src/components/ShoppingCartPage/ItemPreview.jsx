@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
 import { REMOVE_ITEM_FROM_SC, QUANTITY_CHANGE } from "../../actions/types";
+import { countriesList } from "./countriesList.js";
 
 const TableRow = styled.tr`
   width: 100%;
@@ -94,10 +95,14 @@ const ItemPreview = (props) => {
   const dispatch = useDispatch();
   const [item, setItem] = useState(props.item);
 
+  useEffect(() => {
+    setItem(props.item);
+  }, [props.item]);
+
   const handleRemoveClick = () => {
     dispatch({ type: REMOVE_ITEM_FROM_SC, item: item });
     props.calculateSubtotal();
-    window.location.reload(false); // TODO state is updated correctly, but wrong item component until refreshed, hence the reload
+    window.location.reload(false);
   };
 
   const handleQuantityChange = (evt) => {
@@ -124,6 +129,14 @@ const ItemPreview = (props) => {
     return item.images.find((image) => item.color === image.color).imageLink;
   };
 
+  const getCountryNames = (eligibleCountries) => {
+    if (eligibleCountries === "CA") {
+      return "Canada (CA)";
+    } else if (eligibleCountries === "CA/US") {
+      return "Canada (CA) and United States (US)";
+    }
+  };
+
   return (
     <TableRow>
       <td>
@@ -133,6 +146,11 @@ const ItemPreview = (props) => {
             <ItemName>{item.name}</ItemName>
             <ItemDetail>Color: {item.color}</ItemDetail>
             <ItemDetail>Size: {item.size}</ItemDetail>
+            {item.eligibleCountries.length !== 0 && (
+              <ItemDetail style={{ color: "red" }}>
+                Only ships to {getCountryNames(item.eligibleCountries)}
+              </ItemDetail>
+            )}
           </ItemInfoWrapper>
         </ProductWrapper>
       </td>

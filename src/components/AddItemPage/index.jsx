@@ -23,7 +23,9 @@ const AddItemPage = () => {
     sizes: [],
     description: "",
     tags: [],
-    shipping: "",
+    shipping: "1",
+    increment: 1,
+    eligibleCountries: "",
     featured: false,
     thumbnailImage: {
       imageLink:

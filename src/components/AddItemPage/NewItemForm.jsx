@@ -15,6 +15,7 @@ import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
 import PrintifyDropdown from "./PrintifyDropdown";
+import Dropdown from "../styled/Dropdown";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,6 +28,15 @@ const Wrapper = styled.div`
   @media (max-width: 1600px) {
     flex-direction: column;
   }
+`;
+
+const RowWrapper = styled.div`
+  display: flex;
+`;
+
+const ColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Form = styled.form`
@@ -70,12 +80,17 @@ const Input = styled.input`
   color: #3d4246;
   line-height: 1.5;
   padding: 10px 18px;
+
+  ${({ hasError }) =>
+    hasError &&
+    `
+    border: 2px solid red;
+  `}
 `;
 
-const Error = styled.label`
+const Error = styled.span`
   font-family: Righteous, sans-serif;
   font-style: normal;
-  font-weight: 400;
   color: red;
 `;
 
@@ -93,6 +108,23 @@ const Label = styled.label`
   line-height: 1.5;
   max-width: 50%;
   margin-left: 10px;
+
+  ${({ hasError }) =>
+    hasError &&
+    `
+    &: after{
+      content: "  -  Invalid";
+      color: red;
+    }
+  `}
+`;
+
+const List = styled.li`
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
 `;
 
 const Icon = styled.div`
@@ -128,13 +160,28 @@ const TopOptionsWrapper = styled.div`
 `;
 
 const NewItemForm = (props) => {
+  const eligibleCountriesOptions = [
+    {
+      value: "",
+      label: "All Countries",
+    },
+    {
+      value: "CA",
+      label: "Canada Only",
+    },
+    {
+      value: "CA/US",
+      label: "Canada and US",
+    },
+  ];
+
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [isPrintifyItem, setIsPrintifyItem] = useState(
     props.item.isPrintifyItem
   );
   const [newItem, setNewItem] = useState(props.item);
-  const [hasErrors, setHasErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     if (props.edit) {
@@ -142,15 +189,27 @@ const NewItemForm = (props) => {
       getItemById(props.item.id)
         .then((fetchedItem) => {
           console.log(props.item);
-          setNewItem(fetchedItem);
-          setHasErrors(false);
+          setErrors([]);
+          setNewItem(pruneItemColors(fetchedItem));
         })
         .catch((err) => {
           console.log(err);
-          setHasErrors(true);
+          setErrors(["useEffect"]);
         });
     }
   }, []);
+
+  const pruneItemColors = (item) => {
+    console.log(item);
+    return {
+      ...item,
+      colors: item.images
+        .filter((image) => {
+          return item.colors.includes(image.color);
+        })
+        .map((image) => image.color),
+    };
+  };
 
   const getArrayOfColours = () => {
     const arrOfColours = newItem.colors;
@@ -162,27 +221,45 @@ const NewItemForm = (props) => {
   };
 
   const checkForErrors = () => {
+    let newErrors = [];
     // Check for text input fields
-    if (
-      newItem.name === "" ||
-      newItem.price === "" ||
-      newItem.colors === "" ||
-      newItem.sizes === "" ||
-      newItem.description === "" ||
-      newItem.images.length === 0 ||
-      (newItem.isPrintifyItem && newItem.printifyID.length === 0)
-    ) {
-      setHasErrors(true);
-      return true;
+    if (newItem.name.length === 0) {
+      newErrors.push("name");
+    }
+    if (newItem.price.length === 0) {
+      newErrors.push("price");
+    }
+    if (newItem.colors.length === 0) {
+      newErrors.push("colors");
+    }
+    if (newItem.sizes.length === 0) {
+      newErrors.push("sizes");
+    }
+    if (newItem.description.length === 0) {
+      newErrors.push("description");
+    }
+    if (newItem.images.length === 0) {
+      newErrors.push("images");
+    }
+    if (newItem.isPrintifyItem && newItem.printifyID.length === 0) {
+      newErrors.push("printifyID");
+    }
+    if (newItem.shipping.length === 0) {
+      newErrors.push("shipping");
     }
 
     // Check image inputs
     if (newItem.images.filter((image) => image.color !== "None").length === 0) {
-      setHasErrors(true);
-      return true;
+      newErrors.push("imageColors");
     }
 
-    return false;
+    if (newErrors.length) {
+      setErrors(newErrors);
+    }
+
+    console.log(newErrors);
+
+    return newErrors;
   };
 
   const handleFormSubmit = (e) => {
@@ -192,8 +269,9 @@ const NewItemForm = (props) => {
       thumbnailImage: newItem.images[0],
       tags: newItem.tags,
     };
-    console.log("newItem", tempNewItem);
-    if (!checkForErrors()) {
+
+    if (checkForErrors().length === 0) {
+      tempNewItem = pruneItemColors(newItem);
       try {
         if (props.edit) {
           console.log(tempNewItem);
@@ -211,9 +289,12 @@ const NewItemForm = (props) => {
             uploadItem(user, tempNewItem);
           });
         }
-        history.push("/catalog");
+        history.push({
+          pathname: "/catalog",
+          refresh: true,
+        });
       } catch (error) {
-        setHasErrors(true);
+        setErrors(errors.concat(["form"]));
         console.log(error);
       }
     }
@@ -270,11 +351,11 @@ const NewItemForm = (props) => {
     getPrintifyItemById(user, evt.target.value)
       .then((fetchedPrintifyItem) => {
         setNewItem(fetchedPrintifyItem);
-        setHasErrors(false);
+        setErrors([]);
       })
       .catch((err) => {
         console.log(err);
-        setHasErrors(true);
+        setErrors(errors.concat(["printifyID"]));
       });
   };
 
@@ -306,6 +387,38 @@ const NewItemForm = (props) => {
       ...newItem,
       shipping: evt.target.value,
     });
+  };
+
+  const handleEligibleCountriesChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      eligibleCountries: evt.target.value,
+    });
+  };
+
+  const handleIncrementChange = (evt) => {
+    if (evt.target.value < 1) {
+      evt.target.value = 1;
+    } else if (evt.target.value > 100) {
+      evt.target.value = 100;
+    }
+    setNewItem({
+      ...newItem,
+      increment: evt.target.value,
+    });
+  };
+
+  const getUnchosenColors = (chosenColors) => {
+    console.log(chosenColors);
+    return newItem.colors.filter((color) => !chosenColors.includes(color));
+  };
+
+  const unchosenColors = getUnchosenColors(pruneItemColors(newItem).colors);
+
+  const renderEligibleCountriesOptions = () => {
+    return eligibleCountriesOptions.map((option) => (
+      <option value={option.value}>{option.label}</option>
+    ));
   };
 
   return (
@@ -346,45 +459,49 @@ const NewItemForm = (props) => {
             />
           )}
 
-          <Label>Item Name</Label>
+          <Label hasError={errors.includes("name")}>Item Name</Label>
           <Input
-            hasError={false}
             label="Name"
             onChange={handleNameChange}
             value={newItem.name}
             placeholder="Bean"
             autocomplete="item-name"
+            hasError={errors.includes("name")}
           />
-          <Label>Item Price</Label>
+          <Label hasError={errors.includes("price")}>Item Price</Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("price")}
             label="Price"
             onChange={handlePriceChange}
             value={newItem.price}
             placeholder="xx.xx"
             autocomplete="item-price"
           />
-          <Label>List of Colours (seperated by /)</Label>
+          <Label hasError={errors.includes("colors")}>
+            List of Colours (seperated by /)
+          </Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("colors")}
             label="List of colours"
             onChange={handleListofColoursChange}
             value={newItem.colors.join("/")}
             placeholder="Red/Green/Blue"
             autocomplete="list-of-colours"
           />
-          <Label>List of Sizes (seperated by /)</Label>
+          <Label hasError={errors.includes("sizes")}>
+            List of Sizes (seperated by /)
+          </Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("sizes")}
             label="List of sizes"
             onChange={handleListofSizesChange}
             value={newItem.sizes.join("/")}
             placeholder="S/M/L"
             autocomplete="list-of-sizes"
           />
-          <Label>Description</Label>
+          <Label hasError={errors.includes("description")}>Description</Label>
           <Input
-            hasError={false}
+            hasError={errors.includes("description")}
             label="description"
             onChange={handleDescriptionChange}
             value={newItem.description}
@@ -400,20 +517,45 @@ const NewItemForm = (props) => {
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
           />
+          <Label>Shipping Countries:</Label>
+          <Dropdown
+            value={newItem.eligibleCountries}
+            onChange={handleEligibleCountriesChange}
+          >
+            {renderEligibleCountriesOptions()}
+          </Dropdown>
 
           {!newItem.isPrintifyItem && (
-            <Label>Shipping: (increases linearly with quantity)</Label>
+            <RowWrapper style={{ width: "100%" }}>
+              <ColumnWrapper>
+                <Label hasError={errors.includes("shipping")}>Shipping:</Label>
+                <Input
+                  hasError={errors.includes("shipping")}
+                  label="shipping"
+                  onChange={handleShippingChange}
+                  value={newItem.shipping}
+                  placeholder="2.00"
+                  autocomplete="shipping"
+                  style={{ width: "70%" }}
+                />
+              </ColumnWrapper>
+              <ColumnWrapper>
+                <Label>Increment:</Label>
+                <Input
+                  hasError={false}
+                  label="increment"
+                  onChange={handleIncrementChange}
+                  value={newItem.increment}
+                  type="number"
+                  pattern="[0-9]"
+                  min="1"
+                  autocomplete="increment"
+                  style={{ width: "70%" }}
+                />
+              </ColumnWrapper>
+            </RowWrapper>
           )}
-          {!newItem.isPrintifyItem && (
-            <Input
-              hasError={false}
-              label="shipping"
-              onChange={handleShippingChange}
-              value={newItem.shipping}
-              placeholder="2.00"
-              autocomplete="shipping"
-            />
-          )}
+
           <FeatureItemOption onClick={handleFeatureClick}>
             <Icon>
               {newItem.featured ? (
@@ -424,17 +566,27 @@ const NewItemForm = (props) => {
             </Icon>
             Featured Item
           </FeatureItemOption>
-          <Label>Add images here:</Label>
-          <Label>
-            (Note: First Picture will be thumbnail and DON'T put spaces in
-            filenames)
-          </Label>
+          <Label hasError={errors.includes("images")}>Add images here:</Label>
           <ImageForm
             getArrayOfColours={getArrayOfColours}
             newItem={newItem}
             setNewItem={setNewItem}
+            hasError={errors.includes("imageColors")}
           />
-          {hasErrors && <Error>Please enter valid details!</Error>}
+          {errors.length !== 0 && <Error>Please enter valid details!</Error>}
+          {unchosenColors.length !== 0 && (
+            <div>
+              <Label style={{ width: "100%" }}>
+                <strong>The following colors have not been assigned:</strong>{" "}
+              </Label>
+              {unchosenColors.map((color) => (
+                <List>{color}</List>
+              ))}
+              <Label style={{ width: "100%", color: "red" }}>
+                Upon creating the item, these will be removed if not assigned
+              </Label>
+            </div>
+          )}
           <Button>{props.edit ? "UPDATE ITEM" : "CREATE ITEM"}</Button>
         </Form>
       </FormWrapper>
