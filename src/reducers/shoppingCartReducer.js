@@ -8,7 +8,6 @@ import {
   UPDATE_CART_ITEMS_INFO,
 } from "../actions/types";
 import ls from "local-storage";
-import { routerActions } from "connected-react-router";
 
 const isSameItem = (firstItem, secondItem) => {
   return (
