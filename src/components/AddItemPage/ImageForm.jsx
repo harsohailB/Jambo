@@ -33,6 +33,12 @@ const Input = styled.input`
   width: 100%;
 `;
 
+const Error = styled.span`
+  font-family: Righteous, sans-serif;
+  font-style: normal;
+  color: red;
+`;
+
 const UploadWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -63,7 +69,7 @@ const PreviewImage = styled.img`
   margin-right: 5px;
 `;
 
-const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
+const ImageForm = ({ getArrayOfColours, newItem, setNewItem, hasError }) => {
   const [id, setId] = useState(0);
   const placeHolderImageLink =
     "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png";
@@ -163,6 +169,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem }) => {
         <Dropdown
           value={image.color}
           onChange={(evt) => handleDropdownChange(evt, image)}
+          hasError={hasError}
         >
           {renderColourOptions()}
         </Dropdown>
