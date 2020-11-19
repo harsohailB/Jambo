@@ -269,7 +269,7 @@ const NewItemForm = (props) => {
       thumbnailImage: newItem.images[0],
       tags: newItem.tags,
     };
-    
+
     if (checkForErrors().length === 0) {
       tempNewItem = pruneItemColors(newItem);
       try {
@@ -574,7 +574,6 @@ const NewItemForm = (props) => {
             hasError={errors.includes("imageColors")}
           />
           {errors.length !== 0 && <Error>Please enter valid details!</Error>}
-          {hasErrors && <Error>Please enter valid details!</Error>}
           {unchosenColors.length !== 0 && (
             <div>
               <Label style={{ width: "100%" }}>
