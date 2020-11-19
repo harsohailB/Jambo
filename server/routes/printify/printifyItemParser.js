@@ -1,14 +1,18 @@
 const getColorByVariant = (printifyItem, variantID) => {
   return printifyItem.variants
     .find((variant) => variant.id === variantID)
-    .title.split(" / ")[0];
+    .title.split(" / ")
+    .map((title) => title.trim())
+    .filter((title) =>
+      getOptions(printifyItem, "color").some((color) => title === color)
+    );
 };
 
 const createImages = (printifyItem) => {
   return printifyItem.images.map((image) => {
     return {
       color: image.is_default
-        ? getColorByVariant(printifyItem, image.variant_ids[0])
+        ? getColorByVariant(printifyItem, image.variant_ids[0])[0]
         : "None",
       imageLink: image.src,
     };
@@ -18,7 +22,7 @@ const createImages = (printifyItem) => {
 const getOptions = (printifyItem, opt) => {
   return printifyItem.options
     .find((option) => option.type === opt)
-    .values.map((value) => value.title);
+    .values.map((value) => value.title.trim());
 };
 
 const printifyItemParser = (printifyItem) => {
@@ -48,6 +52,9 @@ const printifyItemParser = (printifyItem) => {
       : getOptions(printifyItem, "surface"),
     sizes: getOptions(printifyItem, "size"),
     images: createImages(printifyItem),
+    shipping: "",
+    increment: 1,
+    eligibleCountries: [],
   };
 };
 

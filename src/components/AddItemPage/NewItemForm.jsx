@@ -15,6 +15,7 @@ import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
 import PrintifyDropdown from "./PrintifyDropdown";
+import Dropdown from "../styled/Dropdown";
 
 const Wrapper = styled.div`
   display: flex;
@@ -118,6 +119,14 @@ const Label = styled.label`
   `}
 `;
 
+const List = styled.li`
+  font-size: 16px;
+  font-family: Oswald, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: black;
+`;
+
 const Icon = styled.div`
   margin: 5px;
   color: #557b97;
@@ -151,6 +160,21 @@ const TopOptionsWrapper = styled.div`
 `;
 
 const NewItemForm = (props) => {
+  const eligibleCountriesOptions = [
+    {
+      value: "",
+      label: "All Countries",
+    },
+    {
+      value: "CA",
+      label: "Canada Only",
+    },
+    {
+      value: "CA/US",
+      label: "Canada and US",
+    },
+  ];
+
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [isPrintifyItem, setIsPrintifyItem] = useState(
@@ -165,8 +189,8 @@ const NewItemForm = (props) => {
       getItemById(props.item.id)
         .then((fetchedItem) => {
           console.log(props.item);
-          setNewItem(fetchedItem);
           setErrors([]);
+          setNewItem(pruneItemColors(fetchedItem));
         })
         .catch((err) => {
           console.log(err);
@@ -174,6 +198,18 @@ const NewItemForm = (props) => {
         });
     }
   }, []);
+
+  const pruneItemColors = (item) => {
+    console.log(item);
+    return {
+      ...item,
+      colors: item.images
+        .filter((image) => {
+          return item.colors.includes(image.color);
+        })
+        .map((image) => image.color),
+    };
+  };
 
   const getArrayOfColours = () => {
     const arrOfColours = newItem.colors;
@@ -233,8 +269,9 @@ const NewItemForm = (props) => {
       thumbnailImage: newItem.images[0],
       tags: newItem.tags,
     };
-    console.log("newItem", tempNewItem);
+    
     if (checkForErrors().length === 0) {
+      tempNewItem = pruneItemColors(newItem);
       try {
         if (props.edit) {
           console.log(tempNewItem);
@@ -352,6 +389,13 @@ const NewItemForm = (props) => {
     });
   };
 
+  const handleEligibleCountriesChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      eligibleCountries: evt.target.value,
+    });
+  };
+
   const handleIncrementChange = (evt) => {
     if (evt.target.value < 1) {
       evt.target.value = 1;
@@ -362,6 +406,19 @@ const NewItemForm = (props) => {
       ...newItem,
       increment: evt.target.value,
     });
+  };
+
+  const getUnchosenColors = (chosenColors) => {
+    console.log(chosenColors);
+    return newItem.colors.filter((color) => !chosenColors.includes(color));
+  };
+
+  const unchosenColors = getUnchosenColors(pruneItemColors(newItem).colors);
+
+  const renderEligibleCountriesOptions = () => {
+    return eligibleCountriesOptions.map((option) => (
+      <option value={option.value}>{option.label}</option>
+    ));
   };
 
   return (
@@ -460,6 +517,13 @@ const NewItemForm = (props) => {
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
           />
+          <Label>Shipping Countries:</Label>
+          <Dropdown
+            value={newItem.eligibleCountries}
+            onChange={handleEligibleCountriesChange}
+          >
+            {renderEligibleCountriesOptions()}
+          </Dropdown>
 
           {!newItem.isPrintifyItem && (
             <RowWrapper style={{ width: "100%" }}>
@@ -510,6 +574,20 @@ const NewItemForm = (props) => {
             hasError={errors.includes("imageColors")}
           />
           {errors.length !== 0 && <Error>Please enter valid details!</Error>}
+          {hasErrors && <Error>Please enter valid details!</Error>}
+          {unchosenColors.length !== 0 && (
+            <div>
+              <Label style={{ width: "100%" }}>
+                <strong>The following colors have not been assigned:</strong>{" "}
+              </Label>
+              {unchosenColors.map((color) => (
+                <List>{color}</List>
+              ))}
+              <Label style={{ width: "100%", color: "red" }}>
+                Upon creating the item, these will be removed if not assigned
+              </Label>
+            </div>
+          )}
           <Button>{props.edit ? "UPDATE ITEM" : "CREATE ITEM"}</Button>
         </Form>
       </FormWrapper>

@@ -18,7 +18,8 @@ const Wrapper = styled(Link)`
 
 const Image = styled.img`
   width: 250px;
-  height: auto;
+  height: 250px;
+  object-fit: cover;
 
   @media (max-width: 768px) {
     width: 150px;
