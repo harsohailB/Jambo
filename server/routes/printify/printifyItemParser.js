@@ -12,7 +12,7 @@ const createImages = (printifyItem) => {
   return printifyItem.images.map((image) => {
     return {
       color: image.is_default
-        ? getColorByVariant(printifyItem, image.variant_ids[0])
+        ? getColorByVariant(printifyItem, image.variant_ids[0])[0]
         : "None",
       imageLink: image.src,
     };

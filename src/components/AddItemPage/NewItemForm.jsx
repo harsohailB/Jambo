@@ -170,6 +170,7 @@ const NewItemForm = (props) => {
   }, []);
 
   const pruneItemColors = (item) => {
+    console.log(item);
     return {
       ...item,
       colors: item.images
@@ -352,6 +353,7 @@ const NewItemForm = (props) => {
   };
 
   const getUnchosenColors = (chosenColors) => {
+    console.log(chosenColors);
     return newItem.colors.filter((color) => !chosenColors.includes(color));
   };
 
