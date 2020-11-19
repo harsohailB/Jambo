@@ -15,6 +15,7 @@ import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
 import { getPrintifyItemById } from "../../actions/printifyItems";
 import PrintifyDropdown from "./PrintifyDropdown";
+import Dropdown from "../styled/Dropdown";
 
 const Wrapper = styled.div`
   display: flex;
@@ -145,6 +146,21 @@ const TopOptionsWrapper = styled.div`
 `;
 
 const NewItemForm = (props) => {
+  const eligibleCountriesOptions = [
+    {
+      value: "",
+      label: "All Countries",
+    },
+    {
+      value: "CA",
+      label: "Canada Only",
+    },
+    {
+      value: "CA/US",
+      label: "Canada and US",
+    },
+  ];
+
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const [isPrintifyItem, setIsPrintifyItem] = useState(
@@ -340,6 +356,13 @@ const NewItemForm = (props) => {
     });
   };
 
+  const handleEligibleCountriesChange = (evt) => {
+    setNewItem({
+      ...newItem,
+      eligibleCountries: evt.target.value,
+    });
+  };
+
   const handleIncrementChange = (evt) => {
     if (evt.target.value < 1) {
       evt.target.value = 1;
@@ -358,6 +381,12 @@ const NewItemForm = (props) => {
   };
 
   const unchosenColors = getUnchosenColors(pruneItemColors(newItem).colors);
+
+  const renderEligibleCountriesOptions = () => {
+    return eligibleCountriesOptions.map((option) => (
+      <option value={option.value}>{option.label}</option>
+    ));
+  };
 
   return (
     <Wrapper>
@@ -451,6 +480,13 @@ const NewItemForm = (props) => {
             placeholder="Accessories/Embroidery/Hats"
             autocomplete="tags"
           />
+          <Label>Shipping Countries:</Label>
+          <Dropdown
+            value={newItem.eligibleCountries}
+            onChange={handleEligibleCountriesChange}
+          >
+            {renderEligibleCountriesOptions()}
+          </Dropdown>
 
           {!newItem.isPrintifyItem && (
             <RowWrapper style={{ width: "100%" }}>
