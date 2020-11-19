@@ -208,6 +208,9 @@ const NewItemForm = (props) => {
     if (newItem.isPrintifyItem && newItem.printifyID.length === 0) {
       newErrors.push("printifyID");
     }
+    if (newItem.shipping.length === 0) {
+      newErrors.push("shipping");
+    }
 
     // Check image inputs
     if (newItem.images.filter((image) => image.color !== "None").length === 0) {
@@ -461,9 +464,9 @@ const NewItemForm = (props) => {
           {!newItem.isPrintifyItem && (
             <RowWrapper style={{ width: "100%" }}>
               <ColumnWrapper>
-                <Label>Shipping:</Label>
+                <Label hasError={errors.includes("shipping")}>Shipping:</Label>
                 <Input
-                  hasError={false}
+                  hasError={errors.includes("shipping")}
                   label="shipping"
                   onChange={handleShippingChange}
                   value={newItem.shipping}
