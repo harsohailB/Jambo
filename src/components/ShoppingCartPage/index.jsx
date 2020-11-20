@@ -134,8 +134,7 @@ const ShoppingCartPage = () => {
   const [countryCode, setCountryCode] = useState("");
 
   const [subTotal, setSubTotal] = useState(0);
-  const STRIPE_PUBLISHABLE_KEY =
-    "pk_test_51H5gw9Aka2oZYulluoHic76Ouk1kd7afjcPSiqEEcXYMnzHA7CZKZtG4piWrmNudkdLE5idB8bS7Za0oaNcbhA9C00CsLqQBdo";
+  const STRIPE_PUBLISHABLE_KEY = "pk_live_vy8q9jFyjBC8piCuMDc6msXg00qvJq3l7y";
   const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
   useEffect(() => {
@@ -202,7 +201,9 @@ const ShoppingCartPage = () => {
 
     shoppingCartItems.forEach((item) => {
       if (!item.isPrintifyItem) {
-        customItemShipping += parseFloat(item.shipping * item.quantity);
+        customItemShipping += parseFloat(
+          item.shipping * Math.ceil(item.quantity / item.increment)
+        );
       }
     });
 
@@ -258,7 +259,18 @@ const ShoppingCartPage = () => {
   };
 
   const renderCountryCodeOptions = () => {
-    return countriesList.map((country) => (
+    var intersectingCountries = countriesList;
+    shoppingCartItems.forEach((item) => {
+      if (item.eligibleCountries.length !== 0) {
+        intersectingCountries = intersectingCountries.filter((country) => {
+          return item.eligibleCountries
+            .split("/")
+            .some((eligibleCountry) => eligibleCountry === country.code);
+        });
+      }
+    });
+
+    return intersectingCountries.map((country) => (
       <option value={country.code}>
         {country.name + " - " + country.code}
       </option>

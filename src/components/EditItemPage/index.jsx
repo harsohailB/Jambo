@@ -7,8 +7,6 @@ import { useLocation } from "react-router-dom";
 import Title from "../styled/Title";
 import { getItemById } from "../../actions/items";
 import NewItemForm from "../AddItemPage/NewItemForm";
-import Button from "../styled/Button";
-import { getPrintifyItemById } from "../../actions/printifyItems";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +34,9 @@ const EditItemPage = () => {
         "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
     },
     images: [],
+    shipping: "",
+    increment: 1,
+    eligibleCountries: [],
   };
   const user = useSelector((state) => state.user);
   const [item, setItem] = useState(defaultNewItem);

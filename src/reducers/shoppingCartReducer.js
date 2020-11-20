@@ -8,7 +8,6 @@ import {
   UPDATE_CART_ITEMS_INFO,
 } from "../actions/types";
 import ls from "local-storage";
-import { routerActions } from "connected-react-router";
 
 const isSameItem = (firstItem, secondItem) => {
   return (
@@ -81,10 +80,11 @@ const shoppingCartReducer = (state = [], action) => {
         return action.items.some((actionItem) => actionItem.id === item.id);
       });
       // Remove items that have selected color or size that does not exist anymore
-      newState = state.filter((item) => {
+      newState = newState.filter((item) => {
         const existingItem = action.items.find(
           (actionItem) => actionItem.id === item.id
         );
+        console.log(existingItem);
 
         if (
           existingItem.colors.some((color) => color === item.color) &&
@@ -108,8 +108,10 @@ const shoppingCartReducer = (state = [], action) => {
             name: updatedItem.name,
             price: updatedItem.price,
             shipping: updatedItem.shipping,
+            increment: updatedItem.increment,
             colors: updatedItem.colors,
             sizes: updatedItem.sizes,
+            eligibleCountries: updatedItem.eligibleCountries,
           };
         }
 
