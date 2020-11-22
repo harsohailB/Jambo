@@ -253,6 +253,9 @@ const NewItemForm = (props) => {
     if (newItem.shipping.length === 0) {
       newErrors.push("shipping");
     }
+    if (newItem.increment.length === 0 || newItem.increment === 0) {
+      newErrors.push("increment");
+    }
 
     // Check image inputs
     if (newItem.images.filter((image) => image.color !== "None").length === 0) {
@@ -404,8 +407,8 @@ const NewItemForm = (props) => {
   };
 
   const handleIncrementChange = (evt) => {
-    if (evt.target.value < 1) {
-      evt.target.value = 1;
+    if (evt.target.value < 0) {
+      evt.target.value = Math.abs(evt.target.value);
     } else if (evt.target.value > 100) {
       evt.target.value = 100;
     }
@@ -546,7 +549,9 @@ const NewItemForm = (props) => {
                 />
               </ColumnWrapper>
               <ColumnWrapper>
-                <Label>Increment:</Label>
+                <Label hasError={errors.includes("increment")}>
+                  Increment:
+                </Label>
                 <Input
                   hasError={false}
                   label="increment"
