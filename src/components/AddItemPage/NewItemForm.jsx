@@ -200,14 +200,20 @@ const NewItemForm = (props) => {
   }, []);
 
   const pruneItemColors = (item) => {
-    console.log(item);
+    let tempColors = [];
+    item.images
+      .filter((image) => {
+        return item.colors.includes(image.color);
+      })
+      .forEach((image) => {
+        if (!tempColors.includes(image.color)) {
+          tempColors.push(image.color);
+        }
+      });
+
     return {
       ...item,
-      colors: item.images
-        .filter((image) => {
-          return item.colors.includes(image.color);
-        })
-        .map((image) => image.color),
+      colors: tempColors,
     };
   };
 
@@ -263,6 +269,7 @@ const NewItemForm = (props) => {
   };
 
   const handleFormSubmit = (e) => {
+    console.log(newItem);
     e.preventDefault();
     let tempNewItem = {
       ...newItem,
@@ -409,7 +416,6 @@ const NewItemForm = (props) => {
   };
 
   const getUnchosenColors = (chosenColors) => {
-    console.log(chosenColors);
     return newItem.colors.filter((color) => !chosenColors.includes(color));
   };
 
