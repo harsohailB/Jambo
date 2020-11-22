@@ -27,6 +27,12 @@ const Wrapper = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
+
+  ${({ editPage }) =>
+    editPage &&
+    `
+    justify-content:  space-around;
+  `}
 `;
 
 const PreviewWrapper = styled.div`
@@ -177,7 +183,7 @@ const Dropdown = styled.select`
   }
 `;
 
-const ItemPreview = ({ item, setItem }) => {
+const ItemPreview = ({ item, setItem, editPage }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
   useWindowResize((event: React.SyntheticEvent) => {
     setIsMobile(window.innerWidth < 728);
@@ -268,7 +274,7 @@ const ItemPreview = ({ item, setItem }) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper editPage={editPage}>
       <Helmet>
         <title>{item.name} - JAMBO</title>
       </Helmet>

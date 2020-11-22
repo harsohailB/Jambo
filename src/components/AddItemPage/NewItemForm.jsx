@@ -51,7 +51,7 @@ const FormWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 20%;
   padding-left: 10%;
 `;
 
@@ -603,7 +603,7 @@ const NewItemForm = (props) => {
       </FormWrapper>
 
       <ItemPreviewWrapper>
-        <ItemPreview item={newItem} />
+        <ItemPreview item={newItem} editPage={true} />
       </ItemPreviewWrapper>
     </Wrapper>
   );
