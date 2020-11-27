@@ -301,10 +301,10 @@ const NewItemForm = (props) => {
             uploadItem(user, tempNewItem);
           });
         }
-        // history.push({
-        //   pathname: "/catalog",
-        //   refresh: true,
-        // });
+        history.push({
+          pathname: "/catalog",
+          refresh: true,
+        });
       } catch (error) {
         setErrors(errors.concat(["form"]));
         console.log(error);
