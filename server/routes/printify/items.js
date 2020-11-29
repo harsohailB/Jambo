@@ -19,17 +19,26 @@ router.get("/items", ensureAuthenticated, async function (req, res, next) {
     "/products.json?page=" +
     itemsPage;
 
-  const response = await axios
+  await axios
     .get(url, {
       headers: {
         Authorization: "Bearer " + process.env.PRINTIFY_AUTH_KEY,
       },
     })
     .then((response) => {
-      res.json(response.data.data.map((item) => printifyItemParser(item)));
+      let tempArr = [];
+      response.data.data.forEach((item) => {
+        try {
+          tempArr.push(printifyItemParser(item));
+        } catch {
+          console.log("Failed to parse printify item" + item.title);
+        }
+      });
+      res.json(tempArr);
     })
     .catch((err) => {
-      res.json({ message: err.message, status: err.requestResult.statusCode });
+      console.log(err);
+      res.json(err);
     });
 });
 
