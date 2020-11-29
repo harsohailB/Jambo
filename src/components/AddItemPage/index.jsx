@@ -27,6 +27,7 @@ const AddItemPage = () => {
     increment: 1,
     eligibleCountries: "",
     featured: false,
+    isVisible: true,
     thumbnailImage: {
       imageLink:
         "https://breakthrough.org/wp-content/uploads/2018/10/default-placeholder-image.png",
