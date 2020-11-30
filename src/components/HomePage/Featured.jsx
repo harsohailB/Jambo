@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Item from "../CatalogPage/Item";
 import Button from "../styled/Button";
 import { getItems } from "../../actions/items";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ const ItemWrapper = styled.div`
 `;
 
 const Featured = () => {
+  const user = useSelector((state) => state.user);
   const [featuredItems, setFeaturedItems] = useState([]);
 
   useEffect(() => {
@@ -45,8 +47,11 @@ const Featured = () => {
   }, []);
 
   const renderFeaturedItems = () => {
-    console.log(featuredItems);
-    return featuredItems.map((item) => <Item item={item}></Item>);
+    return featuredItems.map((item) => {
+      if (item.isVisible || user) {
+        return <Item item={item}></Item>;
+      }
+    });
   };
 
   return (
