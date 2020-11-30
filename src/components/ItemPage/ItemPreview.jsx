@@ -27,6 +27,12 @@ const Wrapper = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
+
+  ${({ editPage }) =>
+    editPage &&
+    `
+    justify-content:  space-around;
+  `}
 `;
 
 const PreviewWrapper = styled.div`
@@ -177,7 +183,7 @@ const Dropdown = styled.select`
   }
 `;
 
-const ItemPreview = ({ item, setItem }) => {
+const ItemPreview = ({ item, setItem, editPage }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
   useWindowResize((event: React.SyntheticEvent) => {
     setIsMobile(window.innerWidth < 728);
@@ -267,8 +273,21 @@ const ItemPreview = ({ item, setItem }) => {
     });
   };
 
+  const handleVisibleClick = (e) => {
+    e.preventDefault();
+    let currentItemVisible = item.isVisible;
+    setItem({
+      ...item,
+      isVisible: !currentItemVisible,
+    });
+    updateItemById(user, {
+      ...item,
+      isVisible: !currentItemVisible,
+    });
+  };
+
   return (
-    <Wrapper>
+    <Wrapper editPage={editPage}>
       <Helmet>
         <title>{item.name} - JAMBO</title>
       </Helmet>
@@ -345,6 +364,19 @@ const ItemPreview = ({ item, setItem }) => {
             Featured Item
           </FeatureItemOption>
         )}
+        {user && (
+          <FeatureItemOption onClick={handleVisibleClick}>
+            <Icon>
+              {item.isVisible ? (
+                <FaCheckCircle size={24} />
+              ) : (
+                <FaRegCircle size={24} />
+              )}
+            </Icon>
+            Item Visible
+          </FeatureItemOption>
+        )}
+
         <shareBoxes>
           <FontBox>
             <Facebook url={url}></Facebook>

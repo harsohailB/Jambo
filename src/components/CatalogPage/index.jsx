@@ -7,6 +7,7 @@ import FilterBar from "./FilterBar";
 import Item from "./Item";
 import { getItems } from "../../actions/items";
 import { sortCatalog } from "./sortingAlgorithms";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,6 +55,7 @@ const ItemsWrapper = styled.div`
 `;
 
 const CatalogPage = () => {
+  const user = useSelector((state) => state.user);
   const location = useLocation();
   const [items, setItems] = useState([]);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -84,7 +86,11 @@ const CatalogPage = () => {
       filteredItems = displayedItems;
     }
 
-    return filteredItems.map((item) => <Item item={item}></Item>);
+    return filteredItems.map((item) => {
+      if (item.isVisible || user) {
+        return <Item item={item}></Item>;
+      }
+    });
   };
 
   return (

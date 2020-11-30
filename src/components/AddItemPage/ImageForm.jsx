@@ -88,12 +88,20 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem, hasError }) => {
   };
 
   const handleDeleteImageInput = (image) => {
-    setNewItem({
+    let tempNewItem = {
       ...newItem,
       images: newItem.images.filter(
-        (existingImage) => existingImage.imageLink !== image.imageLink
+        (existingImage) =>
+          newItem.images.indexOf(existingImage) !==
+          newItem.images.indexOf(image)
       ),
-      thumbnailImage: { imageLink: placeHolderImageLink },
+    };
+
+    setNewItem({
+      ...tempNewItem,
+      thumbnailImage: tempNewItem.images.length
+        ? tempNewItem.images[0]
+        : { imageLink: placeHolderImageLink },
     });
   };
 
@@ -101,7 +109,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem, hasError }) => {
     setNewItem({
       ...newItem,
       images: newItem.images.map((img) => {
-        if (image.imageLink === img.imageLink) {
+        if (newItem.images.indexOf(image) === newItem.images.indexOf(img)) {
           img = {
             ...img,
             color: evt.target.value,
@@ -123,7 +131,7 @@ const ImageForm = ({ getArrayOfColours, newItem, setNewItem, hasError }) => {
         imageLink: newImageLink,
       },
       images: newItem.images.map((img) => {
-        if (image.id === img.id) {
+        if (newItem.images.indexOf(image) === newItem.images.indexOf(img)) {
           img = {
             ...img,
             imageLink: newImageLink,

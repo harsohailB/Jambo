@@ -51,7 +51,7 @@ const FormWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 20%;
   padding-left: 10%;
 `;
 
@@ -200,14 +200,20 @@ const NewItemForm = (props) => {
   }, []);
 
   const pruneItemColors = (item) => {
-    console.log(item);
+    let tempColors = [];
+    item.images
+      .filter((image) => {
+        return item.colors.includes(image.color);
+      })
+      .forEach((image) => {
+        if (!tempColors.includes(image.color)) {
+          tempColors.push(image.color);
+        }
+      });
+
     return {
       ...item,
-      colors: item.images
-        .filter((image) => {
-          return item.colors.includes(image.color);
-        })
-        .map((image) => image.color),
+      colors: tempColors,
     };
   };
 
@@ -247,6 +253,9 @@ const NewItemForm = (props) => {
     if (newItem.shipping.length === 0) {
       newErrors.push("shipping");
     }
+    if (newItem.increment.length === 0 || newItem.increment === 0) {
+      newErrors.push("increment");
+    }
 
     // Check image inputs
     if (newItem.images.filter((image) => image.color !== "None").length === 0) {
@@ -263,6 +272,7 @@ const NewItemForm = (props) => {
   };
 
   const handleFormSubmit = (e) => {
+    console.log(newItem);
     e.preventDefault();
     let tempNewItem = {
       ...newItem,
@@ -273,8 +283,9 @@ const NewItemForm = (props) => {
     if (checkForErrors().length === 0) {
       tempNewItem = pruneItemColors(newItem);
       try {
+        console.log("edit?", props.edit);
         if (props.edit) {
-          console.log(tempNewItem);
+          console.log("updating an item");
           updateItemById(user, tempNewItem);
         } else {
           getItems().then((fetchedItems) => {
@@ -286,6 +297,7 @@ const NewItemForm = (props) => {
                   fetchedItems.map((item) => item.id)
                 ) + 1,
             };
+            console.log("posting an item");
             uploadItem(user, tempNewItem);
           });
         }
@@ -397,8 +409,8 @@ const NewItemForm = (props) => {
   };
 
   const handleIncrementChange = (evt) => {
-    if (evt.target.value < 1) {
-      evt.target.value = 1;
+    if (evt.target.value < 0) {
+      evt.target.value = Math.abs(evt.target.value);
     } else if (evt.target.value > 100) {
       evt.target.value = 100;
     }
@@ -409,7 +421,6 @@ const NewItemForm = (props) => {
   };
 
   const getUnchosenColors = (chosenColors) => {
-    console.log(chosenColors);
     return newItem.colors.filter((color) => !chosenColors.includes(color));
   };
 
@@ -540,7 +551,9 @@ const NewItemForm = (props) => {
                 />
               </ColumnWrapper>
               <ColumnWrapper>
-                <Label>Increment:</Label>
+                <Label hasError={errors.includes("increment")}>
+                  Increment:
+                </Label>
                 <Input
                   hasError={false}
                   label="increment"
@@ -592,7 +605,7 @@ const NewItemForm = (props) => {
       </FormWrapper>
 
       <ItemPreviewWrapper>
-        <ItemPreview item={newItem} />
+        <ItemPreview item={newItem} editPage={true} />
       </ItemPreviewWrapper>
     </Wrapper>
   );

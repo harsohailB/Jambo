@@ -103,7 +103,7 @@ const SubscribeBanner = () => {
     <Wrapper>
       <Title>WELCOME TO THE FAMILY</Title>
       <Subtitle>
-        be the first to know about new products, promotions, and updates on the
+        Be the first to know about new products, promotions, and updates on the
         difference we've made :)
       </Subtitle>
       <Form onSubmit={handleSubmit}>
