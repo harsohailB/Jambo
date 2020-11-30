@@ -71,7 +71,14 @@ const CatalogPage = () => {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
-        setDisplayedItems(sortCatalog(fetchedItems, "Alphabetically, A-Z"));
+
+        let sortedItems = sortCatalog(fetchedItems, "Alphabetically, A-Z");
+        console.log(user);
+        if (user) {
+          setDisplayedItems(sortedItems);
+        } else {
+          setDisplayedItems(sortedItems.filter((item) => item.isVisible));
+        }
       }
     });
   }, [location]);
@@ -86,11 +93,7 @@ const CatalogPage = () => {
       filteredItems = displayedItems;
     }
 
-    return filteredItems.map((item) => {
-      if (item.isVisible || user) {
-        return <Item item={item}></Item>;
-      }
-    });
+    return filteredItems.map((item) => <Item item={item}></Item>);
   };
 
   return (
