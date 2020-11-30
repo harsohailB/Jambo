@@ -253,7 +253,10 @@ const NewItemForm = (props) => {
     if (newItem.shipping.length === 0) {
       newErrors.push("shipping");
     }
-    if (newItem.increment.length === 0 || newItem.increment === 0) {
+    if (
+      !newItem.isPrintifyItem &&
+      (newItem.increment.length === 0 || newItem.increment === 0)
+    ) {
       newErrors.push("increment");
     }
 
