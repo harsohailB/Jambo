@@ -64,8 +64,8 @@ const WelcomeBanner = () => {
       <ContentWrapper>
         <Title>LEGACIES LIVE ON</Title>
         <Subtitle>
-          All proceeds will go towards enriching the lives of children in rural
-          Kenya
+          70% of proceeds will go towards enriching the lives of children in
+          rural Kenya
         </Subtitle>
         <ExternalLinkButton href={donationPageLink}>Donate</ExternalLinkButton>
       </ContentWrapper>
