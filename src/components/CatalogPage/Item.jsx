@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled(Link)`
   display: flex;
@@ -68,6 +69,8 @@ const VisibleIcon = styled.div`
 `;
 
 const Item = ({ item }) => {
+  const user = useSelector((state) => state.user);
+
   return (
     <Wrapper to={"/catalog/" + item.id}>
       <Image src={item.thumbnailImage.imageLink}></Image>
@@ -77,9 +80,11 @@ const Item = ({ item }) => {
           <Name>{item.name}</Name>
           <Price>${item.price}</Price>
         </ColumnWrapper>
-        <VisibleIcon>
-          {item.isVisible ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
-        </VisibleIcon>
+        {user && (
+          <VisibleIcon>
+            {item.isVisible ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+          </VisibleIcon>
+        )}
       </DetailsWrapper>
     </Wrapper>
   );
