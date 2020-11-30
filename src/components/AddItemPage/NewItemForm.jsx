@@ -51,8 +51,7 @@ const FormWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 20%;
-  padding-left: 10%;
+  width: 40%;
 `;
 
 const ItemPreviewWrapper = styled.div`
@@ -60,7 +59,7 @@ const ItemPreviewWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 60%;
 
   @media (max-width: 1600px) {
     width: 100%;
