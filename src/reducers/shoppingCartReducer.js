@@ -112,6 +112,7 @@ const shoppingCartReducer = (state = [], action) => {
             colors: updatedItem.colors,
             sizes: updatedItem.sizes,
             eligibleCountries: updatedItem.eligibleCountries,
+            images: updatedItem.images,
           };
         }
 

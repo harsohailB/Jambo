@@ -250,7 +250,7 @@ const NewItemForm = (props) => {
     if (newItem.isPrintifyItem && newItem.printifyID.length === 0) {
       newErrors.push("printifyID");
     }
-    if (newItem.shipping.length === 0) {
+    if (!newItem.isPrintifyItem && newItem.shipping.length === 0) {
       newErrors.push("shipping");
     }
     if (
