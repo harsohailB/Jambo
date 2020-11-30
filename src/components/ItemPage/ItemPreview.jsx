@@ -273,6 +273,19 @@ const ItemPreview = ({ item, setItem, editPage }) => {
     });
   };
 
+  const handleVisibleClick = (e) => {
+    e.preventDefault();
+    let currentItemVisible = item.isVisible;
+    setItem({
+      ...item,
+      isVisible: !currentItemVisible,
+    });
+    updateItemById(user, {
+      ...item,
+      isVisible: !currentItemVisible,
+    });
+  };
+
   return (
     <Wrapper editPage={editPage}>
       <Helmet>
@@ -351,6 +364,19 @@ const ItemPreview = ({ item, setItem, editPage }) => {
             Featured Item
           </FeatureItemOption>
         )}
+        {user && (
+          <FeatureItemOption onClick={handleVisibleClick}>
+            <Icon>
+              {item.isVisible ? (
+                <FaCheckCircle size={24} />
+              ) : (
+                <FaRegCircle size={24} />
+              )}
+            </Icon>
+            Item Visible
+          </FeatureItemOption>
+        )}
+
         <shareBoxes>
           <FontBox>
             <Facebook url={url}></Facebook>

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled(Link)`
   display: flex;
@@ -46,12 +48,44 @@ const Price = styled.h3`
   margin: 0;
 `;
 
+const DetailsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const VisibleIcon = styled.div`
+  display: flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  color: #bbb;
+`;
+
 const Item = ({ item }) => {
+  const user = useSelector((state) => state.user);
+
   return (
     <Wrapper to={"/catalog/" + item.id}>
       <Image src={item.thumbnailImage.imageLink}></Image>
-      <Name>{item.name}</Name>
-      <Price>${item.price}</Price>
+
+      <DetailsWrapper>
+        <ColumnWrapper>
+          <Name>{item.name}</Name>
+          <Price>${item.price}</Price>
+        </ColumnWrapper>
+        {user && (
+          <VisibleIcon>
+            {item.isVisible ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+          </VisibleIcon>
+        )}
+      </DetailsWrapper>
     </Wrapper>
   );
 };
