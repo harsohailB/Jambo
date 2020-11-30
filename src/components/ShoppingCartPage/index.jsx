@@ -218,7 +218,7 @@ const ShoppingCartPage = () => {
 
       if (shippingObject.line_items.length) {
         await getShipping(shippingObject).then((shippingData) => {
-          printifyShipping = shippingData.standard / 100;
+          printifyShipping = (shippingData.standard / 100) * 1.33;
         });
       }
 
