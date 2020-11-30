@@ -73,7 +73,7 @@ const CatalogPage = () => {
         setItems(fetchedItems);
 
         let sortedItems = sortCatalog(fetchedItems, "Alphabetically, A-Z");
-        console.log(user);
+
         if (user) {
           setDisplayedItems(sortedItems);
         } else {
@@ -81,7 +81,7 @@ const CatalogPage = () => {
         }
       }
     });
-  }, [location]);
+  }, [user]);
 
   const renderItems = () => {
     let filteredItems = [];
