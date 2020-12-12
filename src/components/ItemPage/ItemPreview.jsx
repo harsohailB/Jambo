@@ -3,8 +3,15 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaCheckCircle,
+  FaRegCircle,
+} from "react-icons/fa";
 import parse from "html-react-parser";
+import Carousel from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
 
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
@@ -177,10 +184,19 @@ const Dropdown = styled.select`
   line-height: 1.5;
   border: 0 solid transparent;
   width: 100%;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  
   @media (max-width: 768px) {
     margin-bottom: 10px;
     font-size: 22px;
   }
+`;
+
+const CarouselImage = styled.img`
+  width: 100%;
+  height: auto;
 `;
 
 const ItemPreview = ({ item, setItem, editPage }) => {
@@ -203,6 +219,7 @@ const ItemPreview = ({ item, setItem, editPage }) => {
   const [selectedColor, setSelectedColor] = useState(item.colors[0]);
   const [selectedSize, setSelectedSize] = useState(item.sizes[0]);
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
+  const [mobileCarouselIndex, setMobileCarouselIndex] = useState(0);
 
   const renderSmallImages = () => {
     return item.images.map((image) => (
@@ -222,11 +239,22 @@ const ItemPreview = ({ item, setItem, editPage }) => {
     return item.sizes.map((size) => <option>{size}</option>);
   };
 
+  const renderMobileCarousel = () => {
+    return item.images.map((image) => (
+      <InnerImageZoom
+        src={image.imageLink}
+        zoomSrc={image.imageLink}
+        className="innerZoomImage"
+      />
+    ));
+  };
+
   const updateSelectedColor = (evt) => {
     setSelectedColor(evt.target.value);
     item.images.forEach((image) => {
       if (image.color === evt.target.value) {
         setMainImage(image);
+        setMobileCarouselIndex(item.images.indexOf(image));
       }
     });
   };
@@ -286,6 +314,10 @@ const ItemPreview = ({ item, setItem, editPage }) => {
     });
   };
 
+  const handleMobileCarouselIndexChange = (e) => {
+    setMobileCarouselIndex(e.target ? e.target.value : e);
+  };
+
   return (
     <Wrapper editPage={editPage}>
       <Helmet>
@@ -293,29 +325,35 @@ const ItemPreview = ({ item, setItem, editPage }) => {
       </Helmet>
 
       <PreviewWrapper>
-        <MainImageWrapper>
-          {mainImage ? (
-            <InnerImageZoom
-              src={mainImage.imageLink}
-              zoomSrc={mainImage.imageLink}
-              className="innerZoomImage"
-            />
-          ) : (
-            <InnerImageZoom
-              src={item.thumbnailImage.imageLink}
-              zoomSrc={item.thumbnailImage.imageLink}
-            />
-          )}
-        </MainImageWrapper>
-
         {!isMobile ? (
-          <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
+          <MainImageWrapper>
+            {mainImage ? (
+              <InnerImageZoom
+                src={mainImage.imageLink}
+                zoomSrc={mainImage.imageLink}
+                className="innerZoomImage"
+              />
+            ) : (
+              <InnerImageZoom
+                src={item.thumbnailImage.imageLink}
+                zoomSrc={item.thumbnailImage.imageLink}
+              />
+            )}
+          </MainImageWrapper>
         ) : (
-          <ImageCarousel
-            item={item}
-            images={item.images}
-            setMainImage={setMainImage}
-          />
+          <Carousel
+            arrowLeft={<FaAngleLeft size={40} />}
+            arrowRight={<FaAngleRight size={40} />}
+            addArrowClickHandler
+            value={mobileCarouselIndex}
+            onChange={handleMobileCarouselIndexChange}
+          >
+            {renderMobileCarousel()}
+          </Carousel>
+        )}
+
+        {!isMobile && (
+          <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
         )}
       </PreviewWrapper>
 
