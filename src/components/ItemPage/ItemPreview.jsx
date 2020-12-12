@@ -237,11 +237,11 @@ const ItemPreview = ({ item, setItem, editPage }) => {
 
   const renderMobileCarousel = () => {
     return item.images.map((image) => (
-      <CarouselImage
+      <InnerImageZoom
         src={image.imageLink}
-        onError={placeHolderImageLink}
-        alt={image.imageLink}
-      ></CarouselImage>
+        zoomSrc={image.imageLink}
+        className="innerZoomImage"
+      />
     ));
   };
 
