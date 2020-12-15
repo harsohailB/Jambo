@@ -285,31 +285,40 @@ const NewItemForm = (props) => {
     if (checkForErrors().length === 0) {
       tempNewItem = pruneItemColors(newItem);
       try {
-        console.log("edit?", props.edit);
         if (props.edit) {
-          console.log("updating an item");
-          updateItemById(user, tempNewItem);
+          updateItemById(user, tempNewItem)
+            .then((response) => {
+              history.push({
+                pathname: "/catalog",
+                refresh: true,
+              });
+            })
+            .catch((err) => alert(err));
         } else {
-          getItems().then((fetchedItems) => {
-            tempNewItem = {
-              ...tempNewItem,
-              id:
-                Math.max.apply(
-                  Math,
-                  fetchedItems.map((item) => item.id)
-                ) + 1,
-            };
-            console.log("posting an item");
-            uploadItem(user, tempNewItem);
-          });
+          getItems()
+            .then((fetchedItems) => {
+              tempNewItem = {
+                ...tempNewItem,
+                id:
+                  Math.max.apply(
+                    Math,
+                    fetchedItems.map((item) => item.id)
+                  ) + 1,
+              };
+              uploadItem(user, tempNewItem)
+                .then((response) => {
+                  history.push({
+                    pathname: "/catalog",
+                    refresh: true,
+                  });
+                })
+                .catch((err) => alert(err));
+            })
+            .catch((err) => alert(err));
         }
-        history.push({
-          pathname: "/catalog",
-          refresh: true,
-        });
       } catch (error) {
         setErrors(errors.concat(["form"]));
-        console.log(error);
+        alert(error);
       }
     }
   };
