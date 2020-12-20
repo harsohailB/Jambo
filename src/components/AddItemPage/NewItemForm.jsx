@@ -284,6 +284,14 @@ const NewItemForm = (props) => {
 
     if (checkForErrors().length === 0) {
       tempNewItem = pruneItemColors(newItem);
+
+      tempNewItem = {
+        ...tempNewItem,
+        price: parseFloat(tempNewItem.price),
+        shipping: parseFloat(tempNewItem.shipping),
+        increment: parseInt(newItem.increment),
+      };
+
       try {
         if (props.edit) {
           updateItemById(user, tempNewItem)
