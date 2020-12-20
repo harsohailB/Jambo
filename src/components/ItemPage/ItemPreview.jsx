@@ -187,7 +187,7 @@ const Dropdown = styled.select`
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-  
+
   @media (max-width: 768px) {
     margin-bottom: 10px;
     font-size: 22px;
@@ -359,7 +359,7 @@ const ItemPreview = ({ item, setItem, editPage }) => {
 
       <InfoWrapper>
         <Name>{item.name.length ? item.name : "<Name>"}</Name>
-        <Price>${item.price !== "" ? item.price : "<Price>"}</Price>
+        <Price>${item.price !== "" ? item.price.toFixed(2) : "<Price>"}</Price>
 
         <DropdownWrapper>
           <Dropdown value={selectedColor} onChange={updateSelectedColor}>
