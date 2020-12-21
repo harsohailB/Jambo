@@ -231,7 +231,7 @@ const NewItemForm = (props) => {
     if (newItem.name.length === 0) {
       newErrors.push("name");
     }
-    if (newItem.price.length === 0) {
+    if (newItem.price.length === 0 || isNaN(newItem.price)) {
       newErrors.push("price");
     }
     if (newItem.colors.length === 0) {
@@ -249,12 +249,17 @@ const NewItemForm = (props) => {
     if (newItem.isPrintifyItem && newItem.printifyID.length === 0) {
       newErrors.push("printifyID");
     }
-    if (!newItem.isPrintifyItem && newItem.shipping.length === 0) {
+    if (
+      !newItem.isPrintifyItem &&
+      (newItem.shipping.length === 0 || isNaN(newItem.shipping))
+    ) {
       newErrors.push("shipping");
     }
     if (
       !newItem.isPrintifyItem &&
-      (newItem.increment.length === 0 || newItem.increment === 0)
+      (newItem.increment.length === 0 ||
+        newItem.increment === 0 ||
+        isNaN(newItem.increment))
     ) {
       newErrors.push("increment");
     }
@@ -342,7 +347,7 @@ const NewItemForm = (props) => {
   const handlePriceChange = (evt) => {
     setNewItem({
       ...newItem,
-      price: evt.target.value,
+      price: parseFloat(evt.target.value),
     });
   };
 
@@ -500,6 +505,9 @@ const NewItemForm = (props) => {
           />
           <Label hasError={errors.includes("price")}>Item Price</Label>
           <Input
+            type="number"
+            min="1"
+            step="any"
             hasError={errors.includes("price")}
             label="Price"
             onChange={handlePriceChange}
@@ -560,6 +568,9 @@ const NewItemForm = (props) => {
               <ColumnWrapper>
                 <Label hasError={errors.includes("shipping")}>Shipping:</Label>
                 <Input
+                  type="number"
+                  min="0"
+                  step="any"
                   hasError={errors.includes("shipping")}
                   label="shipping"
                   onChange={handleShippingChange}
