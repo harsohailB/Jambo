@@ -31,15 +31,10 @@ const Wrapper = styled.div`
   align-items: flex-start;
   margin-top: 50px;
   justify-content: flex-start;
+  width: 100%;
   @media (max-width: 768px) {
     flex-direction: column;
   }
-
-  ${({ editPage }) =>
-    editPage &&
-    `
-    justify-content:  space-around;
-  `}
 `;
 
 const PreviewWrapper = styled.div`
@@ -199,7 +194,7 @@ const CarouselImage = styled.img`
   height: auto;
 `;
 
-const ItemPreview = ({ item, setItem, editPage }) => {
+const ItemPreview = ({ item, setItem }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
   useWindowResize((event: React.SyntheticEvent) => {
     setIsMobile(window.innerWidth < 728);
@@ -319,7 +314,7 @@ const ItemPreview = ({ item, setItem, editPage }) => {
   };
 
   return (
-    <Wrapper editPage={editPage}>
+    <Wrapper>
       <Helmet>
         <title>{item.name} - JAMBO</title>
       </Helmet>

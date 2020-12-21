@@ -23,11 +23,7 @@ const Wrapper = styled.div`
   margin-top: 2%;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-
-  @media (max-width: 1600px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `;
 
 const RowWrapper = styled.div`
@@ -59,11 +55,7 @@ const ItemPreviewWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 60%;
-
-  @media (max-width: 1600px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -628,7 +620,7 @@ const NewItemForm = (props) => {
       </FormWrapper>
 
       <ItemPreviewWrapper>
-        <ItemPreview item={newItem} editPage={true} />
+        <ItemPreview item={newItem} />
       </ItemPreviewWrapper>
     </Wrapper>
   );
