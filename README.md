@@ -54,7 +54,7 @@ To deploy the ExpressJS server onto Heroku, do the following:
 
 ## Usage
 
-Just browse the site lol
+Browse the site, view items in catalog, add them to your shopping cart, and buy!
 
 ## Contributing
 
