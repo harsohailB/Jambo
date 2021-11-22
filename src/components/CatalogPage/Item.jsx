@@ -10,6 +10,7 @@ const Wrapper = styled(Link)`
   cursor: pointer;
   text-decoration: none;
   padding: 0 20px;
+  max-width: 250px;
 
   & :hover {
     opacity: 80%;

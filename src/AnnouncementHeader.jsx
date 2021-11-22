@@ -20,7 +20,7 @@ const AnnouncementHeader = () => {
   return (
     <AnnouncementWrapper>
       <AnnouncementMessage>
-        NEW LOWERED PRICES + A CHANCE TO WIN A FREE SHIRT WITH ANY PURCHASE
+        70% OF PROCEEDS WILL GO TOWARDS FUNDING SCHOOL SUPPLIES IN RURAL KENYA
       </AnnouncementMessage>
     </AnnouncementWrapper>
   );

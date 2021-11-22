@@ -52,6 +52,10 @@ const ItemsWrapper = styled.div`
   @media (max-width: 900px) {
     grid: auto / repeat(2, 50%);
   }
+
+  @media (max-width: 768px) {
+    grid: auto / repeat(1, 100%);
+  }
 `;
 
 const CatalogPage = () => {
