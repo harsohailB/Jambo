@@ -114,13 +114,21 @@ const FilterBar = ({ items, displayedItems, setDisplayedItems }) => {
   const updateCatalog = (items, sortingOption, filteringOption) => {
     // SORT
     let sortedItems = sortCatalog(items, sortingOption);
+
     // FILTER
+    let filteredItems = [];
     if (filteringOption !== "All Products") {
-      setDisplayedItems(
-        sortedItems.filter((item) => item.tags.includes(filteringOption))
+      filteredItems = sortedItems.filter((item) =>
+        item.tags.includes(filteringOption)
       );
     } else {
-      setDisplayedItems([...sortedItems]);
+      filteredItems = [...sortedItems];
+    }
+
+    if (user) {
+      setDisplayedItems(filteredItems);
+    } else {
+      setDisplayedItems(filteredItems.filter((item) => item.isVisible));
     }
   };
 

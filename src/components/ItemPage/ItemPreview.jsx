@@ -3,8 +3,15 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaCheckCircle,
+  FaRegCircle
+} from "react-icons/fa";
 import parse from "html-react-parser";
+import Carousel from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
 
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
@@ -24,15 +31,10 @@ const Wrapper = styled.div`
   align-items: flex-start;
   margin-top: 50px;
   justify-content: flex-start;
+  width: 100%;
   @media (max-width: 768px) {
     flex-direction: column;
   }
-
-  ${({ editPage }) =>
-    editPage &&
-    `
-    justify-content:  space-around;
-  `}
 `;
 
 const PreviewWrapper = styled.div`
@@ -177,13 +179,21 @@ const Dropdown = styled.select`
   line-height: 1.5;
   border: 0 solid transparent;
   width: 100%;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   @media (max-width: 768px) {
     margin-bottom: 10px;
     font-size: 22px;
   }
 `;
 
-const ItemPreview = ({ item, setItem, editPage }) => {
+const CarouselImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+const ItemPreview = ({ item, setItem }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
   useWindowResize((event: React.SyntheticEvent) => {
     setIsMobile(window.innerWidth < 728);
@@ -203,6 +213,7 @@ const ItemPreview = ({ item, setItem, editPage }) => {
   const [selectedColor, setSelectedColor] = useState(item.colors[0]);
   const [selectedSize, setSelectedSize] = useState(item.sizes[0]);
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
+  const [mobileCarouselIndex, setMobileCarouselIndex] = useState(0);
 
   const renderSmallImages = () => {
     return item.images.map((image) => (
@@ -222,11 +233,22 @@ const ItemPreview = ({ item, setItem, editPage }) => {
     return item.sizes.map((size) => <option>{size}</option>);
   };
 
+  const renderMobileCarousel = () => {
+    return item.images.map((image) => (
+      <InnerImageZoom
+        src={image.imageLink}
+        zoomSrc={image.imageLink}
+        className="innerZoomImage"
+      />
+    ));
+  };
+
   const updateSelectedColor = (evt) => {
     setSelectedColor(evt.target.value);
     item.images.forEach((image) => {
       if (image.color === evt.target.value) {
         setMainImage(image);
+        setMobileCarouselIndex(item.images.indexOf(image));
       }
     });
   };
@@ -247,8 +269,8 @@ const ItemPreview = ({ item, setItem, editPage }) => {
         ...item,
         color: selectedColor,
         quantity: "1",
-        size: selectedSize,
-      },
+        size: selectedSize
+      }
     });
     history.push("/cart");
   };
@@ -265,11 +287,11 @@ const ItemPreview = ({ item, setItem, editPage }) => {
     let currentItemFeatured = item.featured;
     setItem({
       ...item,
-      featured: !currentItemFeatured,
+      featured: !currentItemFeatured
     });
     updateItemById(user, {
       ...item,
-      featured: !currentItemFeatured,
+      featured: !currentItemFeatured
     });
   };
 
@@ -278,50 +300,60 @@ const ItemPreview = ({ item, setItem, editPage }) => {
     let currentItemVisible = item.isVisible;
     setItem({
       ...item,
-      isVisible: !currentItemVisible,
+      isVisible: !currentItemVisible
     });
     updateItemById(user, {
       ...item,
-      isVisible: !currentItemVisible,
+      isVisible: !currentItemVisible
     });
   };
 
+  const handleMobileCarouselIndexChange = (e) => {
+    setMobileCarouselIndex(e.target ? e.target.value : e);
+  };
+
   return (
-    <Wrapper editPage={editPage}>
+    <Wrapper>
       <Helmet>
         <title>{item.name} - JAMBO</title>
       </Helmet>
 
       <PreviewWrapper>
-        <MainImageWrapper>
-          {mainImage ? (
-            <InnerImageZoom
-              src={mainImage.imageLink}
-              zoomSrc={mainImage.imageLink}
-              className="innerZoomImage"
-            />
-          ) : (
-            <InnerImageZoom
-              src={item.thumbnailImage.imageLink}
-              zoomSrc={item.thumbnailImage.imageLink}
-            />
-          )}
-        </MainImageWrapper>
-
         {!isMobile ? (
-          <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
+          <MainImageWrapper>
+            {mainImage ? (
+              <InnerImageZoom
+                src={mainImage.imageLink}
+                zoomSrc={mainImage.imageLink}
+                className="innerZoomImage"
+              />
+            ) : (
+              <InnerImageZoom
+                src={item.thumbnailImage.imageLink}
+                zoomSrc={item.thumbnailImage.imageLink}
+              />
+            )}
+          </MainImageWrapper>
         ) : (
-          <ImageCarousel
-            item={item}
-            images={item.images}
-            setMainImage={setMainImage}
-          />
+          <Carousel
+            arrowLeft={<FaAngleLeft size={40} />}
+            arrowRight={<FaAngleRight size={40} />}
+            addArrowClickHandler
+            value={mobileCarouselIndex}
+            onChange={handleMobileCarouselIndexChange}
+          >
+            {renderMobileCarousel()}
+          </Carousel>
+        )}
+
+        {!isMobile && (
+          <SmallImageWrapper>{renderSmallImages()}</SmallImageWrapper>
         )}
       </PreviewWrapper>
 
       <InfoWrapper>
         <Name>{item.name.length ? item.name : "<Name>"}</Name>
-        <Price>${item.price !== "" ? item.price : "<Price>"}</Price>
+        <Price>${item.price !== "" ? item.price.toFixed(2) : "<Price>"}</Price>
 
         <DropdownWrapper>
           <Dropdown value={selectedColor} onChange={updateSelectedColor}>

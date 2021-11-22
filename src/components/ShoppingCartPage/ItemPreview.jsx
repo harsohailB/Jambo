@@ -155,7 +155,7 @@ const ItemPreview = (props) => {
         </ProductWrapper>
       </td>
       <td>
-        <Price>${item.price}</Price>
+        <Price>${item.price.toFixed(2)}</Price>
       </td>
       <td>
         <QuantityWrapper>

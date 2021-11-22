@@ -10,6 +10,9 @@ const Dropdown = styled.select`
   line-height: 1.5;
   border: 0 solid transparent;
   width: 100%;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 
   ${({ hasError }) =>
     hasError &&

@@ -75,10 +75,17 @@ const CatalogPage = () => {
         throw "Error loading page, items overflow";
       } else {
         setItems(fetchedItems);
-        setDisplayedItems(sortCatalog(fetchedItems, "Alphabetically, A-Z"));
+
+        let sortedItems = sortCatalog(fetchedItems, "Alphabetically, A-Z");
+
+        if (user) {
+          setDisplayedItems(sortedItems);
+        } else {
+          setDisplayedItems(sortedItems.filter((item) => item.isVisible));
+        }
       }
     });
-  }, [location]);
+  }, [user]);
 
   const renderItems = () => {
     let filteredItems = [];

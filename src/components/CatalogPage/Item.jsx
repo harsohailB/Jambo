@@ -79,7 +79,7 @@ const Item = ({ item }) => {
       <DetailsWrapper>
         <ColumnWrapper>
           <Name>{item.name}</Name>
-          <Price>${item.price}</Price>
+          <Price>${item.price.toFixed(2)}</Price>
         </ColumnWrapper>
         {user && (
           <VisibleIcon>
