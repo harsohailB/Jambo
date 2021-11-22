@@ -27,32 +27,10 @@ const Message = styled.h2`
 `;
 
 const ItemWrapper = styled.div`
-  display: grid;
-  grid: auto / repeat(5, 19.2%);
-  gap: 1%;
-  justify-items: center;
-  width: 80%;
-  max-width: 1500px;
-
-  @media (max-width: 1500px) {
-    grid: auto / repeat(4, 25%);
-  }
-
-  @media (max-width: 1300px) {
-    grid: auto / repeat(3, 33%);
-  }
-
-  @media (max-width: 1100px) {
-    grid: auto / repeat(3, 33%);
-  }
-
-  @media (max-width: 900px) {
-    grid: auto / repeat(2, 50%);
-  }
-
-  @media (max-width: 768px) {
-    grid: auto / repeat(1, 100%);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 
 const Featured = () => {
