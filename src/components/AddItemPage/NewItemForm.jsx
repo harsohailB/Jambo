@@ -9,7 +9,7 @@ import {
   getItemById,
   getItems,
   updateItemById,
-  uploadItem,
+  uploadItem
 } from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
@@ -23,11 +23,7 @@ const Wrapper = styled.div`
   margin-top: 2%;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-
-  @media (max-width: 1600px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `;
 
 const RowWrapper = styled.div`
@@ -51,8 +47,7 @@ const FormWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 20%;
-  padding-left: 10%;
+  width: 40%;
 `;
 
 const ItemPreviewWrapper = styled.div`
@@ -60,11 +55,7 @@ const ItemPreviewWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 70%;
-
-  @media (max-width: 1600px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -163,16 +154,16 @@ const NewItemForm = (props) => {
   const eligibleCountriesOptions = [
     {
       value: "",
-      label: "All Countries",
+      label: "All Countries"
     },
     {
       value: "CA",
-      label: "Canada Only",
+      label: "Canada Only"
     },
     {
       value: "CA/US",
-      label: "Canada and US",
-    },
+      label: "Canada and US"
+    }
   ];
 
   const user = useSelector((state) => state.user);
@@ -213,7 +204,7 @@ const NewItemForm = (props) => {
 
     return {
       ...item,
-      colors: tempColors,
+      colors: tempColors
     };
   };
 
@@ -232,7 +223,7 @@ const NewItemForm = (props) => {
     if (newItem.name.length === 0) {
       newErrors.push("name");
     }
-    if (newItem.price.length === 0) {
+    if (newItem.price.length === 0 || isNaN(newItem.price)) {
       newErrors.push("price");
     }
     if (newItem.colors.length === 0) {
@@ -250,10 +241,18 @@ const NewItemForm = (props) => {
     if (newItem.isPrintifyItem && newItem.printifyID.length === 0) {
       newErrors.push("printifyID");
     }
-    if (newItem.shipping.length === 0) {
+    if (
+      !newItem.isPrintifyItem &&
+      (newItem.shipping.length === 0 || isNaN(newItem.shipping))
+    ) {
       newErrors.push("shipping");
     }
-    if (newItem.increment.length === 0 || newItem.increment === 0) {
+    if (
+      !newItem.isPrintifyItem &&
+      (newItem.increment.length === 0 ||
+        newItem.increment === 0 ||
+        isNaN(newItem.increment))
+    ) {
       newErrors.push("increment");
     }
 
@@ -277,37 +276,48 @@ const NewItemForm = (props) => {
     let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
-      tags: newItem.tags,
+      tags: newItem.tags
     };
 
     if (checkForErrors().length === 0) {
       tempNewItem = pruneItemColors(newItem);
+
       try {
         console.log("edit?", props.edit);
         if (props.edit) {
-          console.log("updating an item");
-          updateItemById(user, tempNewItem);
+          updateItemById(user, tempNewItem)
+            .then((response) => {
+              history.push({
+                pathname: "/catalog",
+                refresh: true
+              });
+            })
+            .catch((err) => alert(err));
         } else {
-          getItems().then((fetchedItems) => {
-            tempNewItem = {
-              ...tempNewItem,
-              id:
-                Math.max.apply(
-                  Math,
-                  fetchedItems.map((item) => item.id)
-                ) + 1,
-            };
-            console.log("posting an item");
-            uploadItem(user, tempNewItem);
-          });
+          getItems()
+            .then((fetchedItems) => {
+              tempNewItem = {
+                ...tempNewItem,
+                id:
+                  Math.max.apply(
+                    Math,
+                    fetchedItems.map((item) => item.id)
+                  ) + 1
+              };
+              uploadItem(user, tempNewItem)
+                .then((response) => {
+                  history.push({
+                    pathname: "/catalog",
+                    refresh: true
+                  });
+                })
+                .catch((err) => alert(err));
+            })
+            .catch((err) => alert(err));
         }
-        history.push({
-          pathname: "/catalog",
-          refresh: true,
-        });
       } catch (error) {
         setErrors(errors.concat(["form"]));
-        console.log(error);
+        alert(error);
       }
     }
   };
@@ -316,49 +326,49 @@ const NewItemForm = (props) => {
     const input = evt.target.value;
     setNewItem({
       ...newItem,
-      name: input,
+      name: input
     });
   };
 
   const handlePriceChange = (evt) => {
     setNewItem({
       ...newItem,
-      price: evt.target.value,
+      price: parseFloat(evt.target.value)
     });
   };
 
   const handleListofColoursChange = (evt) => {
     setNewItem({
       ...newItem,
-      colors: evt.target.value.split("/"),
+      colors: evt.target.value.split("/")
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setNewItem({
       ...newItem,
-      sizes: evt.target.value.split("/"),
+      sizes: evt.target.value.split("/")
     });
   };
 
   const handleDescriptionChange = (evt) => {
     setNewItem({
       ...newItem,
-      description: evt.target.value,
+      description: evt.target.value
     });
   };
 
   const handleTagsChange = (evt) => {
     setNewItem({
       ...newItem,
-      tags: evt.target.value.split("/"),
+      tags: evt.target.value.split("/")
     });
   };
 
   const handlePrintifyIDChange = (evt) => {
     setNewItem({
       ...newItem,
-      printifyID: evt.target.value,
+      printifyID: evt.target.value
     });
     getPrintifyItemById(user, evt.target.value)
       .then((fetchedPrintifyItem) => {
@@ -374,7 +384,7 @@ const NewItemForm = (props) => {
   const handleFeatureClick = () => {
     setNewItem({
       ...newItem,
-      featured: !newItem.featured,
+      featured: !newItem.featured
     });
   };
 
@@ -388,7 +398,7 @@ const NewItemForm = (props) => {
       (fetchedPrintifyItem) => {
         setNewItem({
           ...fetchedPrintifyItem,
-          id: newItem.id,
+          id: newItem.id
         });
       }
     );
@@ -397,14 +407,14 @@ const NewItemForm = (props) => {
   const handleShippingChange = (evt) => {
     setNewItem({
       ...newItem,
-      shipping: evt.target.value,
+      shipping: evt.target.value
     });
   };
 
   const handleEligibleCountriesChange = (evt) => {
     setNewItem({
       ...newItem,
-      eligibleCountries: evt.target.value,
+      eligibleCountries: evt.target.value
     });
   };
 
@@ -416,7 +426,7 @@ const NewItemForm = (props) => {
     }
     setNewItem({
       ...newItem,
-      increment: evt.target.value,
+      increment: evt.target.value
     });
   };
 
@@ -481,6 +491,9 @@ const NewItemForm = (props) => {
           />
           <Label hasError={errors.includes("price")}>Item Price</Label>
           <Input
+            type="number"
+            min="1"
+            step="any"
             hasError={errors.includes("price")}
             label="Price"
             onChange={handlePriceChange}
@@ -541,6 +554,9 @@ const NewItemForm = (props) => {
               <ColumnWrapper>
                 <Label hasError={errors.includes("shipping")}>Shipping:</Label>
                 <Input
+                  type="number"
+                  min="0"
+                  step="any"
                   hasError={errors.includes("shipping")}
                   label="shipping"
                   onChange={handleShippingChange}
