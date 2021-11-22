@@ -9,7 +9,7 @@ import {
   getItemById,
   getItems,
   updateItemById,
-  uploadItem,
+  uploadItem
 } from "../../actions/items";
 import ItemPreview from "../ItemPage/ItemPreview";
 import ButtonStyles from "../styled/ButtonStyles";
@@ -154,16 +154,16 @@ const NewItemForm = (props) => {
   const eligibleCountriesOptions = [
     {
       value: "",
-      label: "All Countries",
+      label: "All Countries"
     },
     {
       value: "CA",
-      label: "Canada Only",
+      label: "Canada Only"
     },
     {
       value: "CA/US",
-      label: "Canada and US",
-    },
+      label: "Canada and US"
+    }
   ];
 
   const user = useSelector((state) => state.user);
@@ -204,7 +204,7 @@ const NewItemForm = (props) => {
 
     return {
       ...item,
-      colors: tempColors,
+      colors: tempColors
     };
   };
 
@@ -276,19 +276,20 @@ const NewItemForm = (props) => {
     let tempNewItem = {
       ...newItem,
       thumbnailImage: newItem.images[0],
-      tags: newItem.tags,
+      tags: newItem.tags
     };
 
     if (checkForErrors().length === 0) {
       tempNewItem = pruneItemColors(newItem);
 
       try {
+        console.log("edit?", props.edit);
         if (props.edit) {
           updateItemById(user, tempNewItem)
             .then((response) => {
               history.push({
                 pathname: "/catalog",
-                refresh: true,
+                refresh: true
               });
             })
             .catch((err) => alert(err));
@@ -301,13 +302,13 @@ const NewItemForm = (props) => {
                   Math.max.apply(
                     Math,
                     fetchedItems.map((item) => item.id)
-                  ) + 1,
+                  ) + 1
               };
               uploadItem(user, tempNewItem)
                 .then((response) => {
                   history.push({
                     pathname: "/catalog",
-                    refresh: true,
+                    refresh: true
                   });
                 })
                 .catch((err) => alert(err));
@@ -325,49 +326,49 @@ const NewItemForm = (props) => {
     const input = evt.target.value;
     setNewItem({
       ...newItem,
-      name: input,
+      name: input
     });
   };
 
   const handlePriceChange = (evt) => {
     setNewItem({
       ...newItem,
-      price: parseFloat(evt.target.value),
+      price: parseFloat(evt.target.value)
     });
   };
 
   const handleListofColoursChange = (evt) => {
     setNewItem({
       ...newItem,
-      colors: evt.target.value.split("/"),
+      colors: evt.target.value.split("/")
     });
   };
 
   const handleListofSizesChange = (evt) => {
     setNewItem({
       ...newItem,
-      sizes: evt.target.value.split("/"),
+      sizes: evt.target.value.split("/")
     });
   };
 
   const handleDescriptionChange = (evt) => {
     setNewItem({
       ...newItem,
-      description: evt.target.value,
+      description: evt.target.value
     });
   };
 
   const handleTagsChange = (evt) => {
     setNewItem({
       ...newItem,
-      tags: evt.target.value.split("/"),
+      tags: evt.target.value.split("/")
     });
   };
 
   const handlePrintifyIDChange = (evt) => {
     setNewItem({
       ...newItem,
-      printifyID: evt.target.value,
+      printifyID: evt.target.value
     });
     getPrintifyItemById(user, evt.target.value)
       .then((fetchedPrintifyItem) => {
@@ -383,7 +384,7 @@ const NewItemForm = (props) => {
   const handleFeatureClick = () => {
     setNewItem({
       ...newItem,
-      featured: !newItem.featured,
+      featured: !newItem.featured
     });
   };
 
@@ -397,7 +398,7 @@ const NewItemForm = (props) => {
       (fetchedPrintifyItem) => {
         setNewItem({
           ...fetchedPrintifyItem,
-          id: newItem.id,
+          id: newItem.id
         });
       }
     );
@@ -406,14 +407,14 @@ const NewItemForm = (props) => {
   const handleShippingChange = (evt) => {
     setNewItem({
       ...newItem,
-      shipping: evt.target.value,
+      shipping: evt.target.value
     });
   };
 
   const handleEligibleCountriesChange = (evt) => {
     setNewItem({
       ...newItem,
-      eligibleCountries: evt.target.value,
+      eligibleCountries: evt.target.value
     });
   };
 
@@ -425,7 +426,7 @@ const NewItemForm = (props) => {
     }
     setNewItem({
       ...newItem,
-      increment: evt.target.value,
+      increment: evt.target.value
     });
   };
 
@@ -620,7 +621,7 @@ const NewItemForm = (props) => {
       </FormWrapper>
 
       <ItemPreviewWrapper>
-        <ItemPreview item={newItem} />
+        <ItemPreview item={newItem} editPage={true} />
       </ItemPreviewWrapper>
     </Wrapper>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { SocialIcon } from 'react-social-icons';
-
+import { SocialIcon } from "react-social-icons";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,31 +30,26 @@ const Credits = styled.p`
 
 const SocialMediaIcons = styled.div`
   display: flex;
-  flex-flow: row ;
+  flex-flow: row;
   justify-content: center;
-`;
-
-const Title = styled.h1`
-  font-family: Righteous, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.2;
-  font-size: 1.25em;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-align: center;
-  color: #3d4246;
 `;
 
 const Footer = () => {
   return (
     <Wrapper>
       <SocialMediaIcons>
-        <SocialIcon url="https://www.facebook.com/jamboapparell" style={{ height: 50, width: 50, margin: 10}}/>
-        <SocialIcon url="https://www.instagram.com/jamboapparel/?igshid=cduznovgcg5p" style={{ height: 50, width: 50, margin: 10}}/>
+        <SocialIcon
+          url="https://www.facebook.com/jamboapparell"
+          style={{ height: 50, width: 50, margin: 10 }}
+        />
+        <SocialIcon
+          url="https://www.instagram.com/jamboapparel/?igshid=cduznovgcg5p"
+          style={{ height: 50, width: 50, margin: 10 }}
+        />
       </SocialMediaIcons>
       <Credits>
-        © 2020, JAMBO Website by Harsohail Brar, Ryan Holt & Gary Wu
+        © {new Date().getFullYear()}, JAMBO Website by Harsohail Brar, Ryan Holt
+        & Gary Wu
       </Credits>
     </Wrapper>
   );

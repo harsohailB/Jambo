@@ -20,7 +20,7 @@ const AnnouncementHeader = () => {
   return (
     <AnnouncementWrapper>
       <AnnouncementMessage>
-        70% OF PROCEEDS WILL GO TOWARDS FUNDING SCHOOL SUPPLIES OF KENYA
+        70% OF PROCEEDS WILL GO TOWARDS FUNDING SCHOOL SUPPLIES IN RURAL KENYA
       </AnnouncementMessage>
     </AnnouncementWrapper>
   );

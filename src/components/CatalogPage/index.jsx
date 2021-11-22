@@ -52,6 +52,10 @@ const ItemsWrapper = styled.div`
   @media (max-width: 900px) {
     grid: auto / repeat(2, 50%);
   }
+
+  @media (max-width: 768px) {
+    grid: auto / repeat(1, 100%);
+  }
 `;
 
 const CatalogPage = () => {
@@ -93,7 +97,11 @@ const CatalogPage = () => {
       filteredItems = displayedItems;
     }
 
-    return filteredItems.map((item) => <Item item={item}></Item>);
+    return filteredItems.map((item) => {
+      if (item.isVisible || user) {
+        return <Item item={item}></Item>;
+      }
+    });
   };
 
   return (

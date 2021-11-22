@@ -7,7 +7,7 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaCheckCircle,
-  FaRegCircle,
+  FaRegCircle
 } from "react-icons/fa";
 import parse from "html-react-parser";
 import Carousel from "@brainhubeu/react-carousel";
@@ -182,7 +182,6 @@ const Dropdown = styled.select`
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-
   @media (max-width: 768px) {
     margin-bottom: 10px;
     font-size: 22px;
@@ -270,8 +269,8 @@ const ItemPreview = ({ item, setItem }) => {
         ...item,
         color: selectedColor,
         quantity: "1",
-        size: selectedSize,
-      },
+        size: selectedSize
+      }
     });
     history.push("/cart");
   };
@@ -288,11 +287,11 @@ const ItemPreview = ({ item, setItem }) => {
     let currentItemFeatured = item.featured;
     setItem({
       ...item,
-      featured: !currentItemFeatured,
+      featured: !currentItemFeatured
     });
     updateItemById(user, {
       ...item,
-      featured: !currentItemFeatured,
+      featured: !currentItemFeatured
     });
   };
 
@@ -301,11 +300,11 @@ const ItemPreview = ({ item, setItem }) => {
     let currentItemVisible = item.isVisible;
     setItem({
       ...item,
-      isVisible: !currentItemVisible,
+      isVisible: !currentItemVisible
     });
     updateItemById(user, {
       ...item,
-      isVisible: !currentItemVisible,
+      isVisible: !currentItemVisible
     });
   };
 
